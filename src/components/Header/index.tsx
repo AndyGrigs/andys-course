@@ -29,16 +29,16 @@ export const Header: React.FC<HeaderProps> = () => {
                   variant="contained"
                   color="error"
                 >
-                  Війти
+                  Вийти
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outlined">Войти</Button>
+                  <Button variant="outlined">Війти</Button>
                 </Link>
                 <Link to="/register">
-                  <Button variant="contained">Создать аккаунт</Button>
+                  <Button variant="contained">Створити аккаунт</Button>
                 </Link>
               </>
             )}
