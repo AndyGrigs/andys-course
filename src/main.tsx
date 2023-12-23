@@ -3,7 +3,7 @@ import App from "./App.tsx";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter } from "react-router-dom";
-import { theme } from "./theme.ts";
+import { theme } from "./utils/theme.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <CssBaseline>

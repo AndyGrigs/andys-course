@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 interface HeaderProps {
-  isAuth: boolean;
+  isAuth?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = () => {
