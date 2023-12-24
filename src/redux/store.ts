@@ -12,5 +12,6 @@ const store: EnhancedStore<RootState> = configureStore({
     auth: authReducer,
   },
 });
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

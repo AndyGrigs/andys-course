@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Define a type for the function parameter if needed
-interface LoginParams {
-  username: string;
+export interface LoginParams {
+  email: string;
   password: string;
   // Add other properties if necessary
 }
 
 // Define a type for your data returned by the API
-interface UserData {
+export interface UserData {
   // Define the structure of the user data
   id: number;
   name: string;
