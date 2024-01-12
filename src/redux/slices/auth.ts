@@ -29,16 +29,51 @@ const initialState: AuthState = {
   status: "loading",
 };
 
-export const fetchUserData = createAsyncThunk<UserData, LoginParams>(
-  "auth/fetchUserData",
-  async (params) => {
-    const { data } = await axios.post<UserData>(
+// export const fetchUserData = createAsyncThunk<
+//   UserData,
+//   LoginParams,
+//   { rejectValue: string }
+// >("auth/fetchUserData", async function (params, { rejectWithValue }) {
+//   const { data } = await axios.post<UserData>(
+//     "http://localhost:4444/auth/login",
+//     params
+//   );
+
+//   if (!data) {
+//     return rejectWithValue("Server error!");
+//   }
+//   return data;
+// });
+
+// Assuming UserData and LoginParams are defined elsewhere
+// import { UserData, LoginParams } from 'path-to-your-types';
+
+export const fetchUserData = createAsyncThunk<
+  UserData, // Return type for the payload creator
+  LoginParams, // First argument to the payload creator
+  {
+    rejectValue: string; // Types for ThunkAPI parameters
+  }
+>("auth/fetchUserData", async (params: LoginParams, { rejectWithValue }) => {
+  try {
+    const response = await axios.post<UserData>(
       "http://localhost:4444/auth/login",
       params
     );
-    return data;
+    if (!response.data) {
+      throw new Error("No data received from the server");
+    }
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      // Handle a response error from axios
+      return rejectWithValue(error.response.data);
+    } else {
+      // Handle any other errors
+      return rejectWithValue("Server error!");
+    }
   }
-);
+});
 
 const authSlice = createSlice({
   name: "auth",

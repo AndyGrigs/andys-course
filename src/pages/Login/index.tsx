@@ -5,9 +5,9 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { LoginParams, UserData, fetchUserData } from "../../redux/slices/auth";
-import { useDispatch } from "../../redux/slices/reduxHooks";
-
+import { useAppDispatch } from "../../redux/slices/reduxHooks";
 import styles from "./Login.module.scss";
+import { isAsyncThunkAction } from "@reduxjs/toolkit";
 
 interface LoginFormInputs {
   email: string;
@@ -15,7 +15,7 @@ interface LoginFormInputs {
 }
 
 export const Login: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -30,7 +30,6 @@ export const Login: React.FC = () => {
   });
 
   const onSubmit = (values: LoginFormInputs) => {
-    //@ts-ignore
     dispatch(fetchUserData(values));
   };
 
