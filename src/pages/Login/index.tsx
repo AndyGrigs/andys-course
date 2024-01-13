@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { LoginParams, UserData, fetchUserData } from "../../redux/slices/auth";
 import { useAppDispatch } from "../../redux/slices/reduxHooks";
 import styles from "./Login.module.scss";
-import { isAsyncThunkAction } from "@reduxjs/toolkit";
 
 interface LoginFormInputs {
   email: string;
@@ -30,6 +29,7 @@ export const Login: React.FC = () => {
   });
 
   const onSubmit = (values: LoginFormInputs) => {
+    //@ts-ignore
     dispatch(fetchUserData(values));
   };
 
