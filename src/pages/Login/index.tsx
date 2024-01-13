@@ -1,64 +1,29 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
-import { LoginParams, UserData, fetchUserData } from "../../redux/slices/auth";
-import { useAppDispatch } from "../../redux/slices/reduxHooks";
-import styles from "./Login.module.scss";
-
-interface LoginFormInputs {
-  email: string;
-  password: string;
-}
+import { Card, Form, Row, Space, Typography } from "antd";
+import Layout from "../../components/Layout";
+import { PasswordInput } from "../../components/ui/passwordInput";
+import { AppInput } from "../../components/ui/input";
+import { AppButton } from "../../components/ui/button";
+import { Link } from "react-router-dom";
 
 export const Login: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isValid },
-  } = useForm<LoginFormInputs>({
-    defaultValues: {
-      email: "user1234name@domain.com",
-      password: "1234",
-    },
-    mode: "all",
-  });
-
-  const onSubmit = (values: LoginFormInputs) => {
-    //@ts-ignore
-    dispatch(fetchUserData(values));
-  };
-
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        Вхід в аккаунт
-      </Typography>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          className={styles.field}
-          label="E-Mail"
-          error
-          helperText={errors.email?.message}
-          {...register("email", { required: "type in your email" })}
-          fullWidth
-        />
-        <TextField
-          className={styles.field}
-          label="Пароль"
-          helperText={errors.password?.message}
-          fullWidth
-          {...register("password", { required: "type in your password" })}
-        />
-        <Button type="submit" size="large" variant="contained" fullWidth>
-          Войти
-        </Button>
-      </form>
-    </Paper>
+    <Layout>
+      <Row align="middle" justify="center">
+        <Card title="Війти" style={{ width: "30rem" }}>
+          <Form onFinish={() => null}>
+            <AppInput type="email" name="email" placeholder="email" />
+            <PasswordInput name="password" placeholder="Пароль" />
+            <AppButton type="primary" htmlType="submit">
+              Війти
+            </AppButton>
+          </Form>
+          <Space direction="vertical" size="large">
+            <Typography.Text>
+              Нема аккаунту? <Link to="/register">Зареєструйтесь</Link>
+            </Typography.Text>
+          </Space>
+        </Card>
+      </Row>
+    </Layout>
   );
 };

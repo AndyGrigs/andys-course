@@ -4,6 +4,13 @@
   padding: 2rem;
   text-align: center; */
 }
+
+html,
+body,
+body > div {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto";

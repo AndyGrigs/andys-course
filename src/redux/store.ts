@@ -1,14 +1,19 @@
-import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/auth";
-import { AuthState } from "./slices/auth";
 
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+    // auth: authReducer,
   },
 });
 
 export default store;
 
-export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;

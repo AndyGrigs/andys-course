@@ -1,26 +1,34 @@
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-
-import styles from "./Registration.module.scss";
+import { Card, Form, Row, Space, Typography } from "antd";
+import Layout from "../../components/Layout";
+import { Link } from "react-router-dom";
+import { AppButton } from "../../components/ui/button";
+import { AppInput } from "../../components/ui/input";
+import { PasswordInput } from "../../components/ui/passwordInput";
 
 export const Registration = () => {
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        Створити аккаунт
-      </Typography>
-      <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
-      </div>
-      <TextField className={styles.field} label="Повне ім'я" fullWidth />
-      <TextField className={styles.field} label="E-Mail" fullWidth />
-      <TextField className={styles.field} label="Пароль" fullWidth />
-      <Button size="large" variant="contained" fullWidth>
-        Зареєструватись
-      </Button>
-    </Paper>
+    <Layout>
+      <Row align="middle" justify="center">
+        <Card title="Реєстрація" style={{ width: "30rem" }}>
+          <Form onFinish={() => null}>
+            <AppInput name="name" placeholder="Ім'я" />
+            <AppInput type="email" name="email" placeholder="email" />
+            <PasswordInput name="password" placeholder="Пароль" />
+            <PasswordInput
+              name="confirmPassword"
+              placeholder="Повторіть пароль"
+            />
+            <AppButton type="primary" htmlType="submit">
+              Зареєструватись
+            </AppButton>
+          </Form>
+          <Space direction="vertical" size="large">
+            <Typography.Text>
+              Вжу є аккаунт? <Link to="/login">Війти</Link>
+            </Typography.Text>
+          </Space>
+        </Card>
+      </Row>
+    </Layout>
   );
 };
