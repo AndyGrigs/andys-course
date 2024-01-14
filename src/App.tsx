@@ -4,7 +4,8 @@ import { Routes, Route, RouterProvider, Router } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
 import Home from "./pages/Home";
-import { router } from "./router";
+import Dashboard from "./components/Dashboard";
+import mod from "./assets/module.json";
 
 function App() {
   return (
@@ -14,10 +15,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route path="/dashboard" element={<Dashboard module={mod} />} />
       </Routes>
-      {/* <Routes>
-        <RouterProvider router={router} />
-      </Routes> */}
     </>
   );
 }
