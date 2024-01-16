@@ -6,17 +6,20 @@ import { Registration } from "./pages/Registration";
 import Home from "./pages/Home";
 import Dashboard from "./components/Dashboard";
 import mod from "./assets/module.json";
+import { Auth } from "./features/authLoader";
 
 function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/dashboard" element={<Dashboard module={mod} />} />
-      </Routes>
+      <Auth>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registration />} />
+          <Route path="/dashboard" element={<Dashboard module={mod} />} />
+        </Routes>
+      </Auth>
     </>
   );
 }
