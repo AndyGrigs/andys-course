@@ -1,73 +1,25 @@
-import React from "react";
+import React from 'react';
+import { Card, Progress } from 'antd';
 
-interface VocabularyItem {
-  word: string;
-  translation: string;
-  _id: string;
-}
+const coursesData = [
+  { title: 'Introduction to Programming', progress: 75 },
+  { title: 'Advanced Web Development', progress: 50 },
+  { title: 'Data Structures and Algorithms', progress: 30 },
+  // Add more courses as needed
+];
 
-interface Module {
-  text: {
-    title: string;
-    content: string;
-  };
-  _id: string;
-  name: string;
-  moduleGrammar: any[]; // Define this more precisely if possible
-  videos: string[];
-  vocabulary: VocabularyItem[];
-  exercises: string[];
-  __v: number;
-}
-
-interface DashboardProps {
-  module: Module;
-}
-
-interface DashboardState {
-  progress: number;
-}
-
-// You can also define an interface for each subcomponent if needed
-
-class Dashboard extends React.Component<DashboardProps, DashboardState> {
-  constructor(props: DashboardProps) {
-    super(props);
-    this.state = {
-      progress: 0, // Initialize progress, could be dynamic based on user's progress
-    };
-  }
-
-  renderVocabularyList() {
-    return this.props.module.vocabulary.map((item, index) => (
-      <li key={item._id}>
-        {item.word} - {item.translation}
-      </li>
-    ));
-  }
-
-  renderVideosList() {
-    return this.props.module.videos.map((video, index) => (
-      <li key={index}>{video}</li>
-    ));
-  }
-
-  render() {
-    const { module } = this.props;
-    return (
-      <div style={{ paddingLeft: 200 }}>
-        <h2>{module.text.title}</h2>
-        <p>{module.text.content}</p>
-        <h3>Vocabulary</h3>
-        <ul>{this.renderVocabularyList()}</ul>
-        <h3>Videos</h3>
-        <ul>{this.renderVideosList()}</ul>
-        {/* Render other module details as needed */}
-        <p>Progress: {this.state.progress}%</p>
-        {/* Add functionality to update progress */}
-      </div>
-    );
-  }
-}
+const Dashboard: React.FC = () => {
+  return (
+    <Card title="Your Courses" bordered={false} style={{ width: '100%' }}>
+      {coursesData.map((course, index) => (
+        <div key={index} style={{ marginBottom: '20px' }}>
+          <h3>{course.title}</h3>
+          <Progress percent={course.progress} />
+          {/* Additional course details can be added here */}
+        </div>
+      ))}
+    </Card>
+  );
+};
 
 export default Dashboard;

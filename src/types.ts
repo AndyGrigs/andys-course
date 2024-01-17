@@ -13,3 +13,13 @@ export interface User {
   updatedAt: string;
   token: string;
 }
+
+export interface Module {
+  _id: string;
+  name: string;
+  moduleGrammar: string[]; // Or use the appropriate data type for moduleGrammar
+  videos: string[]; // Or use the appropriate data type for videos
+  vocabulary: { word: string; translation: string; _id: string }[];
+  exercises: string[]; // Or use the appropriate data type for exercises
+
+}
