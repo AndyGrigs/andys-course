@@ -10,6 +10,8 @@ import { Layout, Menu, Breadcrumb } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Footer } from "antd/es/layout/layout";
 import PrivateRoute from "./components/PrivatRoute";
+import { AppRouter } from "./routes";
+import AppSidebar from "./components/sidebar";
 
 function App() {
 
@@ -18,14 +20,7 @@ function App() {
       {/* <Header /
       */}
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible>
-          <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            {/* <Menu.Item key="1">
-            </Menu.Item> */}
-            {/* Additional menu items can be added here */}
-          </Menu>
-        </Sider>
+        <AppSidebar />
         <Layout className="site-layout">
           <Header />
           <Content style={{ margin: '0 16px' }}>
@@ -33,19 +28,8 @@ function App() {
               {/* <Breadcrumb.Item>Student</Breadcrumb.Item>
               <Breadcrumb.Item>Dashboard</Breadcrumb.Item> */}
             </Breadcrumb>
+            <AppRouter />
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-
-              <Auth>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Registration />} />
-                  <Route path="/dashboard" element={<PrivateRoute />}>
-                    <Route index element={<Dashboard />} />
-                  </Route>
-                </Routes>
-              </Auth>
-
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
