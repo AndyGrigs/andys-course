@@ -32,10 +32,10 @@ const moduleSlice = createSlice({
             .addMatcher(moduleApi.endpoints.getModules.matchFulfilled, (state, action) => {
                 state.currentModule = action.payload;
             })
-        // Add more matchers for other module-related API endpoints if necessary
     },
 })
 
 export const { setCurrentModule, clearCurrentModule } = moduleSlice.actions;
 export default moduleSlice.reducer;
 export const selectCurrentModule = (state: RootState) => state.module.currentModule;
+export const selectCourseModules = (state: RootState) => state.module.courseModules

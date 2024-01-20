@@ -4,11 +4,12 @@ import { Routes, Route, } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
 import Home from "./pages/Home";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import { Auth } from "./features/authLoader";
 import { Layout, Menu, Breadcrumb } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Footer } from "antd/es/layout/layout";
+import PrivateRoute from "./components/PrivatRoute";
 
 function App() {
 
@@ -29,8 +30,8 @@ function App() {
           <Header />
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Student</Breadcrumb.Item>
-              <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+              {/* <Breadcrumb.Item>Student</Breadcrumb.Item>
+              <Breadcrumb.Item>Dashboard</Breadcrumb.Item> */}
             </Breadcrumb>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
 
@@ -39,7 +40,9 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Registration />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard" element={<PrivateRoute />}>
+                    <Route index element={<Dashboard />} />
+                  </Route>
                 </Routes>
               </Auth>
 

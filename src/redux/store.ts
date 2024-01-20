@@ -8,7 +8,6 @@ import { moduleApi } from "./services/modules";
 const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    //[moduleApi.reducerPath]: moduleApi.reducer,
     auth,
     module,
   },
