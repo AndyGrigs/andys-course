@@ -29,7 +29,7 @@ const moduleSlice = createSlice({
             .addMatcher(moduleApi.endpoints.getOneModule.matchFulfilled, (state, action) => {
                 state.currentModule = action.payload;
             })
-            .addMatcher(moduleApi.endpoints.getModules.matchFulfilled, (state, action) => {
+            .addMatcher(moduleApi.endpoints.getAllModules.matchFulfilled, (state, action) => {
                 state.currentModule = action.payload;
             })
     },

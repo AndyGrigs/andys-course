@@ -1,23 +1,25 @@
 import React from 'react';
-import { Card, Progress } from 'antd';
+import { Card, List, Spin } from 'antd';
+import { useGetAllModulesQuery } from '../../redux/services/modules';
 
-const coursesData = [
-  { title: 'Introduction to Programming', progress: 75 },
-  { title: 'Advanced Web Development', progress: 50 },
-  { title: 'Data Structures and Algorithms', progress: 30 },
-  // Add more courses as needed
-];
+
 
 const Dashboard: React.FC = () => {
+  const { data: modulesData, isLoading, isError } = useGetAllModulesQuery()
+  console.log(modulesData)
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  if (isError) {
+    return <div>Error loading modules.</div>;
+  }
+
+
   return (
     <Card title="Your Courses" bordered={false} style={{ width: '100%' }}>
-      {coursesData.map((course, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          <h3>{course.title}</h3>
-          <Progress percent={course.progress} />
-          {/* Additional course details can be added here */}
-        </div>
-      ))}
+      {modulesData && modulesData.map(item => <List key={item.id}>{item.name}</List>)}
     </Card>
   );
 };

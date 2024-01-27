@@ -1,15 +1,7 @@
 import "./App.css";
 import { Header } from "./components/Header";
-import { Routes, Route, } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { Registration } from "./pages/Registration";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import { Auth } from "./features/authLoader";
-import { Layout, Menu, Breadcrumb } from "antd";
-import Sider from "antd/es/layout/Sider";
+import { Layout, Breadcrumb } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
-import PrivateRoute from "./components/PrivatRoute";
 import { AppRouter } from "./routes";
 import AppSidebar from "./components/sidebar";
 

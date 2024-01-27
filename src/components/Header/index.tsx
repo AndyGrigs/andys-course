@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Layout, Space, Typography, Button } from "antd";
-import { LoginOutlined, LogoutOutlined, UserAddOutlined } from "@ant-design/icons";
+import { BookOutlined, LoginOutlined, LogoutOutlined, UserAddOutlined } from "@ant-design/icons";
 import style from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import { logout, selectUser } from "../../redux/slices/authSlice";
@@ -28,13 +28,25 @@ export const Header = () => {
 
         {
           user ? (
-            <Button
-              type="text"
-              icon={<LogoutOutlined />}
-              onClick={onLogoutClick}
-            >
-              Вийти
-            </Button>
+            <>
+              <Space>
+                <Link to="/dashboard">
+                  <Button icon={<BookOutlined />} type="text">
+                    Кабінет
+                  </Button>
+                </Link>
+              </Space>
+              <Space>
+                <Button
+                  type="text"
+                  icon={<LogoutOutlined />}
+                  onClick={onLogoutClick}
+                >
+                  Вийти
+                </Button>
+              </Space>
+            </>
+
           ) : (
             <>
               <Space>

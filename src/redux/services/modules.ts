@@ -1,4 +1,5 @@
 
+import { Module } from '../../types';
 import { api } from './api';
 
 export const moduleApi = api.injectEndpoints({
@@ -13,8 +14,15 @@ export const moduleApi = api.injectEndpoints({
         }),
 
         // Endpoint to get all modules
-        getModules: builder.query({
-            query: () => '/modules',
+        // getModules: builder.query({
+        //     query: () => '/modules',
+        // }),
+
+        getAllModules: builder.query<Module[], void>({
+            query: () => ({
+                url: "/modules",
+                method: "GET",
+            }),
         }),
 
         // Endpoint to get a specific module by moduleId
@@ -49,7 +57,7 @@ export const moduleApi = api.injectEndpoints({
 // Export hooks for usage in functional components
 export const {
     useCreateModuleMutation,
-    useGetModulesQuery,
+    useGetAllModulesQuery,
     useGetOneModuleQuery,
     useGetModuleExercisesQuery,
     useUpdateOneModuleMutation,
@@ -58,7 +66,7 @@ export const {
 
 export const {
     endpoints: {
-        getModules,
+        getAllModules,
         getOneModule,
         createModule,
         getModuleExercises,
