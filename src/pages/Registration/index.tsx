@@ -55,7 +55,7 @@ export const Registration = () => {
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Вжу є аккаунт? <Link to="/login">Війти</Link>
+              Вжу є аккаунт? <Link to="/login">Увійти</Link>
             </Typography.Text>
           </Space>
         </Card>
