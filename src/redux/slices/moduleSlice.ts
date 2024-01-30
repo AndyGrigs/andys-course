@@ -5,7 +5,7 @@ import { RootState } from "../store";
 
 interface ModuleState {
     currentModule: Module | null;
-    courseModules: [];
+    courseModules: Module[];
 }
 
 const initialState: ModuleState = {
@@ -30,7 +30,7 @@ const moduleSlice = createSlice({
                 state.currentModule = action.payload;
             })
             .addMatcher(moduleApi.endpoints.getAllModules.matchFulfilled, (state, action) => {
-                state.currentModule = action.payload;
+                state.courseModules = action.payload;
             })
     },
 })

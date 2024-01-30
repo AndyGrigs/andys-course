@@ -13,10 +13,6 @@ export const moduleApi = api.injectEndpoints({
             }),
         }),
 
-        // Endpoint to get all modules
-        // getModules: builder.query({
-        //     query: () => '/modules',
-        // }),
 
         getAllModules: builder.query<Module[], void>({
             query: () => ({
@@ -25,7 +21,6 @@ export const moduleApi = api.injectEndpoints({
             }),
         }),
 
-        // Endpoint to get a specific module by moduleId
         getOneModule: builder.query({
             query: (moduleId) => `/modules/${moduleId}`,
         }),

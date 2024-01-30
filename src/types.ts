@@ -15,7 +15,7 @@ export interface User {
   progress: Record<string, UserProgress>
 }
 
-interface UserProgress {
+export interface UserProgress {
   moduleId: string;
   progress: number;
   completed: boolean;
