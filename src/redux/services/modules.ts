@@ -4,7 +4,6 @@ import { api } from './api';
 
 export const moduleApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        // Endpoint to create a new module
         createModule: builder.mutation({
             query: (moduleData) => ({
                 url: '/add-module',

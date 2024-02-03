@@ -22,12 +22,31 @@ export interface UserProgress {
 }
 
 export interface Module {
-
   id: string;
   name: string;
   moduleGrammar: string[];
   videos: string[];
-  vocabulary: { word: string; translation: string; id: string }[];
+  vocabulary: IVocabulary[];
   exercises: string[];
+
+}
+
+export interface IVocabulary {
+  word: string;
+  translation: string;
+  id: string;
+}
+export interface ITask {
+  content: string;
+  solution: string;
+  id: string;
+}
+
+export interface IExercise {
+  id: string;
+  number: number;
+  instruction: string;
+  example: string;
+  tasks: ITask[];
 
 }

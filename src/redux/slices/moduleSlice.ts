@@ -5,12 +5,12 @@ import { RootState } from "../store";
 
 interface ModuleState {
     currentModule: Module | null;
-    courseModules: Module[];
+    allModules: Module[];
 }
 
 const initialState: ModuleState = {
     currentModule: null,
-    courseModules: [],
+    allModules: [],
 };
 
 const moduleSlice = createSlice({
@@ -19,6 +19,9 @@ const moduleSlice = createSlice({
     reducers: {
         setCurrentModule: (state, action) => {
             state.currentModule = action.payload;
+        },
+        setAllModules: (state, action) => {
+            state.allModules = action.payload;
         },
         clearCurrentModule: (state) => {
             state.currentModule = null;
@@ -30,7 +33,7 @@ const moduleSlice = createSlice({
                 state.currentModule = action.payload;
             })
             .addMatcher(moduleApi.endpoints.getAllModules.matchFulfilled, (state, action) => {
-                state.courseModules = action.payload;
+                state.allModules = action.payload;
             })
     },
 })
@@ -38,4 +41,4 @@ const moduleSlice = createSlice({
 export const { setCurrentModule, clearCurrentModule } = moduleSlice.actions;
 export default moduleSlice.reducer;
 export const selectCurrentModule = (state: RootState) => state.module.currentModule;
-export const selectCourseModules = (state: RootState) => state.module.courseModules
+export const selectCourseModules = (state: RootState) => state.module.allModules

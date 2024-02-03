@@ -20,5 +20,4 @@ export const userProgressSlice = createSlice({
 
 export const { setProgress } = userProgressSlice.actions;
 export default userProgressSlice.reducer;
-export const selectCurrentModule = (state: RootState) => state.module.currentModule;
-export const selectCourseModules = (state: RootState) => state.module.courseModules;
+export const selectUserProgress = (state: RootState) => state.userProgerss.progress;

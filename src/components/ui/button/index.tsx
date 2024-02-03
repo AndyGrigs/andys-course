@@ -25,7 +25,7 @@ export const AppButton = ({
   return (
     <Form.Item>
       <Button
-        //@ts-ignore
+        //@ts-expect-error
         type={type}
         htmlType={htmlType}
         danger={danger}

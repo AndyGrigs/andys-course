@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
+import ModuleExercises from "../pages/ModuleExercises";
 
 export const AppRouter: React.FC = () => {
     return (
@@ -15,6 +16,7 @@ export const AppRouter: React.FC = () => {
                 <Route path="/register" element={<Registration />} />
                 <Route path="/dashboard" element={<PrivateRoute />}>
                     <Route index element={<Dashboard />} />
+                    <Route path="module/:moduleId" element={<ModuleExercises />} />
                 </Route>
             </Routes>
         </Auth>

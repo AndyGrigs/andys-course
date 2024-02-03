@@ -3,8 +3,6 @@ import { UserProgress } from '../../types';
 
 export const progressApi = api.injectEndpoints({
     endpoints: (builder) => ({
-
-
         getUserProgress: builder.query<UserProgress, void>({
             query: (userId) => ({
                 url: `/progress/${userId}`,
@@ -21,3 +19,5 @@ export const progressApi = api.injectEndpoints({
 
     }),
 });
+
+export const { useGetUserProgressQuery, useUpdateUserProgressMutation } = progressApi;
