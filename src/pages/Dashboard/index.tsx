@@ -10,12 +10,16 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const handleStartClick = (moduleId: string) => {
-    navigate(`/module/${moduleId}`);
+    console.log('moduleId:', moduleId)
+    navigate(`/module/${moduleId}/exercises`);
   };
 
 
   if (isLoading) {
-    return <Spin />;
+    return (
+      <Flex justify='center' align='center'>
+        <Spin />;
+      </Flex>)
   }
 
   if (isError) {
@@ -41,11 +45,11 @@ const Dashboard: React.FC = () => {
         }}
         dataSource={modulesData}
         renderItem={item => (
-          <List.Item key={item.id}>
+          <List.Item key={item._id}>
             <Card style={{ textAlign: "center" }} title={item.name}>
               <Flex justify='center' align='center' vertical gap={10}>
                 <div>{item.exercises.length} вправ</div>
-                <Button onClick={() => handleStartClick(item.id)} size='small'>Почати</Button>
+                <Button onClick={() => handleStartClick(item._id)} size='small'>Почати</Button>
               </Flex>
             </Card>
           </List.Item>

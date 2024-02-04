@@ -22,7 +22,7 @@ export interface UserProgress {
 }
 
 export interface Module {
-  id: string;
+  _id: string;
   name: string;
   moduleGrammar: string[];
   videos: string[];

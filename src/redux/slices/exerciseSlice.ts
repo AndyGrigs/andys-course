@@ -52,4 +52,5 @@ const exerciseSlice = createSlice({
 })
 
 export default exerciseSlice.reducer;
-//export const selectOneExercise = (state: RootState) => state.
+export const selectOneExercise = (state: RootState) => state.exercise.currentExercise;
+export const selectAllExercises = (state: RootState) => state.exercise.allExercises;

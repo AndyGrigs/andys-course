@@ -16,7 +16,7 @@ export const AppRouter: React.FC = () => {
                 <Route path="/register" element={<Registration />} />
                 <Route path="/dashboard" element={<PrivateRoute />}>
                     <Route index element={<Dashboard />} />
-                    <Route path="module/:moduleId" element={<ModuleExercises />} />
+                    <Route path="/dashboard/module/:moduleId/exercises" element={<ModuleExercises />} />
                 </Route>
             </Routes>
         </Auth>

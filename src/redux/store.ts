@@ -7,6 +7,7 @@ import { moduleApi } from "./services/modules";
 import { progressApi } from "./services/progressApi"
 import userProgressReducer from './slices/userProgressSlice'
 import { exercisesApi } from "./services/exersiceApi";
+import exerciseReducer from "./slices/exerciseSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
     auth,
     module,
     userProgerss: userProgressReducer,
-
+    exercise: exerciseReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
