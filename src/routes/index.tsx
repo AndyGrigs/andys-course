@@ -8,19 +8,32 @@ import { Registration } from "../pages/Registration";
 import ModuleExercises from "../pages/ModuleExercises";
 
 export const AppRouter: React.FC = () => {
-    return (
-        <Auth>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Registration />} />
-                <Route path="/dashboard" element={<PrivateRoute />}>
-                    <Route index element={<Dashboard />} />
-                    <Route path="/dashboard/module/:moduleId/exercises" element={<ModuleExercises />} />
-                </Route>
-            </Routes>
-        </Auth>
-    )
-}
+  return (
+    <Auth>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
+        {/* <Route path="/dashboard" element={<PrivateRoute />}>
+          <Route index element={<Dashboard />} />
+          <Route
+            path="/module/:moduleId/exercises"
+            element={<ModuleExercises />}
+          />
+        </Route>  */}
 
-
+        <Route path="/dashboard" element={<PrivateRoute />}>
+          <Route index element={<Dashboard />} />
+          {/* <Route
+            path="module/:moduleId/exercises"
+            element={<ModuleExercises />}
+          /> */}
+        </Route>
+        <Route
+          path="module/:moduleId/exercises"
+          element={<ModuleExercises />}
+        />
+      </Routes>
+    </Auth>
+  );
+};
