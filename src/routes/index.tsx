@@ -22,17 +22,17 @@ export const AppRouter: React.FC = () => {
           />
         </Route>  */}
 
-        <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route index element={<Dashboard />} />
-          {/* <Route
+        <Route path="" element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
             path="module/:moduleId/exercises"
             element={<ModuleExercises />}
-          /> */}
+          />
         </Route>
-        <Route
+        {/* <Route
           path="module/:moduleId/exercises"
           element={<ModuleExercises />}
-        />
+        /> */}
       </Routes>
     </Auth>
   );

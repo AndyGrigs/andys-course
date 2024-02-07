@@ -17,6 +17,7 @@ const store = configureStore({
     userProgerss: userProgressReducer,
     exercise: exerciseReducer
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(api.middleware)

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, List, Spin, Flex } from 'antd';
+import { Outlet } from 'react-router-dom';
 import { useGetAllModulesQuery } from '../../redux/services/modules';
 import { useNavigate } from 'react-router-dom';
 
