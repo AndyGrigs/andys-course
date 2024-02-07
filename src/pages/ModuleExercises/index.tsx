@@ -1,7 +1,16 @@
 import { List, Card, Flex, Button } from "antd";
 import { useParams } from "react-router-dom";
+import { useGetExercisesQuery } from "../../redux/services/exersiceApi";
 const ExerciseList = () => {
   const { moduleId } = useParams();
+  const {
+    data: exercises,
+    isLoading,
+    isError,
+  } = useGetExercisesQuery(moduleId);
+
+  if (isLoading) return <p>Lädt...</p>;
+  if (isError) return <p>Fehler beim Laden der Übungen</p>;
 
   return (
     <List.Item key=" ">
