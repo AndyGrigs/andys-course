@@ -2,7 +2,7 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Layout, Breadcrumb } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
-import { AppRouter } from "./routes";
+import { AppRouter } from "./routes/Router";
 import AppSidebar from "./components/sidebar";
 
 function App() {

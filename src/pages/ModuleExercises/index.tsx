@@ -1,29 +1,37 @@
-import { List, Card, Flex, Button } from "antd";
+import { List, Flex, Button, Progress, Card, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import { useGetExercisesQuery } from "../../redux/services/exersiceApi";
+import { Loader } from "../../components/Loader";
 const ExerciseList = () => {
-  const { moduleId } = useParams();
-  const {
-    data: exercises,
-    isLoading,
-    isError,
-  } = useGetExercisesQuery(moduleId);
+  const { moduleId } = useParams<{ moduleId: string }>();
+  const { data, isLoading, isError } = useGetExercisesQuery(moduleId ?? "");
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (isLoading) return <p>Lädt...</p>;
-  if (isError) return <p>Fehler beim Laden der Übungen</p>;
+  if (isError || !data || !Array.isArray(data.exercisesObj))
+    return <p>Fehler beim Laden der Übungen</p>;
 
+  console.log(data.exercisesObj);
+  const progressPercentage = 50;
+  const exercises = data.exercisesObj;
+  // getExerciseProgress(exercise)
   return (
-    <List.Item key=" ">
-      <Card
-        style={{ textAlign: "center" }}
-        title="Here you are going to do some practice"
-      >
-        <Flex justify="center" align="center" vertical gap={10}>
-          <div> You will find here your exercises</div>
-          <Button size="small">Почати</Button>
-        </Flex>
-      </Card>
-    </List.Item>
+    <List
+      dataSource={exercises}
+      renderItem={(exercise) => (
+        <List.Item key={exercise._id}>
+          <Card title={`Exercise ${exercise.number}`}>
+            <p>{exercise.instruction}</p>
+            {/* Displaying the progress bar */}
+            <Progress percent={progressPercentage} />
+            <Button size="small">Почати</Button>
+          </Card>
+        </List.Item>
+      )}
+    />
   );
 };
 

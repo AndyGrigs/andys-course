@@ -14,13 +14,6 @@ export const AppRouter: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        {/* <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route index element={<Dashboard />} />
-          <Route
-            path="/module/:moduleId/exercises"
-            element={<ModuleExercises />}
-          />
-        </Route>  */}
 
         <Route path="" element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -29,10 +22,6 @@ export const AppRouter: React.FC = () => {
             element={<ModuleExercises />}
           />
         </Route>
-        {/* <Route
-          path="module/:moduleId/exercises"
-          element={<ModuleExercises />}
-        /> */}
       </Routes>
     </Auth>
   );

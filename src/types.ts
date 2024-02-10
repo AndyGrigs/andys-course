@@ -1,3 +1,5 @@
+import { Key, ReactNode } from "react";
+
 export type ErrorWithMessage = {
   status: number;
   data: {
@@ -12,7 +14,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   token: string;
-  progress: Record<string, UserProgress>
+  progress: Record<string, UserProgress>;
 }
 
 export interface UserProgress {
@@ -28,7 +30,6 @@ export interface Module {
   videos: string[];
   vocabulary: IVocabulary[];
   exercises: string[];
-
 }
 
 export interface IVocabulary {
@@ -43,10 +44,16 @@ export interface ITask {
 }
 
 export interface IExercise {
-  id: string;
+  _id: string;
   number: number;
   instruction: string;
   example: string;
   tasks: ITask[];
+}
 
+export interface IExerciseResponse {
+  _id: Key | null | undefined;
+  number: any;
+  instruction: ReactNode;
+  exercisesObj: IExercise[];
 }
