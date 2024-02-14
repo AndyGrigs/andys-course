@@ -8,10 +8,10 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/slices/authSlice";
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../redux/services/auth";
-import { User } from "../../types";
+import { IUser } from "../../types";
 import { isErrorWithMessage } from "../../utils/isErrorWithMessage";
 
-type registerData = Omit<User, "id"> & { confirmPassword: string }
+type registerData = Omit<IUser, "id"> & { confirmPassword: string }
 
 export const Registration = () => {
   const navigate = useNavigate()

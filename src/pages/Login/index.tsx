@@ -15,7 +15,7 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const user = useSelector(selectUser);
-  const [loginUser, loginUserResult] = useLoginMutation();
+  const [loginUser] = useLoginMutation();
 
   useEffect(() => {
     if (user) {

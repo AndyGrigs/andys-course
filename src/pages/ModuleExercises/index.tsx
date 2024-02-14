@@ -23,7 +23,7 @@ const ExerciseList = () => {
       dataSource={exercises}
       renderItem={(exercise) => (
         <List.Item key={exercise._id}>
-          <Card title={`Exercise ${exercise.number}`}>
+          <Card style={{ width: "80%" }} title={`Exercise ${exercise.number}`}>
             <p>{exercise.instruction}</p>
             {/* Displaying the progress bar */}
             <Progress percent={progressPercentage} />

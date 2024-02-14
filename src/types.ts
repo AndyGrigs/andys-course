@@ -7,15 +7,33 @@ export type ErrorWithMessage = {
   };
 };
 
-export interface User {
-  id: string;
+// export interface User {
+//   id: string;
+//   fullName: string;
+//   email: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   token: string;
+//   progress: Record<string, UserProgress>;
+// }
+
+export interface IUser {
+  id: string; // Assuming the id is the string representation of _id.$oid
   fullName: string;
   email: string;
-  createdAt: string;
-  updatedAt: string;
-  token: string;
-  progress: Record<string, UserProgress>;
+  createdAt: string; // Assuming it's in ISO 8601 format
+  updatedAt: string; // Assuming it's in ISO 8601 format
+  token: string; // Assuming this is provided from somewhere else, not present in the database object
+  progress: {
+    [moduleId: string]: {
+      moduleId: string;
+      moduleNumber: number;
+      progress: number;
+      completed: "not_started" | "in_progress" | "completed";
+    }[];
+  };
 }
+
 
 export interface UserProgress {
   moduleId: string;
@@ -53,7 +71,7 @@ export interface IExercise {
 
 export interface IExerciseResponse {
   _id: Key | null | undefined;
-  number: any;
+  number: number;
   instruction: ReactNode;
   exercisesObj: IExercise[];
 }

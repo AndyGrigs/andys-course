@@ -1,10 +1,10 @@
-import { User } from "../../types";
+import { IUser } from "../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../services/auth";
 import { RootState } from "../store";
 
 interface InitialState {
-  user: (User & { token: string }) | null;
+  user: (IUser & { token: string }) | null;
   isAuthenticated: boolean;
 }
 

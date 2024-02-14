@@ -1,9 +1,9 @@
-import { User } from "../../types";
+import { IUser } from "../../types";
 import { api } from "./api";
 
-export type UserData = Omit<User, "id">;
+export type UserData = Omit<IUser, "id">;
 //type ResponseLoginData = User & { token: string };
-type ResponseLoginData = User;
+type ResponseLoginData = IUser;
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
