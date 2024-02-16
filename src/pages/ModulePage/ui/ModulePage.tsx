@@ -1,15 +1,14 @@
 import React from "react";
 import { Button, Card, List, Flex } from "antd";
-import { useGetAllModulesQuery } from "../../redux/services/modules";
+import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "../../components/Loader";
+import { Loader } from "../../../components/Loader";
 
-const Dashboard: React.FC = () => {
+export const ModulePage: React.FC = () => {
   const { data: modulesData, isLoading, isError } = useGetAllModulesQuery();
   const navigate = useNavigate();
 
   const handleStartClick = (moduleId: string) => {
-    console.log("moduleId:", moduleId);
     navigate(`/module/${moduleId}/exercises`);
   };
 
@@ -34,12 +33,15 @@ const Dashboard: React.FC = () => {
           xxl: 3,
         }}
         dataSource={modulesData}
-        renderItem={(item) => (
-          <List.Item key={item._id}>
-            <Card style={{ textAlign: "center" }} title={item.name}>
+        renderItem={(module) => (
+          <List.Item key={module._id}>
+            <Card style={{ textAlign: "center" }} title={module.name}>
               <Flex justify="center" align="center" vertical gap={10}>
-                <div>{item.exercises.length} вправ</div>
-                <Button onClick={() => handleStartClick(item._id)} size="small">
+                <div>{module.exercises.length} вправ</div>
+                <Button
+                  onClick={() => handleStartClick(module._id)}
+                  size="small"
+                >
                   Почати
                 </Button>
               </Flex>
@@ -50,5 +52,3 @@ const Dashboard: React.FC = () => {
     </Card>
   );
 };
-
-export default Dashboard;

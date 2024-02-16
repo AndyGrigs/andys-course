@@ -4,8 +4,8 @@ import { IExerciseResponse } from "../../types";
 export const exercisesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getExercises: builder.query<IExerciseResponse, string | undefined>({
-      query: (exId) => ({
-        url: `/modules/${exId}/exercises`,
+      query: (moduleId) => ({
+        url: `/modules/${moduleId}/exercises`,
         method: "GET",
       }),
     }),
@@ -18,7 +18,7 @@ export const exercisesApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetExercisesQuery } = exercisesApi;
+export const { useGetExercisesQuery, useGetOneExercisesQuery } = exercisesApi;
 export const {
   endpoints: { getExercises, getOneExercises },
 } = exercisesApi;

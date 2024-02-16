@@ -3,90 +3,49 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { exercisesApi } from "../services/exersiceApi";
 import { RootState } from "../store";
 
-
 interface IExerciseState {
-    currentExercise: IExercise | null;
-    allExercises: IExercise[];
-    loading: string;
-    error: string;
-
+  currentExercise: IExercise | null;
+  allExercises: IExercise[];
 }
 
 const initialState: IExerciseState = {
-    currentExercise: null,
-    allExercises: [],
-    loading: '',
-    error: ''
-
-}
+  currentExercise: null,
+  allExercises: [],
+};
 
 const exerciseSlice = createSlice({
-    name: 'exercise',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(exercisesApi.endpoints.getExercises.pending, (state) => {
-                // Handle loading state if needed
-                state.loading = 'pending';
-            })
-            .addCase(exercisesApi.endpoints.getExercises.fulfilled, (state, action) => {
-                // Update state with data when the query is fulfilled
-                state.allExercises = [action.payload];
-                state.loading = 'fulfilled';
-                state.error = '';
-            })
-            .addCase(exercisesApi.endpoints.getExercises.rejected, (state, action) => {
-                // Handle error state when the query is rejected
-                state.loading = 'rejected';
-                state.error = 'An error occurred while fetching exercises.';
-            })
-            .addCase(exercisesApi.endpoints.getOneExercises.fulfilled, (state, action) => {
-                state.currentExercise = action.payload;
-            })
-        // .addCase(exercisesApi.endpoints.getExercises.pending, (state) => {
-        //     // Handle loading state if needed
-        //     state.loading = 'pending';
-        // })
-        // .addCase(exercisesApi.endpoints.getExercises.fulfilled, (state, action) => {
-        //     // Update state with data when the query is fulfilled
-        //     state.allExercises = [action.payload];
-        //     state.loading = 'fulfilled';
-        //     state.error = '';
-        // })
-        // .addCase(exercisesApi.endpoints.getExercises.rejected, (state, action) => {
-        //     // Handle error state when the query is rejected
-        //     state.loading = 'rejected';
-        //     state.error = 'An error occurred while fetching exercises.';
-        // })
-        // .addCase(exercisesApi.endpoints.getOneExercises.fulfilled, (state, action) => {
-        //     state.currentExercise = action.payload;
-        // })
-        // .addMatcher(exercisesApi.endpoints.getExercises.matchPending, (state) => {
-        //     // Handle loading state if needed
-        //     state.loading = 'pending';
-        // })
-        // .addMatcher(exercisesApi.endpoints.getExercises.matchFulfilled, (state, action) => {
-        //     // Update state with data when the query is fulfilled
-        //     state.allExercises = [action.payload];
-        //     state.loading = 'fulfilled';
-        //     state.error = '';
-        // })
-        // .addMatcher(exercisesApi.endpoints.getExercises.matchRejected, (state, action) => {
-        //     // Handle error state when the query is rejected
-        //     state.loading = 'rejected';
-        //     state.error = 'An error occurred while fetching exercises.';
-        // })
-        // // .addMatcher((action) => action.type === 'exercise/setCurrentExercise', (state, action) => {
-        // //     // Handle setting the current exercise
-        // //     state.currentExercise = action.payload;
-        // //   });
-        // .addMatcher(exercisesApi.endpoints.getOneExercises.matchFulfilled, (state, action) => {
-        //     state.currentExercise = action.payload;
-        // })
+  name: "exercise",
+  initialState,
+  reducers: {
+    setCurrrentExerciseId: (state, action: PayloadAction<string>) => {
+      const exerciseToSet = state.allExercises.find((exercise) => {
+        exercise._id === action.payload;
+        if (exerciseToSet) {
+          state.currentExercise = exerciseToSet;
+        } else {
+          console.error("Exercise not found");
+        }
+      });
     },
-})
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      exercisesApi.endpoints.getExercises.matchFulfilled,
+      (state, action) => {
+        state.allExercises = action.payload.exercisesObj;
+      }
+    );
+  },
+});
 
 export default exerciseSlice.reducer;
-export const selectOneExercise = (state: RootState) => state.exercise.currentExercise;
-export const selectAllExercises = (state: RootState) => state.exercise.allExercises;
+export const selectOneExercise = (state: RootState) =>
+  state.exercise.currentExercise;
+
+export const selectExerciseById = (state: RootState, exerciseId: string) =>
+  state.exercise.allExercises.find((exercise) => exercise._id === exerciseId);
+
+// export const selectExercisesByModuleId = (state: RootState, moduleId: string) => state.exercise.allExercises.filter((exercise)=> exercise._id === )
+
+export const selectAllExercises = (state: RootState) =>
+  state.exercise.allExercises;
