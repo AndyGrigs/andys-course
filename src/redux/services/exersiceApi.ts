@@ -9,7 +9,7 @@ export const exercisesApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    getOneExercises: builder.query<IExerciseResponse, void>({
+    getOneExercises: builder.query<IExerciseResponse, string | undefined>({
       query: (exId) => ({
         url: `/exercises/${exId}`,
         method: "GET",

@@ -17,28 +17,44 @@ export type ErrorWithMessage = {
 //   progress: Record<string, UserProgress>;
 // }
 
+// export interface IUser {
+//   id: string;
+//   fullName: string;
+//   email: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   token: string;
+//   progress: {
+//     [moduleId: string]: {
+//       moduleId: string;
+//       moduleNumber: number;
+//       progress: number;
+//       completed: "not_started" | "in_progress" | "completed";
+//     }[];
+//   };
+// }
+
 export interface IUser {
-  id: string; // Assuming the id is the string representation of _id.$oid
+  id: string;
   fullName: string;
   email: string;
-  createdAt: string; // Assuming it's in ISO 8601 format
-  updatedAt: string; // Assuming it's in ISO 8601 format
-  token: string; // Assuming this is provided from somewhere else, not present in the database object
-  progress: {
-    [moduleId: string]: {
-      moduleId: string;
-      moduleNumber: number;
-      progress: number;
-      completed: "not_started" | "in_progress" | "completed";
-    }[];
-  };
-}
-
-
-export interface UserProgress {
-  moduleId: string;
-  progress: number;
-  completed: boolean;
+  passwordHash: string;
+  moduleProgress: {
+    moduleId: string;
+    moduleNumber: number;
+    progress: number;
+    completed: "in_progress" | "completed" | "not_started";
+  }[];
+  exerciseProgress: {
+    exerciseId: string;
+    exerciseNumber: number;
+    progress: number;
+    completed: "in_progress" | "completed" | "not_started";
+  }[];
+  avatarUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  token: string;
 }
 
 export interface Module {
@@ -58,7 +74,7 @@ export interface IVocabulary {
 export interface ITask {
   content: string;
   solution: string;
-  id: string;
+  _id: string;
 }
 
 export interface IExercise {
@@ -72,6 +88,9 @@ export interface IExercise {
 export interface IExerciseResponse {
   _id: Key | null | undefined;
   number: number;
-  instruction: ReactNode;
+  //instruction: ReactNode;
+  instruction: string;
+  example: string;
+  tasks: ITask[];
   exercisesObj: IExercise[];
 }
