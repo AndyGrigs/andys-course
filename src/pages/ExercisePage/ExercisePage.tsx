@@ -1,4 +1,4 @@
-import { Button, Card, List, Flex, Input } from "antd";
+import { Button, Card, List, Flex, Input, Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "../../components/Loader";
 import { RootState } from "../../redux/store";
@@ -55,6 +55,9 @@ export const ExercisePage: React.FC = ({}) => {
   //   return selectedExercise;
   // });
 
+  //const [answerValue, setAnswerValue] = useState(" ");
+  const [answerValue, setAnswerValue] = useState<Record<string, string>>({});
+
   const {
     data: exercise,
     isLoading,
@@ -69,23 +72,57 @@ export const ExercisePage: React.FC = ({}) => {
     return <div>Error loading exercise</div>;
   }
   console.log(exercise);
-  // const [inputValue, setInputValue] = useState("");
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue(e.target.value);
-  // };
+  function normalizeString(input: string): string {
+    return input.toLowerCase().trim();
+  }
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    taskId: string
+  ) => {
+    setAnswerValue((prevState) => ({ ...prevState, [taskId]: e.target.value }));
+  };
+
+  function compareStrings(userAnswer: string, solution: any): boolean {
+    // Implement the comparison logic here
+    // For example, if the solution is a string, you might compare it like this:
+    return userAnswer === solution;
+  }
+
+  const checkAnswer = (taskId: string, partIndex: number) => {
+    const task = exercise.tasks.find((t) => t._id === taskId);
+    console.log(task);
+    if (!task) {
+      console.error("Task not found");
+      return;
+    }
+
+    // Get the answer from the state
+    const userAnswer = answerValue[taskId] || "";
+    console.log(userAnswer);
+    // Combine the parts and the user answer
+    const parts = task.content.split("{{input}}");
+    let combinedAnswer = parts.reduce((acc, part, index) => {
+      // For each part, add the user answer in the correct position
+      if (index === partIndex) {
+        return acc + userAnswer + part;
+      }
+      return acc + part;
+    }, "");
+
+    // Here you should compare combinedAnswer with the solution for that task
+    const isCorrect = combinedAnswer.trim() === task.solution[0].trim();
+    console.log(task.solution[0]);
+    console.log(isCorrect);
+    console.log(
+      `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
+    );
+    // Here you can update the state to show feedback to the user
+  };
 
   return (
-    // <div style={{ color: "wheat" }}>
-    //   <h1>{exercise.number}</h1>
-    //   <p>{exercise.instruction}</p>
-    //   <p>{exercise.example}</p>
-    //   {exercise.tasks &&
-    //     exercise.tasks.map((task) => (
-    //       <List key={task._id}>{task.content}</List>
-    //     ))}
-    // </div>
-    <div style={{ color: "wheat" }}>
+    <div style={{ color: "lightgrey" }}>
       <h1>{exercise.number}</h1>
       <p>{exercise.instruction}</p>
       <p>{exercise.example}</p>
@@ -93,21 +130,33 @@ export const ExercisePage: React.FC = ({}) => {
         exercise.tasks.map((task, index) => {
           const parts = task.content.split("{{input}}");
           return (
-            <div key={task._id}>
+            <Row
+              key={task._id}
+              gutter={13}
+              align="middle"
+              style={{ marginBottom: "10px" }}
+            >
               {parts.map((part, partIndex) => (
                 <React.Fragment key={partIndex}>
-                  <Flex>
-                    <p>{part}</p>
-                    {partIndex < parts.length - 1 && (
+                  {part && (
+                    <Col>
+                      <p style={{ marginBottom: 0 }}>{part}</p>{" "}
+                    </Col>
+                  )}
+                  {partIndex < parts.length - 1 && (
+                    <Col>
                       <Input
-                        style={{ width: "20%" }}
-                        placeholder="Enter text here"
+                        onChange={(e) => handleInputChange(e, task._id)}
+                        placeholder="Gebe dein Antwort ein..."
                       />
-                    )}
-                  </Flex>
+                    </Col>
+                  )}
                 </React.Fragment>
               ))}
-            </div>
+              <Button onClick={() => checkAnswer(task._id, parts.length - 2)}>
+                Check!
+              </Button>
+            </Row>
           );
         })}
     </div>
