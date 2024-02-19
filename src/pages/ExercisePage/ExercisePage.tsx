@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
 
-
 export const ExercisePage: React.FC = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
 
@@ -20,8 +19,11 @@ export const ExercisePage: React.FC = () => {
   // });
 
   //const [answerValue, setAnswerValue] = useState(" ");
-  const [answerValue, setAnswerValue] = useState<Record<string, string>>({});
-  const [inputValues, setInputValues] = useState<{ [key: string]: string[] }>({});
+  const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
+    {}
+  );
+  console.log(answerValue);
+
   const {
     data: exercise,
     isLoading,
@@ -35,69 +37,58 @@ export const ExercisePage: React.FC = () => {
   if (isError || !exercise) {
     return <div>Error loading exercise</div>;
   }
-  console.log(exercise);
 
   function normalizeString(input: string): string {
     return input.toLowerCase().trim();
   }
 
-  // const handleInputChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>,
-  //   taskId: string,
-  //   partIndex: number
-  // ) => {
-  //   // Оновлення значення конкретного інпута
-  //   setInputValues(prevValues => {
-  //     // Створення копії поточного стану
-  //     const updatedValues = { ...prevValues };
-
-  //     // Перевірка, чи існує вже масив для даного taskId
-  //     if (!updatedValues[taskId]) {
-  //       updatedValues[taskId] = [];
-  //     }
+  const concatAnswerValue = (obj: { [key: string]: any[] }) => {
+    let concatenatedString = "";
+    for (const key in obj) {
+      if (Array.isArray(obj[key])) {
+        // Concatenate the array elements into the string
+        concatenatedString += obj[key].join("").toLocaleLowerCase();
+      }
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     taskId: string,
     partIndex: number
   ) => {
-    setAnswerValue((prevState) => ({ ...prevState, [taskId]: e.target.value }));
+    setAnswerValue((prevState) => {
+      const updatedAnswers = { ...prevState };
+      if (!updatedAnswers[taskId]) {
+        updatedAnswers[taskId] = [];
+      }
+      updatedAnswers[taskId][partIndex] = e.target.value;
+
+      return updatedAnswers;
+    });
   };
 
-  function compareStrings(userAnswer: string, solution: string): boolean {
+  function compareAnswer(userAnswer: string, solution: string): boolean {
     // Implement the comparison logic here
     // For example, if the solution is a string, you might compare it like this:
-    return userAnswer === solution;
+    return normalizeString(userAnswer) === normalizeString(solution);
   }
 
   const checkAnswer = (taskId: string, partIndex: number) => {
     const task = exercise.tasks.find((t) => t._id === taskId);
     console.log(task);
+
     if (!task) {
       console.error("Task not found");
       return;
     }
 
-    // Get the answer from the state
-    const userAnswer = answerValue[taskId] || "";
-    console.log(userAnswer);
-    // Combine the parts and the user answer
-    const parts = task.content.split("{{input}}");
-    const combinedAnswer = parts.reduce((acc, part, index) => {
-      // For each part, add the user answer in the correct position
-      if (index === partIndex) {
-        return acc + userAnswer + part;
-      }
-      return acc + part;
-    }, "");
-
     // Here you should compare combinedAnswer with the solution for that task
-    const isCorrect = combinedAnswer.trim() === task.solution[0].trim();
-    console.log(task.solution[0]);
-    console.log(isCorrect);
-    console.log(
-      `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
-    );
+    // const isCorrect = console.log(task.solution[0]);
+    //console.log(isCorrect);
+    // console.log(
+    //   `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
+    // );
     // Here you can update the state to show feedback to the user
   };
 
@@ -126,7 +117,9 @@ export const ExercisePage: React.FC = () => {
                   {partIndex < parts.length - 1 && (
                     <Col>
                       <Input
-                        onChange={(e) => handleInputChange(e, task._id, partIndex)}
+                        onChange={(e) =>
+                          handleInputChange(e, task._id, partIndex)
+                        }
                         placeholder="Gebe dein Antwort ein..."
                       />
                     </Col>
