@@ -38,18 +38,17 @@ export const ExercisePage: React.FC = () => {
     return <div>Error loading exercise</div>;
   }
 
-  function normalizeString(input: string): string {
-    return input.toLowerCase().trim();
-  }
 
-  const concatAnswerValue = (obj: { [key: string]: any[] }) => {
+
+  const concatAnswerValue = (obj: { [key: string]: string[] }) => {
     let concatenatedString = "";
     for (const key in obj) {
       if (Array.isArray(obj[key])) {
-        // Concatenate the array elements into the string
-        concatenatedString += obj[key].join("").toLocaleLowerCase();
+        concatenatedString += obj[key].join("");
       }
     }
+
+    return concatenatedString
   };
 
   const handleInputChange = (
@@ -71,7 +70,7 @@ export const ExercisePage: React.FC = () => {
   function compareAnswer(userAnswer: string, solution: string): boolean {
     // Implement the comparison logic here
     // For example, if the solution is a string, you might compare it like this:
-    return normalizeString(userAnswer) === normalizeString(solution);
+    return userAnswer == solution
   }
 
   const checkAnswer = (taskId: string, partIndex: number) => {
@@ -82,13 +81,14 @@ export const ExercisePage: React.FC = () => {
       console.error("Task not found");
       return;
     }
-
-    // Here you should compare combinedAnswer with the solution for that task
-    // const isCorrect = console.log(task.solution[0]);
-    //console.log(isCorrect);
-    // console.log(
-    //   `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
-    // );
+    console.log(concatAnswerValue(answerValue))
+    //const isCorrect = console.log(task.solution[0]);
+    const isCorrect = compareAnswer(concatAnswerValue(answerValue).trim(), (task.solution[0].replace(/\s/g, '').trim()))
+    console.log(concatAnswerValue(answerValue).replace(/\s/g, '').trim(), task.solution[0].replace(/\s/g, ''))
+    console.log(isCorrect);
+    console.log(
+      `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
+    );
     // Here you can update the state to show feedback to the user
   };
 

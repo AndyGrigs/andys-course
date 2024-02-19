@@ -73,7 +73,7 @@ export interface IVocabulary {
 }
 export interface ITask {
   content: string;
-  solution: string[];
+  solution: string;
   _id: string;
 }
 
