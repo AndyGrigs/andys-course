@@ -1,28 +1,16 @@
 import { Button, Card, List, Flex, Input, Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
 
 export const ExercisePage: React.FC = () => {
+
   const { exerciseId } = useParams<{ exerciseId: string }>();
-
-  // const exercise = useSelector((state: RootState) => {
-  //   const allExercises = state.exercise.allExercises;
-  //   const selectedExercise = allExercises.find((ex) => ex._id === exerciseId);
-  //   console.log("Selected Exercise:", selectedExercise);
-  //   console.log(" Exercise Id:", exerciseId);
-  //   return selectedExercise;
-  // });
-
-  //const [answerValue, setAnswerValue] = useState(" ");
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
-  console.log(answerValue);
 
   const {
     data: exercise,
@@ -31,7 +19,7 @@ export const ExercisePage: React.FC = () => {
   } = useGetOneExercisesQuery(exerciseId);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (isError || !exercise) {
@@ -40,15 +28,20 @@ export const ExercisePage: React.FC = () => {
 
 
 
-  const concatAnswerValue = (obj: { [key: string]: string[] }) => {
-    let concatenatedString = "";
-    for (const key in obj) {
-      if (Array.isArray(obj[key])) {
-        concatenatedString += obj[key].join("");
-      }
-    }
+  // const concatAnswerValue = (obj: { [key: string]: string[] }) => {
+  //   let concatenatedString = "";
+  //   for (const key in obj) {
+  //     if (Array.isArray(obj[key])) {
+  //       concatenatedString += obj[key].join("");
+  //     }
+  //   }
 
-    return concatenatedString
+  //   return concatenatedString
+  // };
+
+  const concatAnswerValue = (taskId: string, obj: { [key: string]: string[] }) => {
+    if (!obj[taskId]) return ''; // If there are no answers for this task, return an empty string
+    return obj[taskId].join(""); // Only concatenate the answers for the given task
   };
 
   const handleInputChange = (
@@ -61,30 +54,31 @@ export const ExercisePage: React.FC = () => {
       if (!updatedAnswers[taskId]) {
         updatedAnswers[taskId] = [];
       }
-      updatedAnswers[taskId][partIndex] = e.target.value;
+      updatedAnswers[taskId][partIndex] = e.target.value.trim();
 
       return updatedAnswers;
     });
   };
 
   function compareAnswer(userAnswer: string, solution: string): boolean {
-    // Implement the comparison logic here
-    // For example, if the solution is a string, you might compare it like this:
     return userAnswer == solution
   }
 
-  const checkAnswer = (taskId: string, partIndex: number) => {
+
+
+
+  const checkAnswer = (taskId: string) => {
     const task = exercise.tasks.find((t) => t._id === taskId);
-    console.log(task);
 
     if (!task) {
       console.error("Task not found");
       return;
     }
-    console.log(concatAnswerValue(answerValue))
+
+    console.log(answerValue)
     //const isCorrect = console.log(task.solution[0]);
-    const isCorrect = compareAnswer(concatAnswerValue(answerValue).trim(), (task.solution[0].replace(/\s/g, '').trim()))
-    console.log(concatAnswerValue(answerValue).replace(/\s/g, '').trim(), task.solution[0].replace(/\s/g, ''))
+    const isCorrect = compareAnswer(concatAnswerValue(taskId, answerValue), task.solution[0].replace(/\s/g, ''))
+    console.log(concatAnswerValue(taskId, answerValue), task.solution[0].replace(/\s/g, ''))
     console.log(isCorrect);
     console.log(
       `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
@@ -117,6 +111,7 @@ export const ExercisePage: React.FC = () => {
                   {partIndex < parts.length - 1 && (
                     <Col>
                       <Input
+                        style={{ maxWidth: "50%" }}
                         onChange={(e) =>
                           handleInputChange(e, task._id, partIndex)
                         }
@@ -126,7 +121,7 @@ export const ExercisePage: React.FC = () => {
                   )}
                 </React.Fragment>
               ))}
-              <Button onClick={() => checkAnswer(task._id, parts.length - 2)}>
+              <Button onClick={() => checkAnswer(task._id)}>
                 Check!
               </Button>
             </Row>
