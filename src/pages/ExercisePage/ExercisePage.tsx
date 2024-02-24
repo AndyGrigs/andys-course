@@ -1,9 +1,10 @@
 import { Button, Modal, Input, Col, Row } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { memo, useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
+import useCheckAnswer from "../../hooks/useCheckAnswers";
 
 export const ExercisePage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -12,12 +13,14 @@ export const ExercisePage = () => {
   );
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [userResults, setUserResults] = useState({});
+  // const [userResults, setUserResults] = useState({});
   const {
     data: exercise,
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
+
+  const { checkAnswer, userResults } = useCheckAnswer()
 
   const handleInputChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement>,
@@ -35,11 +38,6 @@ export const ExercisePage = () => {
     });
   }, []);
 
-  const concatAnswerValue = useCallback((taskId: string, obj: { [key: string]: string[] }) => {
-    if (!obj[taskId]) return "";
-    return obj[taskId].join("");
-  }, []);
-
 
   if (isLoading) {
     return <Loader />;
@@ -50,46 +48,12 @@ export const ExercisePage = () => {
   }
 
 
-
-  function compareAnswer(userAnswer: string, solution: string): boolean {
-    return userAnswer == solution;
-  }
-
-  const checkAnswer = (taskId: string, taskIndex: number) => {
-    const task = exercise.tasks.find((t) => t._id === taskId);
-
-    if (!task) {
-      console.error("Task not found");
-      return;
-    }
-
-    console.log(answerValue);
-    //const isCorrect = console.log(task.solution[0]);
-    const isCorrect = compareAnswer(
-      concatAnswerValue(taskId, answerValue),
-      task.solution[0].replace(/\s/g, "")
-    );
-
-    setUserResults((prevResults) => ({
-      ...prevResults,
-      [taskIndex]: isCorrect,
-    }));
-
-    console.log(
-      concatAnswerValue(taskId, answerValue),
-      task.solution[0].replace(/\s/g, "")
-    );
-    console.log(isCorrect);
-    console.log(
-      `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
-    );
-    // Here you can update the state to show feedback to the user
+  const goToNextTask = () => {
+    setCurrentTaskIndex((currentIndex) => (currentIndex + 1) % exercise.tasks.length);
+    setAnswerValue({}); // Clear the input fields
   };
 
-  const goToNextTask = () =>
-    setCurrentTaskIndex(
-      (currentIndex) => (currentIndex + 1) % exercise.tasks.length
-    );
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -144,7 +108,7 @@ export const ExercisePage = () => {
           );
         })} */}
       <Modal
-        title={`Task: ${currentTask._id}`}
+        title={`Task: ${currentTaskIndex}`}
         open={isModalVisible}
         onCancel={handleModalClose}
         footer={[
@@ -175,7 +139,7 @@ export const ExercisePage = () => {
             </React.Fragment>
           ))}
           <Button
-            onClick={() => checkAnswer(currentTask._id, currentTaskIndex)}
+            onClick={() => checkAnswer(currentTask._id, currentTaskIndex, answerValue, exercise)}
           >
             Check!
           </Button>
