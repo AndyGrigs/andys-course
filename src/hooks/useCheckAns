@@ -1,0 +1,24 @@
+import { useCallback } from 'react';
+
+const useCheckAnswer = (exercise) => {
+    const checkAnswer = useCallback((taskId, taskIndex, answerValue, setUserResults) => {
+        const task = exercise?.tasks.find((t) => t._id === taskId);
+        if (!task) {
+            console.error("Task not found");
+            return;
+        }
+        const userAnswer = answerValue[taskId]?.join("") || "";
+        const isCorrect = userAnswer === task.solution[0].replace(/\s/g, "");
+
+        setUserResults((prevResults) => ({
+            ...prevResults,
+            [taskIndex]: isCorrect,
+        }));
+
+        return isCorrect;
+    }, [exercise?.tasks]);
+
+    return checkAnswer;
+};
+
+export default useCheckAnswer;

@@ -1,55 +1,25 @@
 import { Button, Modal, Input, Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
 
-export const ExercisePage: React.FC = () => {
+export const ExercisePage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
-  const [currentTaskIndex, setCurrentTaskIndex] = useState<number>(0);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [userResults, setUserResults] = useState<object>({});
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userResults, setUserResults] = useState({});
   const {
     data: exercise,
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  console.log(`users answers result ${userResults}`);
-  console.log(`users answers ${userResults}`);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError || !exercise) {
-    return <div>Error loading exercise</div>;
-  }
-
-  // const concatAnswerValue = (obj: { [key: string]: string[] }) => {
-  //   let concatenatedString = "";
-  //   for (const key in obj) {
-  //     if (Array.isArray(obj[key])) {
-  //       concatenatedString += obj[key].join("");
-  //     }
-  //   }
-
-  //   return concatenatedString
-  // };
-
-  const concatAnswerValue = (
-    taskId: string,
-    obj: { [key: string]: string[] }
-  ) => {
-    if (!obj[taskId]) return "";
-    return obj[taskId].join("");
-  };
-
-  const handleInputChange = (
+  const handleInputChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement>,
     taskId: string,
     partIndex: number
@@ -63,7 +33,23 @@ export const ExercisePage: React.FC = () => {
 
       return updatedAnswers;
     });
-  };
+  }, []);
+
+  const concatAnswerValue = useCallback((taskId: string, obj: { [key: string]: string[] }) => {
+    if (!obj[taskId]) return "";
+    return obj[taskId].join("");
+  }, []);
+
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError || !exercise) {
+    return <div>Error loading exercise</div>;
+  }
+
+
 
   function compareAnswer(userAnswer: string, solution: string): boolean {
     return userAnswer == solution;
@@ -165,12 +151,9 @@ export const ExercisePage: React.FC = () => {
           <Button key="next" onClick={goToNextTask}>
             Наступне Завдання
           </Button>,
-          // <Button key="close" onClick={handleModalClose}>
-          //   Закрити
-          // </Button>,
         ]}
       >
-        <Row gutter={13} align="middle">
+        <Row gutter={8} align="middle">
           {parts.map((part, partIndex) => (
             <React.Fragment key={partIndex}>
               {part && (
@@ -181,7 +164,7 @@ export const ExercisePage: React.FC = () => {
               {partIndex < parts.length - 1 && (
                 <Col>
                   <Input
-                    style={{ maxWidth: "30%" }}
+                    style={{ maxWidth: "40%" }}
                     onChange={(e) =>
                       handleInputChange(e, currentTask._id, partIndex)
                     }
