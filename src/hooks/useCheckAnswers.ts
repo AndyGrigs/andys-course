@@ -38,6 +38,7 @@ const useCheckAnswer = () => {
         console.log(
             `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
         );
+        return isCorrect
     }
     return { userResults, checkAnswer }
 };

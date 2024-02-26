@@ -1,10 +1,11 @@
-import { Button, Modal, Input, Col, Row } from "antd";
+import { Button, Modal, Input, Col, Row, Flex } from "antd";
 import { useParams } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
 import useCheckAnswer from "../../hooks/useCheckAnswers";
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 export const ExercisePage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -13,7 +14,7 @@ export const ExercisePage = () => {
   );
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  // const [userResults, setUserResults] = useState({});
+  const [resultMessage, setResultMessage] = useState('');
   const {
     data: exercise,
     isLoading,
@@ -21,6 +22,7 @@ export const ExercisePage = () => {
   } = useGetOneExercisesQuery(exerciseId);
 
   const { checkAnswer, userResults } = useCheckAnswer()
+  console.log(userResults)
 
   const handleInputChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement>,
@@ -47,10 +49,20 @@ export const ExercisePage = () => {
     return <div>Error loading exercise</div>;
   }
 
+  const handleCheckAnswer = () => {
+    const isCorrect = checkAnswer(currentTask._id, currentTaskIndex, answerValue, exercise);
+    setResultMessage(isCorrect ? 'Correct!' : 'Incorrect. Try again.');
+  };
+
+  const clearResultMessage = () => {
+    setResultMessage('');
+  };
+
 
   const goToNextTask = () => {
+    clearResultMessage();
     setCurrentTaskIndex((currentIndex) => (currentIndex + 1) % exercise.tasks.length);
-    setAnswerValue({}); // Clear the input fields
+
   };
 
 
@@ -66,85 +78,76 @@ export const ExercisePage = () => {
   const parts = currentTask.content.split("{{input}}");
 
   return (
-    <div style={{ color: "lightgrey" }}>
+    <div style={{ color: "lightgrey", textAlign: "center" }}>
+
       <h1>{exercise.number}</h1>
       <p>{exercise.instruction}</p>
       <p>{exercise.example}</p>
-      <Button type="primary" onClick={showModal}>
+      <Button style={{ width: "20%" }} onClick={showModal}>
         Почати
       </Button>
-      {/* {exercise.tasks &&
-        exercise.tasks.map((task) => {
-          const parts = task.content.split("{{input}}");
-          return (
-            <Row
-              key={task._id}
-              gutter={13}
-              align="middle"
-              style={{ marginBottom: "10px" }}
-            >
-              {parts.map((part, partIndex) => (
-                <React.Fragment key={partIndex}>
-                  {part && (
-                    <Col>
-                      <p style={{ marginBottom: 0 }}>{part}</p>{" "}
-                    </Col>
-                  )}
-                  {partIndex < parts.length - 1 && (
-                    <Col>
-                      <Input
-                        style={{ maxWidth: "50%" }}
-                        onChange={(e) =>
-                          handleInputChange(e, task._id, partIndex)
-                        }
-                        placeholder="Gebe dein Antwort ein..."
-                      />
-                    </Col>
-                  )}
-                </React.Fragment>
-              ))}
-              <Button onClick={() => checkAnswer(task._id)}>Check!</Button>
-            </Row>
-          );
-        })} */}
+
       <Modal
         title={`Task: ${currentTaskIndex}`}
         open={isModalVisible}
         onCancel={handleModalClose}
+        style={{ height: "80%" }}
+        width="50%"
         footer={[
           <Button key="next" onClick={goToNextTask}>
             Наступне Завдання
           </Button>,
         ]}
+
       >
-        <Row gutter={8} align="middle">
+        <Flex justify="center" align="center">
+
           {parts.map((part, partIndex) => (
+
+
+
             <React.Fragment key={partIndex}>
               {part && (
-                <Col>
-                  <p style={{ marginBottom: 0 }}>{part}</p>
+                <Col >
+                  <p style={{ margin: "0 1em 0 1em" }}>{part}</p>
                 </Col>
               )}
               {partIndex < parts.length - 1 && (
-                <Col>
+                <Col span={3}>
                   <Input
-                    style={{ maxWidth: "40%" }}
+                    style={{ maxWidth: "100%" }}
+                    value={answerValue[currentTask._id] ? answerValue[currentTask._id][partIndex] || '' : ''}
                     onChange={(e) =>
                       handleInputChange(e, currentTask._id, partIndex)
                     }
-                    placeholder="Gebe dein Antwort ein..."
+                    placeholder="Antwort..."
                   />
                 </Col>
               )}
             </React.Fragment>
+
           ))}
-          <Button
-            onClick={() => checkAnswer(currentTask._id, currentTaskIndex, answerValue, exercise)}
+          <Button style={{ marginLeft: "2em" }}
+            onClick={() => handleCheckAnswer()}
           >
             Check!
           </Button>
-        </Row>
+
+        </Flex>
+
+        <Flex>
+          {resultMessage === 'Correct!' ? (
+
+            <CheckCircleOutlined style={{ color: 'green', fontSize: '48px' }} />
+
+
+          ) : resultMessage === 'Incorrect. Try again.' ? (
+            <CloseCircleOutlined style={{ color: 'red', fontSize: '48px' }} />
+
+          ) : null}
+        </Flex>
       </Modal>
+
     </div>
   );
 };
