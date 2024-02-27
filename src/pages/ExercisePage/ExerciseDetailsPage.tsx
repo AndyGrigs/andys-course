@@ -105,7 +105,7 @@ export const ExerciseDetailsPage = () => {
       <h1>{exercise.number}</h1>
       <p>{exercise.instruction}</p>
       <p>{exercise.example}</p>
-      <Flex justify="center" align="center">
+      <Flex justify="center" align="center" style={{ marginTop: "2.5em" }}>
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
@@ -149,14 +149,12 @@ export const ExerciseDetailsPage = () => {
           <CloseCircleOutlined style={{ color: "red", fontSize: "48px" }} />
         ) : null}
       </Flex>
-      <Row>
-        <Space />
-        <Flex align="center" justify="center">
-          <Button disabled={allInputsEmpty} onClick={goToNextTask}>
-            {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
-          </Button>
-        </Flex>
-      </Row>
+
+      <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
+        <Button disabled={allInputsEmpty} onClick={goToNextTask}>
+          {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
+        </Button>
+      </Flex>
     </div>
   );
 };
