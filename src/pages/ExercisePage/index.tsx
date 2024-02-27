@@ -1,4 +1,4 @@
+import { ExercisePage } from "./ExercisePage";
+import { ExerciseDetailsPage } from "./ExerciseDetailsPage";
 
-import { ExercisePage, } from "./ExercisePage";
-
-export { ExercisePage }
+export { ExercisePage, ExerciseDetailsPage };

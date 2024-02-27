@@ -7,6 +7,7 @@ import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
 import { ModuleExercises } from "../pages/ModuleExercises";
 import { ExercisePage } from "../pages/ExercisePage";
+import { ExerciseDetailsPage } from "../pages/ExercisePage";
 
 export const AppRouter: React.FC = () => {
   return (
@@ -22,9 +23,13 @@ export const AppRouter: React.FC = () => {
             path="module/:moduleId/exercises"
             element={<ModuleExercises />}
           />
-          <Route
+          {/* <Route
             path="module/:moduleId/exercises/:exerciseId"
             element={<ExercisePage />}
+          /> */}
+          <Route
+            path="module/:moduleId/exercises/:exerciseId"
+            element={<ExerciseDetailsPage />}
           />
         </Route>
       </Routes>

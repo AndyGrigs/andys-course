@@ -5,41 +5,44 @@ import { memo, useCallback, useState } from "react";
 import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
 import React from "react";
 import useCheckAnswer from "../../hooks/useCheckAnswers";
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 export const ExercisePage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
+  const { checkAnswer } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [resultMessage, setResultMessage] = useState('');
+  const [resultMessage, setResultMessage] = useState("");
   const {
     data: exercise,
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  const { checkAnswer, userResults } = useCheckAnswer()
-  console.log(userResults)
+  // const { checkAnswer, userResults } = useCheckAnswer()
+  // console.log(userResults)
 
-  const handleInputChange = useCallback((
-    e: React.ChangeEvent<HTMLInputElement>,
-    taskId: string,
-    partIndex: number
-  ) => {
-    setAnswerValue((prevState) => {
-      const updatedAnswers = { ...prevState };
-      if (!updatedAnswers[taskId]) {
-        updatedAnswers[taskId] = [];
-      }
-      updatedAnswers[taskId][partIndex] = e.target.value.trim();
+  const handleInputChange = useCallback(
+    (
+      e: React.ChangeEvent<HTMLInputElement>,
+      taskId: string,
+      partIndex: number
+    ) => {
+      setAnswerValue((prevState) => {
+        const updatedAnswers = { ...prevState };
+        if (!updatedAnswers[taskId]) {
+          updatedAnswers[taskId] = [];
+        }
+        updatedAnswers[taskId][partIndex] = e.target.value.trim();
 
-      return updatedAnswers;
-    });
-  }, []);
-
+        return updatedAnswers;
+      });
+    },
+    []
+  );
 
   if (isLoading) {
     return <Loader />;
@@ -50,21 +53,25 @@ export const ExercisePage = () => {
   }
 
   const handleCheckAnswer = () => {
-    const isCorrect = checkAnswer(currentTask._id, currentTaskIndex, answerValue, exercise);
-    setResultMessage(isCorrect ? 'Correct!' : 'Incorrect. Try again.');
+    const isCorrect = checkAnswer(
+      currentTask._id,
+      currentTaskIndex,
+      answerValue,
+      exercise
+    );
+    setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
   };
 
   const clearResultMessage = () => {
-    setResultMessage('');
+    setResultMessage("");
   };
-
 
   const goToNextTask = () => {
     clearResultMessage();
-    setCurrentTaskIndex((currentIndex) => (currentIndex + 1) % exercise.tasks.length);
-
+    setCurrentTaskIndex(
+      (currentIndex) => (currentIndex + 1) % exercise.tasks.length
+    );
   };
-
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -79,7 +86,6 @@ export const ExercisePage = () => {
 
   return (
     <div style={{ color: "lightgrey", textAlign: "center" }}>
-
       <h1>{exercise.number}</h1>
       <p>{exercise.instruction}</p>
       <p>{exercise.example}</p>
@@ -87,7 +93,7 @@ export const ExercisePage = () => {
         Почати
       </Button>
 
-      <Modal
+      {/* <Modal
         title={`Task: ${currentTaskIndex}`}
         open={isModalVisible}
         onCancel={handleModalClose}
@@ -98,17 +104,12 @@ export const ExercisePage = () => {
             Наступне Завдання
           </Button>,
         ]}
-
       >
         <Flex justify="center" align="center">
-
           {parts.map((part, partIndex) => (
-
-
-
             <React.Fragment key={partIndex}>
               {part && (
-                <Col >
+                <Col>
                   <p style={{ margin: "0 1em 0 1em" }}>{part}</p>
                 </Col>
               )}
@@ -116,7 +117,11 @@ export const ExercisePage = () => {
                 <Col span={3}>
                   <Input
                     style={{ maxWidth: "100%" }}
-                    value={answerValue[currentTask._id] ? answerValue[currentTask._id][partIndex] || '' : ''}
+                    value={
+                      answerValue[currentTask._id]
+                        ? answerValue[currentTask._id][partIndex] || ""
+                        : ""
+                    }
                     onChange={(e) =>
                       handleInputChange(e, currentTask._id, partIndex)
                     }
@@ -125,29 +130,23 @@ export const ExercisePage = () => {
                 </Col>
               )}
             </React.Fragment>
-
           ))}
-          <Button style={{ marginLeft: "2em" }}
+          <Button
+            style={{ marginLeft: "2em" }}
             onClick={() => handleCheckAnswer()}
           >
             Check!
           </Button>
-
         </Flex>
 
         <Flex>
-          {resultMessage === 'Correct!' ? (
-
-            <CheckCircleOutlined style={{ color: 'green', fontSize: '48px' }} />
-
-
-          ) : resultMessage === 'Incorrect. Try again.' ? (
-            <CloseCircleOutlined style={{ color: 'red', fontSize: '48px' }} />
-
+          {resultMessage === "Correct!" ? (
+            <CheckCircleOutlined style={{ color: "green", fontSize: "48px" }} />
+          ) : resultMessage === "Incorrect. Try again." ? (
+            <CloseCircleOutlined style={{ color: "red", fontSize: "48px" }} />
           ) : null}
         </Flex>
-      </Modal>
-
+      </Modal> */}
     </div>
   );
 };
