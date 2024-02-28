@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Layout, Space, Typography, Button } from "antd";
+import { Layout, Space, Typography, Button, Switch } from "antd";
 import {
   BookOutlined,
   LoginOutlined,
   LogoutOutlined,
+  MoonOutlined,
+  SunOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import style from "./Header.module.scss";
@@ -11,7 +13,11 @@ import { useSelector } from "react-redux";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 
-export const Header = () => {
+interface HeaderProps {
+  handleTheme: (theme: string) => void;
+}
+
+export const Header = ({ handleTheme }: HeaderProps) => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +53,14 @@ export const Header = () => {
               >
                 Вийти
               </Button>
+            </Space>
+            <Space>
+              <Switch
+                onChange={(checked) => handleTheme(checked ? "dark" : "light")}
+                checkedChildren={<MoonOutlined />}
+                unCheckedChildren={<SunOutlined />}
+                defaultChecked
+              />
             </Space>
           </>
         ) : (

@@ -1,11 +1,12 @@
 import { Button, Input, Col, Flex, Row, Space } from "antd";
 import { useParams, Link } from "react-router-dom";
-import { Loader } from "../../components/Loader";
-import { memo, useCallback, useState } from "react";
-import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
+import { Loader } from "../../../components/Loader";
+import { memo, useCallback, useEffect, useState } from "react";
+import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import React from "react";
-import useCheckAnswer from "../../hooks/useCheckAnswers";
+import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import styles from "./ExerciseDetailsPage.module.scss";
 
 export const ExerciseDetailsPage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -16,11 +17,29 @@ export const ExerciseDetailsPage = () => {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [resultMessage, setResultMessage] = useState("");
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [iconClass, setIconClass] = useState("");
   const {
     data: exercise,
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
+
+  useEffect(() => {
+    //let timeoutId: NodeJS.Timeout | null = null;
+
+    if (resultMessage) {
+      setIconClass(styles.fadeIn);
+      // timeoutId = setTimeout(() => setIconClass(styles.fadeOut), 2000);
+    } else {
+      setIconClass("");
+    }
+
+    // return () => {
+    //   if (timeoutId) {
+    //     clearTimeout(timeoutId);
+    //   }
+    // };
+  }, [resultMessage]);
 
   console.log(userResults);
 
@@ -143,11 +162,23 @@ export const ExerciseDetailsPage = () => {
       </Flex>
 
       <Flex>
-        {resultMessage === "Correct!" ? (
-          <CheckCircleOutlined style={{ color: "green", fontSize: "48px" }} />
-        ) : resultMessage === "Incorrect. Try again." ? (
-          <CloseCircleOutlined style={{ color: "red", fontSize: "48px" }} />
-        ) : null}
+        <div
+          className={iconClass}
+          style={{
+            position: "absolute",
+            top: "17em",
+            right: "7em",
+            zIndex: 1000,
+            opacity: resultMessage ? 1 : 0,
+            transition: "opacity  0.5s",
+          }}
+        >
+          {resultMessage === "Correct!" ? (
+            <CheckCircleOutlined style={{ color: "green", fontSize: "96px" }} />
+          ) : resultMessage === "Incorrect. Try again." ? (
+            <CloseCircleOutlined style={{ color: "red", fontSize: "96px" }} />
+          ) : null}
+        </div>
       </Flex>
 
       <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
