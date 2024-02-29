@@ -11,16 +11,12 @@ function App() {
   const [theme, setTheme] = useState("light");
 
   const darkTheme = {
-    colorPrimary: "green",
-    colorTextBase: "lightgreen",
-    colorTextLightSolid: "darkgreen",
-    headerBg: "blue",
+    colorPrimary: "lightblue",
+    colorTextBase: "lightblue",
   };
   const lightTheme = {
     colorPrimary: "black",
-    colorTextBase: "brown",
-    colorTextLightSolid: "grey",
-    headerBg: "lightgreen",
+    colorTextBase: " #474040",
   };
 
   const handleTheme = (theme: string) => setTheme(theme);
@@ -33,9 +29,12 @@ function App() {
         }}
       >
         <Layout style={{ minHeight: "100vh" }}>
-          <AppSidebar />
-          <Layout className="site-layout">
-            <Header handleTheme={handleTheme} />
+          {/* <AppSidebar /> */}
+          <Layout
+            className={theme === "dark" ? "layout-dark" : "layout-light"}
+            style={{ minHeight: "100vh" }}
+          >
+            <Header handleTheme={handleTheme} theme={theme} />
             <Content style={{ margin: "0 16px" }}>
               <Breadcrumb style={{ margin: "16px 0" }}>
                 {/* <Breadcrumb.Item>Student</Breadcrumb.Item>

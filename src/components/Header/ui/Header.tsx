@@ -15,9 +15,10 @@ import { useDispatch } from "react-redux";
 
 interface HeaderProps {
   handleTheme: (theme: string) => void;
+  theme: string;
 }
 
-export const Header = ({ handleTheme }: HeaderProps) => {
+export const Header = ({ handleTheme, theme }: HeaderProps) => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +30,11 @@ export const Header = ({ handleTheme }: HeaderProps) => {
   };
 
   return (
-    <Layout.Header className={style.header}>
+    <Layout.Header
+      className={`${style.header} ${
+        theme === "dark" ? style.dark : style.light
+      }`}
+    >
       <Link to="/">
         <Space>
           <Typography.Title level={4}>Lernst du Deutsch?</Typography.Title>

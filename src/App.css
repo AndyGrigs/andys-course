@@ -18,6 +18,19 @@ body {
   ); */
 }
 
-/* p {
-  font-size: 1.2rem;
-} */
+.layout-dark {
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgb(75, 108, 183) 0%,
+    rgb(55, 82, 141) 90%
+  );
+}
+
+.layout-light {
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgb(255, 246, 236) 39.5%,
+    rgba(100, 46, 122, 0.23) 100.2%
+  );
+  color: #474040;
+}

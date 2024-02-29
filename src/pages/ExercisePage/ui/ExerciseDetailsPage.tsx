@@ -1,4 +1,5 @@
-import { Button, Input, Col, Flex, Row, Space } from "antd";
+import { Button, Input, Col, Flex, Typography, Divider } from "antd";
+const { Title, Paragraph } = Typography;
 import { useParams, Link } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { memo, useCallback, useEffect, useState } from "react";
@@ -120,22 +121,29 @@ export const ExerciseDetailsPage = () => {
   const parts = currentTask.content.split("{{input}}");
 
   return (
-    <div style={{ color: "lightgrey", textAlign: "center" }}>
-      <h1>{exercise.number}</h1>
-      <p>{exercise.instruction}</p>
-      <p>{exercise.example}</p>
+    <div style={{ textAlign: "center" }}>
+      <Title level={3}>{exercise.number}</Title>
+      <Title level={4}>{exercise.instruction}</Title>
+      <Title level={2}>{exercise.example}</Title>
+      <Divider />
       <Flex justify="center" align="center" style={{ marginTop: "2.5em" }}>
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
               <Col>
-                <p style={{ margin: "0 1em 0 1em" }}>{part}</p>
+                <Paragraph style={{ margin: "0 1em 0 1em", fontSize: "1.5em" }}>
+                  {part}
+                </Paragraph>
               </Col>
             )}
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
-                  style={{ maxWidth: "100%" }}
+                  style={{
+                    maxWidth: "100%",
+                    color: "#000000",
+                    fontSize: "1.5em",
+                  }}
                   value={
                     answerValue[currentTask._id]
                       ? answerValue[currentTask._id][partIndex] || ""
@@ -150,15 +158,6 @@ export const ExerciseDetailsPage = () => {
             )}
           </React.Fragment>
         ))}
-
-        {/* <Col span={6}>
-          <Button
-            style={{ marginLeft: "2em" }}
-            onClick={() => handleCheckAnswer()}
-          >
-            Check!
-          </Button>
-        </Col> */}
       </Flex>
 
       <Flex>
