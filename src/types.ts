@@ -7,32 +7,29 @@ export type ErrorWithMessage = {
   };
 };
 
-// export interface User {
-//   id: string;
-//   fullName: string;
-//   email: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   token: string;
-//   progress: Record<string, UserProgress>;
-// }
+export interface ModuleProgress {
+  moduleId: string;
+  moduleName: string;
+  progress: number;
+  completed: boolean;
+}
 
-// export interface IUser {
-//   id: string;
-//   fullName: string;
-//   email: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   token: string;
-//   progress: {
-//     [moduleId: string]: {
-//       moduleId: string;
-//       moduleNumber: number;
-//       progress: number;
-//       completed: "not_started" | "in_progress" | "completed";
-//     }[];
-//   };
-// }
+export interface UserModuleProgress {
+  userId: string;
+  modules: ModuleProgress[];
+}
+
+export interface ExerciseProgress {
+  exerciseId: string;
+  exerciseName: string;
+  progress: number;
+  completed: boolean;
+}
+
+export interface UserExerciseProgress {
+  userId: string;
+  exercises: ExerciseProgress[];
+}
 
 export interface IUser {
   id: string;

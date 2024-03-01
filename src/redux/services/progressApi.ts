@@ -1,32 +1,9 @@
+import { ExerciseProgress, ModuleProgress } from "../../types";
 import { api } from "./api";
-
-export interface ModuleProgress {
-  moduleId: string;
-  moduleName: string;
-  progress: number;
-  completed: boolean;
-}
-
-export interface UserModuleProgress {
-  userId: string;
-  modules: ModuleProgress[];
-}
-
-export interface ExerciseProgress {
-  exerciseId: string;
-  exerciseName: string;
-  progress: number;
-  completed: boolean;
-}
-
-export interface UserExerciseProgress {
-  userId: string;
-  exercises: ExerciseProgress[];
-}
 
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getUserModuleProgress: builder.query<UserModuleProgress, void>({
+    getUserModuleProgress: builder.query<ModuleProgress, void>({
       query: (userId) => ({
         url: `/progress/${userId}`,
         method: "GET",
@@ -39,13 +16,16 @@ export const progressApi = api.injectEndpoints({
         body: progress,
       }),
     }),
-    getUserExerciseProgress: builder.mutation({
-      query: ({ userId, progress }) => ({
-        url: `progress/update/${userId}`,
-        method: "PUT",
-        body: progress,
+    getUserExerciseProgress: builder.query<
+      ExerciseProgress,
+      { userId: string; exerciseId: string }
+    >({
+      query: ({ userId, exerciseId }) => ({
+        url: `/progress/exercise/${userId}/${exerciseId}`,
+        method: "GET",
       }),
     }),
+
     updateUserExerciseProgress: builder.mutation({
       query: ({ userId, progress }) => ({
         url: `progress/update/${userId}`,
