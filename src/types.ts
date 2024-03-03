@@ -16,7 +16,8 @@ export interface ModuleProgress {
 
 export interface UserModuleProgress {
   userId: string;
-  modules: ModuleProgress[];
+  moduleProgress: ModuleProgress;
+  // moduleProgress: ModuleProgress[];
 }
 
 export interface ExerciseProgress {
@@ -28,7 +29,8 @@ export interface ExerciseProgress {
 
 export interface UserExerciseProgress {
   userId: string;
-  exercises: ExerciseProgress[];
+  exerciseProgress: ExerciseProgress;
+  // exerciseProgress: ExerciseProgress[];
 }
 
 export interface IUser {

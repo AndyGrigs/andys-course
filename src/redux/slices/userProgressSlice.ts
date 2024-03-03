@@ -1,23 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserProgress } from "../../types";
 import { RootState } from "../store";
+import { UserExerciseProgress, UserModuleProgress } from "../../types";
+import { progressApi } from "../services/progressApi";
 
 interface UserProgressState {
-    progress: Record<string, UserProgress>
+    moduleProgress: Record<string, UserModuleProgress>;
+    exerciseProgress: Record<string, UserExerciseProgress>;
 }
 
 
 export const userProgressSlice = createSlice({
     name: 'userProgress',
-    initialState: { progress: {} } as UserProgressState,
+    initialState: { moduleProgress: {}, exerciseProgress: {} } as UserProgressState,
     reducers: {
-        setProgress: (state, action) => {
+        setModuleProgress: (state, action) => {
             const { moduleId, progress } = action.payload;
-            state.progress[moduleId] = progress;
+            state.moduleProgress[moduleId] = progress;
+        },
+        setExersiseProgress: (state, action) => {
+            const { exerciseId, progress } = action.payload;
+            state.exerciseProgress[exerciseId] = progress;
         },
     },
+    extraReducers: (builder) => {
+        builder.addMatcher(
+            progressApi.endpoints.getUserModuleProgress.matchFulfilled,
+            (state, action) => {
+                // Your reducer logic here
+                // Assuming the action payload contains moduleProgress and exerciseProgress
+                // state.moduleProgress = action.payload.moduleProgress;
+                state.moduleProgress = action.payload.moduleProgress as unknown as Record<string, UserModuleProgress>;
+            }
+        );
+        builder.addMatcher(
+            progressApi.endpoints.getUserExerciseProgress.matchFulfilled,
+            (state, action) => {
+                // Your reducer logic here
+                // Assuming the action payload contains moduleProgress and exerciseProgress
+                // state.moduleProgress = action.payload.exerciseProgress;
+                state.exerciseProgress = action.payload.exerciseProgress as unknown as Record<string, UserExerciseProgress>;
+            }
+        );
+    }
 });
 
-export const { setProgress } = userProgressSlice.actions;
+export const { setModuleProgress, setExersiseProgress } = userProgressSlice.actions;
 export default userProgressSlice.reducer;
-export const selectUserProgress = (state: RootState) => state.userProgerss.progress;
+export const selectUserModuleProgress = (state: RootState) => state.userProgerss.moduleProgress;
+export const selectUserExerciseProgress = (state: RootState) => state.userProgerss.exerciseProgress;
