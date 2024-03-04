@@ -31,9 +31,8 @@ export const Header = ({ handleTheme, theme }: HeaderProps) => {
 
   return (
     <Layout.Header
-      className={`${style.header} ${
-        theme === "dark" ? style.dark : style.light
-      }`}
+      className={`${style.header} ${theme === "dark" ? style.dark : style.light
+        }`}
     >
       <Link to="/">
         <Space>

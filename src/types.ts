@@ -7,49 +7,67 @@ export type ErrorWithMessage = {
   };
 };
 
+// export interface ModuleProgress {
+//   moduleId: string;
+//   moduleName: string;
+//   progress: number;
+//   completed: boolean;
+// }
+
+// export interface UserModuleProgress {
+//   userId: string;
+//   moduleProgress: ModuleProgress;
+//   // moduleProgress: ModuleProgress[];
+// }
+
+// export interface ExerciseProgress {
+//   exerciseId: string;
+//   exerciseName: string;
+//   progress: number;
+//   completed: boolean;
+// }
+
+// export interface UserExerciseProgress {
+//   userId: string;
+//   exerciseProgress: ExerciseProgress;
+//   // exerciseProgress: ExerciseProgress[];
+// }
+
 export interface ModuleProgress {
   moduleId: string;
-  moduleName: string;
+  moduleNumber?: number;
   progress: number;
   completed: boolean;
-}
-
-export interface UserModuleProgress {
-  userId: string;
-  moduleProgress: ModuleProgress;
-  // moduleProgress: ModuleProgress[];
 }
 
 export interface ExerciseProgress {
   exerciseId: string;
-  exerciseName: string;
+  exerciseNumber?: number;
+  exerciseAnswers: Map<string, string>;
   progress: number;
   completed: boolean;
 }
 
-export interface UserExerciseProgress {
-  userId: string;
-  exerciseProgress: ExerciseProgress;
-  // exerciseProgress: ExerciseProgress[];
-}
 
 export interface IUser {
   id: string;
   fullName: string;
   email: string;
   passwordHash: string;
-  moduleProgress: {
-    moduleId: string;
-    moduleNumber: number;
-    progress: number;
-    completed: "in_progress" | "completed" | "not_started";
-  }[];
-  exerciseProgress: {
-    exerciseId: string;
-    exerciseNumber: number;
-    progress: number;
-    completed: "in_progress" | "completed" | "not_started";
-  }[];
+  // moduleProgress: {
+  //   moduleId: string;
+  //   moduleNumber: number;
+  //   progress: number;
+  //   completed: "in_progress" | "completed" | "not_started";
+  // }[];
+  moduleProgress: ModuleProgress[];
+  // exerciseProgress: {
+  //   exerciseId: string;
+  //   exerciseNumber: number;
+  //   progress: number;
+  //   completed: "in_progress" | "completed" | "not_started";
+  // }[];
+  exerciseProgress: ExerciseProgress[];
   avatarUrl: string;
   createdAt: string;
   updatedAt: string;

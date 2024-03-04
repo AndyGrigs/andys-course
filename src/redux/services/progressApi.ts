@@ -1,8 +1,8 @@
 import { api } from "./api";
-import { UserModuleProgress, UserExerciseProgress } from "../../types";
+import { ModuleProgress, ExerciseProgress } from "../../types";
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getUserModuleProgress: builder.query<UserModuleProgress, void>({
+    getUserModuleProgress: builder.query<ModuleProgress, void>({
       query: (userId) => ({
         url: `/progress/${userId}`,
         method: "GET",
@@ -15,7 +15,7 @@ export const progressApi = api.injectEndpoints({
         body: progress,
       }),
     }),
-    getUserExerciseProgress: builder.query<UserExerciseProgress,
+    getUserExerciseProgress: builder.query<ExerciseProgress,
       { userId: string; exerciseId: string }
     >({
       query: ({ userId, exerciseId }) => ({

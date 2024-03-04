@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserExerciseProgress, UserModuleProgress } from "../../types";
+import { ModuleProgress, ExerciseProgress } from "../../types";
 import { progressApi } from "../services/progressApi";
 
 interface UserProgressState {
-    moduleProgress: Record<string, UserModuleProgress>;
-    exerciseProgress: Record<string, UserExerciseProgress>;
+    moduleProgress: Record<string, ModuleProgress>;
+    exerciseProgress: Record<string, ExerciseProgress>;
 }
 
 
@@ -26,19 +26,15 @@ export const userProgressSlice = createSlice({
         builder.addMatcher(
             progressApi.endpoints.getUserModuleProgress.matchFulfilled,
             (state, action) => {
-                // Your reducer logic here
-                // Assuming the action payload contains moduleProgress and exerciseProgress
-                // state.moduleProgress = action.payload.moduleProgress;
-                state.moduleProgress = action.payload.moduleProgress as unknown as Record<string, UserModuleProgress>;
+                const moduleProgress = action.payload;
+                state.moduleProgress[moduleProgress.moduleId] = moduleProgress;
             }
         );
         builder.addMatcher(
             progressApi.endpoints.getUserExerciseProgress.matchFulfilled,
             (state, action) => {
-                // Your reducer logic here
-                // Assuming the action payload contains moduleProgress and exerciseProgress
-                // state.moduleProgress = action.payload.exerciseProgress;
-                state.exerciseProgress = action.payload.exerciseProgress as unknown as Record<string, UserExerciseProgress>;
+                const exerciseProgress = action.payload;
+                state.exerciseProgress[exerciseProgress.exerciseId] = exerciseProgress;
             }
         );
     }
