@@ -32,7 +32,7 @@ export interface UserExerciseProgress {
 }
 
 export interface IUser {
-  id: string;
+  _id: string;
   fullName: string;
   email: string;
   passwordHash: string;

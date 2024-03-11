@@ -3,19 +3,34 @@ import { api } from "./api";
 
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getUserModuleProgress: builder.query<ModuleProgress, void>({
+    getAllUserModuleProgress: builder.query<
+      ModuleProgress[],
+      string | undefined
+    >({
       query: (userId) => ({
-        url: `/progress/${userId}`,
+        url: `/progress/module/${userId}`,
         method: "GET",
       }),
     }),
+
+    getUserModuleProgress: builder.query<
+      ModuleProgress,
+      { userId: string; moduleId: string }
+    >({
+      query: ({ userId, moduleId }) => ({
+        url: `/progress/module/${userId}/${moduleId}`,
+        method: "GET",
+      }),
+    }),
+
     updateUserModuleProgress: builder.mutation({
       query: ({ userId, progress }) => ({
-        url: `progress/update/${userId}`,
+        url: `progress/module/update/${userId}`,
         method: "PUT",
         body: progress,
       }),
     }),
+
     getUserExerciseProgress: builder.query<
       ExerciseProgress,
       { userId: string; exerciseId: string }
@@ -26,9 +41,16 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
+    getAllUserExerciseProgress: builder.query<ExerciseProgress[], void>({
+      query: (userId) => ({
+        url: `/progress/exercise/${userId}`,
+        method: "GET",
+      }),
+    }),
+
     updateUserExerciseProgress: builder.mutation({
       query: ({ userId, progress }) => ({
-        url: `progress/update/${userId}`,
+        url: `progress/exercise/update/${userId}`,
         method: "PUT",
         body: progress,
       }),
@@ -37,6 +59,10 @@ export const progressApi = api.injectEndpoints({
 });
 
 export const {
+  useGetAllUserModuleProgressQuery,
   useGetUserModuleProgressQuery,
   useUpdateUserModuleProgressMutation,
+  useGetAllUserExerciseProgressQuery,
+  useGetUserExerciseProgressQuery,
+  useUpdateUserExerciseProgressMutation,
 } = progressApi;
