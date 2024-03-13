@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ModuleProgress, ExerciseProgress } from "../../types";
+import { ExerciseProgress, ModuleProgress } from "../../types";
 import { RootState } from "../store";
 
 interface ProgressState {
