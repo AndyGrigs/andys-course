@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "../components/PrivatRoute";
 import { Auth } from "../features/authLoader";
 import { ModulePage } from "../pages/ModulePage";
-import { HomePage } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
 import { HomePage } from "../pages/Home";
