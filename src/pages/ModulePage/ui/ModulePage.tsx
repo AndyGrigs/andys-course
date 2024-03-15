@@ -17,18 +17,16 @@ export const ModulePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // const calculateProgressPercentage = (moduleProgress) => {
-  //   const totalExercises = module.exercises.length;
-  //   const completedExercises = moduleProgress.completedExercises;
-  //   return (completedExercises / totalExercises) * 100;
-  // };
-  console.log(user?.moduleProgress);
   const handleStartClick = (moduleId: string) => {
     navigate(`/module/${moduleId}/exercises`);
   };
 
   if (isModulesLoading) {
     return <Loader />;
+  }
+
+  if (isModulesError) {
+    return <div>Error loading Modules...</div>;
   }
 
   return (

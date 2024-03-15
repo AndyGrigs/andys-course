@@ -1,48 +1,79 @@
-import { Button, Modal, Input, Col, Row, Flex } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Loader } from "../../components/Loader";
-import { memo, useCallback, useState } from "react";
-import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
-import React from "react";
-import useCheckAnswer from "../../hooks/useCheckAnswers";
+import { Button, Input, Col, Flex, Typography, Divider } from "antd";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useGetOneExercisesQuery } from "../../redux/services/exersiceApi";
+import useCheckAnswer from "../../hooks/useCheckAnswers";
+import styles from "./ui/ExerciseDetailsPage.module.scss";
+import { Loader } from "../../components/Loader";
+
+const { Title, Paragraph } = Typography;
 
 export const ExercisePage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
-  const { checkAnswer } = useCheckAnswer();
-  const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
-    {}
-  );
-  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { checkAnswer, userResults } = useCheckAnswer();
   const [resultMessage, setResultMessage] = useState("");
+  const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [iconClass, setIconClass] = useState("");
   const {
     data: exercise,
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  // const { checkAnswer, userResults } = useCheckAnswer()
-  // console.log(userResults)
+  const inputRefs = useRef<{ [key: string]: HTMLInputElement[] }>({});
 
-  const handleInputChange = useCallback(
-    (
-      e: React.ChangeEvent<HTMLInputElement>,
-      taskId: string,
-      partIndex: number
-    ) => {
-      setAnswerValue((prevState) => {
-        const updatedAnswers = { ...prevState };
-        if (!updatedAnswers[taskId]) {
-          updatedAnswers[taskId] = [];
-        }
-        updatedAnswers[taskId][partIndex] = e.target.value.trim();
+  useEffect(() => {
+    if (resultMessage) {
+      setIconClass(styles.fadeIn);
+      setTimeout(() => setIconClass(styles.fadeOut), 2000);
+    } else {
+      setIconClass("");
+    }
+  }, [resultMessage]);
 
-        return updatedAnswers;
-      });
-    },
-    []
-  );
+  const handleCheckAnswer = () => {
+    if (!exercise) {
+      setResultMessage("Exercise not loaded");
+      return;
+    }
+
+    const inputValues = Object.entries(inputRefs.current).reduce(
+      (acc, [taskId, refs]) => {
+        acc[taskId] = refs.map((ref) => ref.value.trim());
+        return acc;
+      },
+      {} as { [key: string]: string[] }
+    );
+
+    const isCorrect = checkAnswer(
+      exercise.tasks[0]._id, // Assuming you want to check the first task
+      0, // Assuming you want to check the first task
+      inputValues,
+      exercise
+    );
+    setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
+    setIsAnswerChecked(false);
+  };
+
+  const clearResultMessage = () => {
+    setResultMessage("");
+  };
+
+  const goToNextTask = () => {
+    if (!exercise) {
+      setResultMessage("Exercise not loaded");
+      return;
+    }
+
+    if (!isAnswerChecked) {
+      handleCheckAnswer();
+      setIsAnswerChecked(true);
+    } else {
+      clearResultMessage();
+      // Logic to go to the next task
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -52,101 +83,67 @@ export const ExercisePage = () => {
     return <div>Error loading exercise</div>;
   }
 
-  const handleCheckAnswer = () => {
-    const isCorrect = checkAnswer(
-      currentTask._id,
-      currentTaskIndex,
-      answerValue,
-      exercise
-    );
-    setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
-  };
-
-  const clearResultMessage = () => {
-    setResultMessage("");
-  };
-
-  const goToNextTask = () => {
-    clearResultMessage();
-    setCurrentTaskIndex(
-      (currentIndex) => (currentIndex + 1) % exercise.tasks.length
-    );
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
-
-  const currentTask = exercise.tasks[currentTaskIndex];
-  const parts = currentTask.content.split("{{input}}");
-
   return (
-    <div style={{ color: "lightgrey", textAlign: "center" }}>
-      <h1>{exercise.number}</h1>
-      <p>{exercise.instruction}</p>
-      <p>{exercise.example}</p>
-      <Button style={{ width: "20%" }} onClick={showModal}>
-        Почати
-      </Button>
+    <div style={{ textAlign: "center" }}>
+      <Title level={3}>{exercise.number}</Title>
+      <Title level={4}>{exercise.instruction}</Title>
+      <Title level={2}>{exercise.example}</Title>
+      <Divider />
+      <Flex justify="center" align="center" style={{ marginTop: "2.5em" }}>
+        {exercise.tasks.map((task, taskIndex) => (
+          <React.Fragment key={taskIndex}>
+            <Col>
+              <Paragraph style={{ margin: "0 1em 0 1em", fontSize: "1.5em" }}>
+                {task.content}
+              </Paragraph>
+            </Col>
+            <Col span={3}>
+              <Input
+                ref={(el) => {
+                  if (!inputRefs.current[task._id]) {
+                    inputRefs.current[task._id] = [];
+                  }
+                  if (el instanceof HTMLInputElement) {
+                    inputRefs.current[task._id][taskIndex] = el;
+                  }
+                }}
+                style={{
+                  maxWidth: "100%",
+                  color: "#000000",
+                  fontSize: "1.5em",
+                }}
+                placeholder="Antwort..."
+              />
+            </Col>
+          </React.Fragment>
+        ))}
+      </Flex>
 
-      {/* <Modal
-        title={`Task: ${currentTaskIndex}`}
-        open={isModalVisible}
-        onCancel={handleModalClose}
-        style={{ height: "80%" }}
-        width="50%"
-        footer={[
-          <Button key="next" onClick={goToNextTask}>
-            Наступне Завдання
-          </Button>,
-        ]}
-      >
-        <Flex justify="center" align="center">
-          {parts.map((part, partIndex) => (
-            <React.Fragment key={partIndex}>
-              {part && (
-                <Col>
-                  <p style={{ margin: "0 1em 0 1em" }}>{part}</p>
-                </Col>
-              )}
-              {partIndex < parts.length - 1 && (
-                <Col span={3}>
-                  <Input
-                    style={{ maxWidth: "100%" }}
-                    value={
-                      answerValue[currentTask._id]
-                        ? answerValue[currentTask._id][partIndex] || ""
-                        : ""
-                    }
-                    onChange={(e) =>
-                      handleInputChange(e, currentTask._id, partIndex)
-                    }
-                    placeholder="Antwort..."
-                  />
-                </Col>
-              )}
-            </React.Fragment>
-          ))}
-          <Button
-            style={{ marginLeft: "2em" }}
-            onClick={() => handleCheckAnswer()}
-          >
-            Check!
-          </Button>
-        </Flex>
-
-        <Flex>
+      <Flex>
+        <div
+          className={iconClass}
+          style={{
+            position: "absolute",
+            top: "17em",
+            right: "7em",
+            zIndex: 1000,
+            opacity: resultMessage ? 1 : 0,
+            transition: "opacity  0.5s",
+          }}
+        >
           {resultMessage === "Correct!" ? (
-            <CheckCircleOutlined style={{ color: "green", fontSize: "48px" }} />
+            <CheckCircleOutlined style={{ color: "green", fontSize: "96px" }} />
           ) : resultMessage === "Incorrect. Try again." ? (
-            <CloseCircleOutlined style={{ color: "red", fontSize: "48px" }} />
+            <CloseCircleOutlined style={{ color: "red", fontSize: "96px" }} />
           ) : null}
-        </Flex>
-      </Modal> */}
+        </div>
+      </Flex>
+
+      <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
+        <Button disabled={!isAnswerChecked} onClick={goToNextTask}>
+          {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
+        </Button>
+      </Flex>
     </div>
   );
 };

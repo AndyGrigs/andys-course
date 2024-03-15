@@ -1,90 +1,97 @@
-To make the icons larger and position them above all elements with absolute positioning, you can adjust the `fontSize` property in the inline styles. For the smooth animation of appearing and disappearing, you can use CSS transitions. Here's how you can modify the code:
+To handle inputs using `useRef` in your `ExerciseDetailsPage.tsx` component, you'll need to make a few changes. Instead of using `useState` to manage the input values, you'll use `useRef` to create a reference to each input element. This allows you to directly access the input's value without having to manage state for each input.
 
-First, let's increase the `fontSize` to make the icons bigger. You can set it to any value you prefer, but for the sake of this example, I'll set it to `96px`.
-
-Next, to position the icons above all elements, you can wrap them in a `div` with absolute positioning and a high `z-index`.
-
-Finally, to add smooth animations, you can use CSS transitions. You'll need to define keyframes for the appearance and disappearance animations and apply them to the icons.
-
-Here's the updated code for the icons:
+Here's how you can rewrite the input handling part of your component using `useRef`:
 
 ```tsx
-<Flex>
-  <div style={{ position: 'absolute', zIndex:  1000, opacity: resultMessage ?  1 :  0, transition: 'opacity  0.5s' }}>
-    {resultMessage === "Correct!" ? (
-      <CheckCircleOutlined style={{ color: "green", fontSize: "96px" }} />
-    ) : resultMessage === "Incorrect. Try again." ? (
-      <CloseCircleOutlined style={{ color: "red", fontSize: "96px" }} />
-    ) : null}
-  </div>
-</Flex>
+import React, { useRef, useEffect } from "react";
+// ... other imports
+
+export const ExerciseDetailsPage = () => {
+  // ... other code
+
+  // Create a ref for each input
+  const inputRefs = useRef<{
+    [key: string]: React.RefObject<HTMLInputElement>[];
+  }>({});
+
+  // Initialize input refs for each task part
+  useEffect(() => {
+    if (exercise) {
+      exercise.tasks.forEach((task) => {
+        const parts = task.content.split("{{input}}");
+        inputRefs.current[task._id] = parts.map(() =>
+          React.createRef<HTMLInputElement>()
+        );
+      });
+    }
+  }, [exercise]);
+
+  // ... other code
+
+  const handleCheckAnswer = () => {
+    if (!exercise) {
+      setResultMessage("Exercise not loaded");
+      return;
+    }
+
+    // Get the input values from the refs
+    const inputValues = Object.entries(inputRefs.current).reduce(
+      (acc, [taskId, refs]) => {
+        acc[taskId] = refs.map((ref) => ref.current?.value.trim() || "");
+        return acc;
+      },
+      {} as { [key: string]: string[] }
+    );
+
+    const isCorrect = checkAnswer(
+      currentTask._id,
+      currentTaskIndex,
+      inputValues,
+      exercise
+    );
+    setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
+    setIsAnswerChecked(false);
+  };
+
+  // ... other code
+
+  return (
+    // ... other JSX
+    <Flex justify="center" align="center" style={{ marginTop: "2.5em" }}>
+      {parts.map((part, partIndex) => (
+        <React.Fragment key={partIndex}>
+          {part && (
+            <Col>
+              <Paragraph style={{ margin: "0 1em 0 1em", fontSize: "1.5em" }}>
+                {part}
+              </Paragraph>
+            </Col>
+          )}
+          {partIndex < parts.length - 1 && (
+            <Col span={3}>
+              <Input
+                ref={inputRefs.current[currentTask._id][partIndex]}
+                style={{
+                  maxWidth: "100%",
+                  color: "#000000",
+                  fontSize: "1.5em",
+                }}
+                placeholder="Antwort..."
+              />
+            </Col>
+          )}
+        </React.Fragment>
+      ))}
+    </Flex>
+    // ... other JSX
+  );
+};
 ```
 
-And here's the CSS for the keyframes (you can add this to your global CSS file or a styled component):
+In this updated code:
 
-```css
-@keyframes fadeIn {
-  from {
-    opacity:  0;
-  }
-  to {
-    opacity:  1;
-  }
-}
+- `useRef` is used to create a reference to each input element.
+- `useEffect` is used to initialize the refs for each task part when the `exercise` data is available.
+- The `handleCheckAnswer` function has been updated to get the input values directly from the refs instead of using state.
 
-@keyframes fadeOut {
-  from {
-    opacity:  1;
-  }
-  to {
-    opacity:  0;
-  }
-}
-
-.fadeIn {
-  animation: fadeIn  0.5s ease-in-out;
-}
-
-.fadeOut {
-  animation: fadeOut  0.5s ease-in-out;
-}
-```
-
-You'll need to dynamically apply the `fadeIn` and `fadeOut` classes based on whether the `resultMessage` is changing. You can use the `useEffect` hook to listen for changes to `resultMessage` and apply the classes accordingly.
-
-Here's an example of how you might do that:
-
-```tsx
-const [iconClass, setIconClass] = useState('');
-
-useEffect(() => {
-  if (resultMessage) {
-    setIconClass('fadeIn');
-    setTimeout(() => setIconClass('fadeOut'),  2000); // Adjust the timeout to control the duration of the icon's appearance
-  } else {
-    setIconClass('');
-  }
-}, [resultMessage]);
-
-// ...
-
-<Flex>
-  <div style={{ position: 'absolute', zIndex:  1000, opacity: resultMessage ?  1 :  0, transition: 'opacity  0.5s' }} className={iconClass}>
-    {resultMessage === "Correct!" ? (
-      <CheckCircleOutlined style={{ color: "green", fontSize: "96px" }} />
-    ) : resultMessage === "Incorrect. Try again." ? (
-      <CloseCircleOutlined style={{ color: "red", fontSize: "96px" }} />
-    ) : null}
-  </div>
-</Flex>
-```
-
-Make sure to import `useEffect` from React if you haven't already:
-
-```tsx
-import React, { useEffect } from 'react';
-```
-
-Please note that the `setTimeout` function is used to control the duration of the icon's appearance. You can adjust the timeout value to suit your needs. The `fadeIn` and `fadeOut` classes are applied based on the state of `resultMessage`.
-
-Remember to add the CSS keyframes to your global styles or a styled component to ensure the animations work correctly.
+Please note that using `useRef` in this way means that the input values are not part of the component's state, and changes to the inputs will not trigger a re-render of the component. If you need to perform actions based on input changes, you may still need to use `useState` or `useEffect` to listen for changes to the input values.

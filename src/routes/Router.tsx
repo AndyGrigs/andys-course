@@ -6,7 +6,7 @@ import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
 import { HomePage } from "../pages/Home";
 import { ModuleExercises } from "../pages/ModuleExercises";
-import { ExerciseDetailsPage } from "../pages/ExercisePage";
+import { ExerciseDetailsPage, ExercisePage } from "../pages/ExercisePage";
 
 export const AppRouter: React.FC = () => {
   return (

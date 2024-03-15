@@ -43,4 +43,5 @@ export const progressApi = api.injectEndpoints({
 export const {
   useGetUserModuleProgressQuery,
   useUpdateUserModuleProgressMutation,
+  useUpdateUserExerciseProgressMutation,
 } = progressApi;

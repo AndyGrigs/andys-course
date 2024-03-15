@@ -2,14 +2,14 @@ import { Button, Input, Col, Flex, Typography, Divider } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams, Link } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
-import { memo, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import React from "react";
 import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 
-export const ExerciseDetailsPage = () => {
+const ExerciseDetailsPage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -25,21 +25,32 @@ export const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  useEffect(() => {
-    //let timeoutId: NodeJS.Timeout | null = null;
+  const inputRefs = useRef<{ [key: string]: HTMLInputElement[] }>({});
 
+  // useEffect(() => {
+  //   //let timeoutId: NodeJS.Timeout | null = null;
+
+  //   if (resultMessage) {
+  //     setIconClass(styles.fadeIn);
+  //     // timeoutId = setTimeout(() => setIconClass(styles.fadeOut), 2000);
+  //   } else {
+  //     setIconClass("");
+  //   }
+
+  //   // return () => {
+  //   //   if (timeoutId) {
+  //   //     clearTimeout(timeoutId);
+  //   //   }
+  //   // };
+  // }, [resultMessage]);
+
+  useEffect(() => {
     if (resultMessage) {
       setIconClass(styles.fadeIn);
-      // timeoutId = setTimeout(() => setIconClass(styles.fadeOut), 2000);
+      setTimeout(() => setIconClass(styles.fadeOut), 2000);
     } else {
       setIconClass("");
     }
-
-    // return () => {
-    //   if (timeoutId) {
-    //     clearTimeout(timeoutId);
-    //   }
-    // };
   }, [resultMessage]);
 
   console.log(userResults);
@@ -63,14 +74,20 @@ export const ExerciseDetailsPage = () => {
     []
   );
 
+  const inputValues = Object.entries(inputRefs.current).reduce(
+    (acc, [taskId, refs]) => {
+      acc[taskId] = refs.map((ref) => ref.value.trim());
+      return acc;
+    },
+    {} as { [key: string]: string[] }
+  );
+
   const allInputsEmpty = Object.values(answerValue).every((answers) =>
     answers.every((answer) => answer.trim() === "")
   );
 
   const handleCheckAnswer = () => {
     if (!exercise) {
-      // Handle the case where exercise is undefined
-      // For example, you might want to set an error message or return early
       setResultMessage("Exercise not loaded");
       return;
     }
@@ -139,6 +156,22 @@ export const ExerciseDetailsPage = () => {
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
+                  ref={(el) => {
+                    if (!inputRefs.current[currentTask._id]) {
+                      inputRefs.current[currentTask._id] = [];
+                    }
+                    if (el instanceof HTMLInputElement) {
+                      inputRefs.current[currentTask._id][partIndex] = el;
+                    }
+                  }}
+                  style={{
+                    maxWidth: "100%",
+                    color: "#000000",
+                    fontSize: "1.5em",
+                  }}
+                  placeholder="Antwort..."
+                />
+                {/* <Input
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
@@ -153,7 +186,7 @@ export const ExerciseDetailsPage = () => {
                     handleInputChange(e, currentTask._id, partIndex)
                   }
                   placeholder="Antwort..."
-                />
+                /> */}
               </Col>
             )}
           </React.Fragment>
@@ -181,10 +214,12 @@ export const ExerciseDetailsPage = () => {
       </Flex>
 
       <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
-        <Button disabled={allInputsEmpty} onClick={goToNextTask}>
+        <Button onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
       </Flex>
     </div>
   );
 };
+
+export default React.memo(ExerciseDetailsPage);
