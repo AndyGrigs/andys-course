@@ -1,6 +1,6 @@
 import { Button, Input, Col, Flex, Typography, Divider } from "antd";
 const { Title, Paragraph } = Typography;
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
@@ -25,7 +25,7 @@ const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  const inputRefs = useRef<{ [key: string]: HTMLInputElement[] }>({});
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // useEffect(() => {
   //   //let timeoutId: NodeJS.Timeout | null = null;
@@ -74,13 +74,13 @@ const ExerciseDetailsPage = () => {
     []
   );
 
-  const inputValues = Object.entries(inputRefs.current).reduce(
-    (acc, [taskId, refs]) => {
-      acc[taskId] = refs.map((ref) => ref.value.trim());
-      return acc;
-    },
-    {} as { [key: string]: string[] }
-  );
+  // const inputValues = Object.entries(inputRefs.current).reduce(
+  //   (acc, [taskId, refs]) => {
+  //     acc[taskId] = refs.map((ref) => ref.value.trim());
+  //     return acc;
+  //   },
+  //   {} as { [key: string]: string[] }
+  // );
 
   const allInputsEmpty = Object.values(answerValue).every((answers) =>
     answers.every((answer) => answer.trim() === "")
@@ -91,7 +91,7 @@ const ExerciseDetailsPage = () => {
       setResultMessage("Exercise not loaded");
       return;
     }
-
+    console.log("Answer being sent for checking:", answerValue);
     const isCorrect = checkAnswer(
       currentTask._id,
       currentTaskIndex,
@@ -102,15 +102,19 @@ const ExerciseDetailsPage = () => {
     setIsAnswerChecked(false);
   };
 
+  const getInputValue = () => {
+    if (inputRef.current) {
+      console.log(inputRef.current.value); // Zugriff auf den Wert des Input-Feldes
+    }
+  };
+
   const clearResultMessage = () => {
     setResultMessage("");
   };
 
   const goToNextTask = () => {
     if (!exercise) {
-      // Handle the case where exercise is undefined
-      // For example, you might want to set an error message or return early
-      setResultMessage("Exercise not loaded");
+      console.log("Exercise is not defined");
       return;
     }
 
@@ -156,14 +160,7 @@ const ExerciseDetailsPage = () => {
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
-                  ref={(el) => {
-                    if (!inputRefs.current[currentTask._id]) {
-                      inputRefs.current[currentTask._id] = [];
-                    }
-                    if (el instanceof HTMLInputElement) {
-                      inputRefs.current[currentTask._id][partIndex] = el;
-                    }
-                  }}
+                  ref={getInputValue}
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
