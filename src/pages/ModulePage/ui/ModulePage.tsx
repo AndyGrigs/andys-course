@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { setCurrentModule } from "../../../redux/slices/moduleSlice";
+import { useCreateModuleMutation } from "../../../redux/services/modules";
 
 export const ModulePage: React.FC = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   const {
@@ -15,9 +19,31 @@ export const ModulePage: React.FC = () => {
     isError: isModulesError,
   } = useGetAllModulesQuery();
 
+  const [createUserModuleProgress, { isLoading: isCreatingProgress }] =
+    useCreateModuleMutation();
+
   const navigate = useNavigate();
 
+  const handleCreateUserModuleProgress = async () => {
+    try {
+      const result = await createUserModuleProgress({
+        userId: user?._id, // Replace with actual user ID
+        progress: {
+          moduleId: ,  
+          moduleNumber: 1,
+          progress: 0,
+          completed: "false",
+        },
+      }).unwrap();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Failed:", error);
+    }
+  };
+
   const handleStartClick = (moduleId: string) => {
+    const currentModule = modulesData?.find((module) => module._id);
+    dispatch(setCurrentModule(currentModule));
     navigate(`/module/${moduleId}/exercises`);
   };
 

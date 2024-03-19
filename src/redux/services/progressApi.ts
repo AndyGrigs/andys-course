@@ -22,10 +22,26 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
+    createUserModuleProgress: builder.mutation({
+      query: ({ userId, progress }) => ({
+        url: `progress/module/create/${userId}`,
+        method: "POST",
+        body: progress,
+      }),
+    }),
+
     updateUserModuleProgress: builder.mutation({
       query: ({ userId, progress }) => ({
         url: `progress/module/update/${userId}`,
         method: "PUT",
+        body: progress,
+      }),
+    }),
+
+    createUserExerciseProgress: builder.mutation({
+      query: ({ userId, progress }) => ({
+        url: `progress/exercise/create/${userId}`,
+        method: "POST",
         body: progress,
       }),
     }),
@@ -44,4 +60,6 @@ export const {
   useGetUserModuleProgressQuery,
   useUpdateUserModuleProgressMutation,
   useUpdateUserExerciseProgressMutation,
+  useCreateUserExerciseProgressMutation,
+  useCreateUserModuleProgressMutation,
 } = progressApi;

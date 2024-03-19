@@ -1,13 +1,17 @@
+import React from "react";
 import { Button, Input, Col, Flex, Typography, Divider } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
-import React from "react";
 import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/slices/authSlice";
+import useCreatingExerciseProgress from "../../../hooks/useCreatingExerciseProgress";
+import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 
 const ExerciseDetailsPage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -25,24 +29,24 @@ const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const currentModule = useSelector(selectCurrentModule);
+  // Assuming `exercise` and `currentModule` are fetched asynchronously and might be undefined
+  const moduleName = currentModule?.name || "";
+  const exerciseNumber = exercise?.number || undefined;
 
-  // useEffect(() => {
-  //   //let timeoutId: NodeJS.Timeout | null = null;
-
-  //   if (resultMessage) {
-  //     setIconClass(styles.fadeIn);
-  //     // timeoutId = setTimeout(() => setIconClass(styles.fadeOut), 2000);
-  //   } else {
-  //     setIconClass("");
-  //   }
-
-  //   // return () => {
-  //   //   if (timeoutId) {
-  //   //     clearTimeout(timeoutId);
-  //   //   }
-  //   // };
-  // }, [resultMessage]);
+  // Now, `moduleName` and `exerciseNumber` are guaranteed to be strings, so you can safely call `useCreatingExerciseProgress`
+  const { createUserExerciseProgress } = useCreatingExerciseProgress(
+    exerciseId || "",
+    moduleName,
+    exerciseNumber || 0
+  );
+  useEffect(() => {
+    createUserExerciseProgress({
+      exerciseId: exerciseId,
+      exerciseNumber: exercise?.number,
+      moduleName: currentModule?.name,
+    });
+  }, []);
 
   useEffect(() => {
     if (resultMessage) {
@@ -53,7 +57,11 @@ const ExerciseDetailsPage = () => {
     }
   }, [resultMessage]);
 
-  console.log(userResults);
+  useEffect(() => {
+    if (userResults) {
+      console.log(userResults);
+    }
+  }, [userResults]); // This effect runs whenever `userResults` changes
 
   const handleInputChange = useCallback(
     (
@@ -74,14 +82,6 @@ const ExerciseDetailsPage = () => {
     []
   );
 
-  // const inputValues = Object.entries(inputRefs.current).reduce(
-  //   (acc, [taskId, refs]) => {
-  //     acc[taskId] = refs.map((ref) => ref.value.trim());
-  //     return acc;
-  //   },
-  //   {} as { [key: string]: string[] }
-  // );
-
   const allInputsEmpty = Object.values(answerValue).every((answers) =>
     answers.every((answer) => answer.trim() === "")
   );
@@ -92,6 +92,7 @@ const ExerciseDetailsPage = () => {
       return;
     }
     console.log("Answer being sent for checking:", answerValue);
+
     const isCorrect = checkAnswer(
       currentTask._id,
       currentTaskIndex,
@@ -100,12 +101,6 @@ const ExerciseDetailsPage = () => {
     );
     setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
     setIsAnswerChecked(false);
-  };
-
-  const getInputValue = () => {
-    if (inputRef.current) {
-      console.log(inputRef.current.value); // Zugriff auf den Wert des Input-Feldes
-    }
   };
 
   const clearResultMessage = () => {
@@ -160,15 +155,6 @@ const ExerciseDetailsPage = () => {
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
-                  ref={getInputValue}
-                  style={{
-                    maxWidth: "100%",
-                    color: "#000000",
-                    fontSize: "1.5em",
-                  }}
-                  placeholder="Antwort..."
-                />
-                {/* <Input
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
@@ -183,7 +169,7 @@ const ExerciseDetailsPage = () => {
                     handleInputChange(e, currentTask._id, partIndex)
                   }
                   placeholder="Antwort..."
-                /> */}
+                />
               </Col>
             )}
           </React.Fragment>
@@ -211,7 +197,7 @@ const ExerciseDetailsPage = () => {
       </Flex>
 
       <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
-        <Button onClick={goToNextTask}>
+        <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
       </Flex>
