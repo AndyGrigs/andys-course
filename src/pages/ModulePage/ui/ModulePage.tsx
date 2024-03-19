@@ -24,12 +24,12 @@ export const ModulePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleCreateUserModuleProgress = async () => {
+  const handleCreateUserModuleProgress = async (moduleId: string) => {
     try {
       const result = await createUserModuleProgress({
         userId: user?._id, // Replace with actual user ID
         progress: {
-          moduleId: ,  
+          moduleId: moduleId,
           moduleNumber: 1,
           progress: 0,
           completed: "false",
@@ -43,6 +43,7 @@ export const ModulePage: React.FC = () => {
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);
+    handleCreateUserModuleProgress(currentModule?._id || '')
     dispatch(setCurrentModule(currentModule));
     navigate(`/module/${moduleId}/exercises`);
   };
