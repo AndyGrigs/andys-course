@@ -3,7 +3,7 @@ import { Layout, Typography } from "antd";
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 
-export const HomePage: React.FC = () => {
+const HomePage: React.FC = () => {
   return (
     <Content style={{ padding: "0 50px", marginTop: 64 }}>
       <div
@@ -20,3 +20,5 @@ export const HomePage: React.FC = () => {
     </Content>
   );
 };
+
+export default HomePage;

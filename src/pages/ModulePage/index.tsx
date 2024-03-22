@@ -1,3 +1,3 @@
-import { ModulePage } from "./ui/ModulePage";
+import { lazy } from "react";
 
-export { ModulePage };
+export const ModulePageAsync = lazy(() => import("./ui/ModulePage"));

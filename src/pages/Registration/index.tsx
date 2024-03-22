@@ -1,3 +1,3 @@
-import { Registration } from "./ui/Registration";
+import { lazy } from "react";
 
-export { Registration };
+export const RegistrationPageAsync = lazy(() => import("./ui/Registration"));

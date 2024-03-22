@@ -1,3 +1,5 @@
-import { ModuleExercises } from "./ui/ModuleExercises";
+import { lazy } from "react";
 
-export { ModuleExercises };
+export const ModuleExercisesPageAsync = lazy(
+  () => import("./ui/ModuleExercises")
+);

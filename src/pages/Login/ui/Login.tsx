@@ -11,7 +11,7 @@ import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { ErrorMessage } from "../../../components/Error";
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const user = useSelector(selectUser);
@@ -60,3 +60,5 @@ export const Login: React.FC = () => {
     </Layout>
   );
 };
+
+export default Login;

@@ -13,7 +13,7 @@ import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
 
-export const Registration = () => {
+const Registration = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
@@ -63,3 +63,5 @@ export const Registration = () => {
     </Layout>
   );
 };
+
+export default Registration;

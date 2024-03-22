@@ -1,4 +1,3 @@
-import { ExercisePage } from "./ExercisePage";
-import ExerciseDetailsPage from "./ui/ExerciseDetailsPage";
+import { lazy } from "react";
 
-export { ExercisePage, ExerciseDetailsPage };
+export const ExercisePageAsync = lazy(() => import("./ui/ExerciseDetailsPage"));

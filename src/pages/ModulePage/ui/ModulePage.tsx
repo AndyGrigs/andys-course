@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
-import { useCreateModuleMutation } from "../../../redux/services/modules";
+import { useCreateUserModuleProgressMutation } from "../../../redux/services/progressApi";
 
-export const ModulePage: React.FC = () => {
+const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -19,8 +19,7 @@ export const ModulePage: React.FC = () => {
     isError: isModulesError,
   } = useGetAllModulesQuery();
 
-  const [createUserModuleProgress, { isLoading: isCreatingProgress }] =
-    useCreateModuleMutation();
+  const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
 
   const navigate = useNavigate();
 
@@ -43,7 +42,7 @@ export const ModulePage: React.FC = () => {
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);
-    handleCreateUserModuleProgress(currentModule?._id || '')
+    handleCreateUserModuleProgress(currentModule?._id || "");
     dispatch(setCurrentModule(currentModule));
     navigate(`/module/${moduleId}/exercises`);
   };
@@ -107,3 +106,5 @@ export const ModulePage: React.FC = () => {
     </Card>
   );
 };
+
+export default ModulePage;

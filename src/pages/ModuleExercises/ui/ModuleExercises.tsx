@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetExercisesQuery } from "../../../redux/services/exersiceApi";
 import { Loader } from "../../../components/Loader";
 
-export const ModuleExercises = () => {
+const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
   const { data, isLoading, isError } = useGetExercisesQuery(moduleId ?? "");
   const navigate = useNavigate();
@@ -49,3 +49,5 @@ export const ModuleExercises = () => {
     />
   );
 };
+
+export default ModuleExercises;

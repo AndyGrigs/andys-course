@@ -47,7 +47,7 @@ const ExerciseDetailsPage = () => {
       moduleName: currentModule?.name,
     });
   }, []);
-
+  console.log("first");
   useEffect(() => {
     if (resultMessage) {
       setIconClass(styles.fadeIn);
@@ -205,4 +205,5 @@ const ExerciseDetailsPage = () => {
   );
 };
 
-export default React.memo(ExerciseDetailsPage);
+const MemoizedExerciseDetailsPage = React.memo(ExerciseDetailsPage);
+export default MemoizedExerciseDetailsPage;

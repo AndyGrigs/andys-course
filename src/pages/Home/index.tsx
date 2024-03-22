@@ -1,3 +1,3 @@
-import { HomePage } from "./ui/HomePage";
+import { lazy } from "react";
 
-export { HomePage };
+export const HomePageAsync = lazy(() => import("./ui/HomePage"));
