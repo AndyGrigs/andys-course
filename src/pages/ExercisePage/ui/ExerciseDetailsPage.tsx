@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, Input, Col, Flex, Typography, Divider } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
@@ -9,11 +9,15 @@ import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../redux/slices/authSlice";
 import useCreatingExerciseProgress from "../../../hooks/useCreatingExerciseProgress";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
+import { InputRef } from "antd/lib/input";
+import { selectUser } from "../../../redux/slices/authSlice";
 
 const ExerciseDetailsPage = () => {
+  const inputRef = useRef<InputRef>(null);
+  const user = useSelector(selectUser);
+
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -40,14 +44,57 @@ const ExerciseDetailsPage = () => {
     moduleName,
     exerciseNumber || 0
   );
+
+  const handleCreateUserExerciseProgress = async (exerciseId: string) => {
+    try {
+      const localStorageProgress = localStorage.getItem(
+        `exerciseProgress_${exerciseId}`
+      );
+      if (localStorageProgress) {
+        const existingProgress = JSON.parse(localStorageProgress);
+        console.log(
+          "Progress exercise found in local storage:",
+          existingProgress
+        );
+      } else {
+        const existingProgress = user?.exerciseProgress.find((progress) => {
+          return progress.exerciseId === exerciseId;
+        });
+        if (!existingProgress) {
+          const result = await createUserExerciseProgress({
+            userId: user?._id,
+            progress: {
+              exerciseIdId: exerciseId,
+              exerciseNumber: 1,
+              progress: 0,
+              completed: "false",
+            },
+          }).unwrap();
+          console.log("Success:", result);
+
+          localStorage.setItem(
+            `exerciseProgress_${exerciseId}`,
+            JSON.stringify(result.progress)
+          );
+        } else {
+          // If the progress exists in the database, store it in the local storage
+          localStorage.setItem(
+            `exerciseProgress_${exerciseId}`,
+            JSON.stringify(existingProgress.progress)
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed:", error);
+    }
+  };
+
   useEffect(() => {
-    createUserExerciseProgress({
-      exerciseId: exerciseId,
-      exerciseNumber: exercise?.number,
-      moduleName: currentModule?.name,
-    });
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   }, []);
-  console.log("first");
+
   useEffect(() => {
     if (resultMessage) {
       setIconClass(styles.fadeIn);
@@ -125,6 +172,8 @@ const ExerciseDetailsPage = () => {
     }
   };
 
+  console.log("render");
+
   if (isLoading) {
     return <Loader />;
   }
@@ -155,6 +204,7 @@ const ExerciseDetailsPage = () => {
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
+                  ref={inputRef}
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
@@ -170,6 +220,22 @@ const ExerciseDetailsPage = () => {
                   }
                   placeholder="Antwort..."
                 />
+                {/* <Input
+                  style={{
+                    maxWidth: "100%",
+                    color: "#000000",
+                    fontSize: "1.5em",
+                  }}
+                  value={
+                    answerValue[currentTask._id]
+                      ? answerValue[currentTask._id][partIndex] || ""
+                      : ""
+                  }
+                  onChange={(e) =>
+                    handleInputChange(e, currentTask._id, partIndex)
+                  }
+                  placeholder="Antwort..."
+                /> */}
               </Col>
             )}
           </React.Fragment>
