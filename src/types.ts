@@ -7,32 +7,6 @@ export type ErrorWithMessage = {
   };
 };
 
-// export interface ModuleProgress {
-//   moduleId: string;
-//   moduleName: string;
-//   progress: number;
-//   completed: boolean;
-// }
-
-// export interface UserModuleProgress {
-//   userId: string;
-//   moduleProgress: ModuleProgress;
-//   // moduleProgress: ModuleProgress[];
-// }
-
-// export interface ExerciseProgress {
-//   exerciseId: string;
-//   exerciseName: string;
-//   progress: number;
-//   completed: boolean;
-// }
-
-// export interface UserExerciseProgress {
-//   userId: string;
-//   exerciseProgress: ExerciseProgress;
-//   // exerciseProgress: ExerciseProgress[];
-// }
-
 export interface ModuleProgress {
   moduleId: string;
   moduleNumber?: number;

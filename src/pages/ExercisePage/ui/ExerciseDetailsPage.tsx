@@ -9,10 +9,10 @@ import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 import { useSelector } from "react-redux";
-import useCreatingExerciseProgress from "../../../hooks/useCreatingExerciseProgress";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 import { InputRef } from "antd/lib/input";
 import { selectUser } from "../../../redux/slices/authSlice";
+import { selectUserExerciseProgress } from '../../../redux/slices/userProgressSlice';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
@@ -32,62 +32,14 @@ const ExerciseDetailsPage = () => {
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
-
+  const userExerciseProgress = useSelector(selectUserExerciseProgress);
   const currentModule = useSelector(selectCurrentModule);
-  // Assuming `exercise` and `currentModule` are fetched asynchronously and might be undefined
-  const moduleName = currentModule?.name || "";
-  const exerciseNumber = exercise?.number || undefined;
 
-  // Now, `moduleName` and `exerciseNumber` are guaranteed to be strings, so you can safely call `useCreatingExerciseProgress`
-  const { createUserExerciseProgress } = useCreatingExerciseProgress(
-    exerciseId || "",
-    moduleName,
-    exerciseNumber || 0
-  );
 
-  const handleCreateUserExerciseProgress = async (exerciseId: string) => {
-    try {
-      const localStorageProgress = localStorage.getItem(
-        `exerciseProgress_${exerciseId}`
-      );
-      if (localStorageProgress) {
-        const existingProgress = JSON.parse(localStorageProgress);
-        console.log(
-          "Progress exercise found in local storage:",
-          existingProgress
-        );
-      } else {
-        const existingProgress = user?.exerciseProgress.find((progress) => {
-          return progress.exerciseId === exerciseId;
-        });
-        if (!existingProgress) {
-          const result = await createUserExerciseProgress({
-            userId: user?._id,
-            progress: {
-              exerciseIdId: exerciseId,
-              exerciseNumber: 1,
-              progress: 0,
-              completed: "false",
-            },
-          }).unwrap();
-          console.log("Success:", result);
+  useEffect(() => {
+    console.log("User Exercise Progress:", userExerciseProgress);
+  }, [userExerciseProgress]);
 
-          localStorage.setItem(
-            `exerciseProgress_${exerciseId}`,
-            JSON.stringify(result.progress)
-          );
-        } else {
-          // If the progress exists in the database, store it in the local storage
-          localStorage.setItem(
-            `exerciseProgress_${exerciseId}`,
-            JSON.stringify(existingProgress.progress)
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Failed:", error);
-    }
-  };
 
   useEffect(() => {
     if (inputRef.current) {
@@ -172,7 +124,7 @@ const ExerciseDetailsPage = () => {
     }
   };
 
-  console.log("render");
+
 
   if (isLoading) {
     return <Loader />;

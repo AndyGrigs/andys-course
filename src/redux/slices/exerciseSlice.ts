@@ -17,15 +17,8 @@ const exerciseSlice = createSlice({
   name: "exercise",
   initialState,
   reducers: {
-    setCurrrentExerciseId: (state, action: PayloadAction<string>) => {
-      const exerciseToSet = state.allExercises.find((exercise) => {
-        exercise._id === action.payload;
-        if (exerciseToSet) {
-          state.currentExercise = exerciseToSet;
-        } else {
-          console.error("Exercise not found");
-        }
-      });
+    setCurrentExercise: (state, action) => {
+      state.currentExercise = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -39,13 +32,16 @@ const exerciseSlice = createSlice({
 });
 
 export default exerciseSlice.reducer;
+
+export const { setCurrentExercise } = exerciseSlice.actions;
+
 export const selectOneExercise = (state: RootState) =>
   state.exercise.currentExercise;
 
 export const selectExerciseById = (state: RootState, exerciseId: string) =>
   state.exercise.allExercises.find((exercise) => exercise._id === exerciseId);
 
-// export const selectExercisesByModuleId = (state: RootState, moduleId: string) => state.exercise.allExercises.filter((exercise)=> exercise._id === )
+// export const selectExercisesByModule = (state: RootState, moduleId: string) => state.exercise.allExercises.filter((exercise)=> exercise._id === )
 
 export const selectAllExercises = (state: RootState) =>
   state.exercise.allExercises;

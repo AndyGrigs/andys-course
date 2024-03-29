@@ -1,5 +1,6 @@
 import { api } from "./api";
 import { ModuleProgress, ExerciseProgress } from "../../types";
+
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserModuleProgress: builder.query<
@@ -22,7 +23,10 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
-    createUserModuleProgress: builder.mutation({
+    createUserModuleProgress: builder.mutation<
+      ModuleProgress,
+      { userId: string; progress: object }
+    >({
       query: ({ userId, progress }) => ({
         url: `progress/module/create/${userId}`,
         method: "POST",
@@ -38,7 +42,29 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
-    createUserExerciseProgress: builder.mutation({
+    getAllUserExerciseeProgress: builder.query<
+      ExerciseProgress[],
+      string | undefined
+    >({
+      query: (userId) => ({
+        url: `/progress/exercise/${userId}`,
+        method: "GET",
+      }),
+    }),
+
+    getUserExerciseProgress: builder.query<
+      ExerciseProgress,
+      { userId: string; moduleId: string }
+    >({
+      query: ({ userId, moduleId }) => ({
+        url: `/progress/exercise/${userId}/${moduleId}`,
+        method: "GET",
+      }),
+    }),
+    createUserExerciseProgress: builder.mutation<
+      ExerciseProgress,
+      { userId: string; progress: object }
+    >({
       query: ({ userId, progress }) => ({
         url: `progress/exercise/create/${userId}`,
         method: "POST",
@@ -46,7 +72,10 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
-    updateUserExerciseProgress: builder.mutation({
+    updateUserExerciseProgress: builder.mutation<
+      ExerciseProgress,
+      { userId: string; progress: object }
+    >({
       query: ({ userId, progress }) => ({
         url: `progress/exercise/update/${userId}`,
         method: "PUT",
@@ -58,6 +87,7 @@ export const progressApi = api.injectEndpoints({
 
 export const {
   useGetUserModuleProgressQuery,
+  useGetUserExerciseProgressQuery,
   useUpdateUserModuleProgressMutation,
   useUpdateUserExerciseProgressMutation,
   useCreateUserExerciseProgressMutation,

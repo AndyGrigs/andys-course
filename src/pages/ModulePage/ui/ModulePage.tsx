@@ -8,6 +8,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useCreateUserModuleProgressMutation } from "../../../redux/services/progressApi";
+import { setModuleProgress } from '../../../redux/slices/userProgressSlice';
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,26 +23,17 @@ const ModulePage: React.FC = () => {
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
 
   const navigate = useNavigate();
-  /*
+
   const handleCreateUserModuleProgress = async (moduleId: string) => {
     try {
-      const localStorageProgress = localStorage.getItem(`moduleProgress_${moduleId}`);
-      if (localStorageProgress) {
-        // If the progress exists in the local storage, parse it and use it
-        const existingProgress = JSON.parse(localStorageProgress);
-        console.log("Progress found in local storage:", existingProgress);
-        // Here you can use the existingProgress as needed
-        // For example, you might want to update the UI to reflect the existing progress
-      }
-
-
+      // If the progress does not exist in the local storage, find it in the user's moduleProgress
       const existingProgress = user?.moduleProgress.find((progress) => {
-        progress.moduleId === moduleId;
+        return progress.moduleId === moduleId;
       });
 
       if (!existingProgress) {
         const result = await createUserModuleProgress({
-          userId: user?._id, // Replace with actual user ID
+          userId: user?._id ?? '',
           progress: {
             moduleId: moduleId,
             moduleNumber: 1,
@@ -50,61 +42,9 @@ const ModulePage: React.FC = () => {
           },
         }).unwrap();
         console.log("Success:", result);
+        dispatch(setModuleProgress(result))
       } else {
-        // For example, to update the progress, you would use a similar mutation but targeting the existing progress ID
         console.log("Progress already exists for this module.");
-      }
-    } catch (error) {
-      console.error("Failed:", error);
-    }
-  };
-*/
-  const handleCreateUserModuleProgress = async (moduleId: string) => {
-    try {
-      // Check if the progress for the module exists in the local storage
-      const localStorageProgress = localStorage.getItem(
-        `moduleProgress_${moduleId}`
-      );
-      if (localStorageProgress) {
-        // If the progress exists in the local storage, parse it and use it
-        const existingProgress = JSON.parse(localStorageProgress);
-        console.log(
-          "Progress module found in local storage:",
-          existingProgress
-        );
-        // Here you can use the existingProgress as needed
-        // For example, you might want to update the UI to reflect the existing progress
-      } else {
-        // If the progress does not exist in the local storage, find it in the user's moduleProgress
-        const existingProgress = user?.moduleProgress.find((progress) => {
-          return progress.moduleId === moduleId;
-        });
-
-        if (!existingProgress) {
-          // If the progress does not exist in the database, create a new object
-          const result = await createUserModuleProgress({
-            userId: user?._id,
-            progress: {
-              moduleId: moduleId,
-              moduleNumber: 1,
-              progress: 0,
-              completed: "false",
-            },
-          }).unwrap();
-          console.log("Success:", result);
-
-          // Store the new progress in the local storage
-          localStorage.setItem(
-            `moduleProgress_${moduleId}`,
-            JSON.stringify(result.progress)
-          );
-        } else {
-          // If the progress exists in the database, store it in the local storage
-          localStorage.setItem(
-            `moduleProgress_${moduleId}`,
-            JSON.stringify(existingProgress.progress)
-          );
-        }
       }
     } catch (error) {
       console.error("Failed:", error);
