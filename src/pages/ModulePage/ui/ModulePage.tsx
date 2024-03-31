@@ -28,6 +28,7 @@ const ModulePage: React.FC = () => {
     try {
       // If the progress does not exist in the local storage, find it in the user's moduleProgress
       const existingProgress = user?.moduleProgress.find((progress) => {
+        dispatch(setModuleProgress(progress.progress))
         return progress.moduleId === moduleId;
       });
 
@@ -42,7 +43,7 @@ const ModulePage: React.FC = () => {
           },
         }).unwrap();
         console.log("Success:", result);
-        dispatch(setModuleProgress(result))
+        dispatch(setModuleProgress(result.progress))
       } else {
         console.log("Progress already exists for this module.");
       }

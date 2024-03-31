@@ -27,6 +27,7 @@ const ModuleExercises = () => {
 
     try {
       const existingProgress = user?.exerciseProgress.find((progress) => {
+        dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId
       })
 
@@ -42,7 +43,7 @@ const ModuleExercises = () => {
             completed: "false",
           }
         }).unwrap()
-        dispatch(setExerciseProgress(result))
+        dispatch(setExerciseProgress(result.progress))
         console.log("Success:", result);
       } else {
         console.log("Progress already exists for this exercise.");

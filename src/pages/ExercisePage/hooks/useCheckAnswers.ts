@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { IExerciseResponse } from '../types';
+import { IExerciseResponse } from '../../../types';
 
 
 function compareAnswer(userAnswer: string, solution: string): boolean {

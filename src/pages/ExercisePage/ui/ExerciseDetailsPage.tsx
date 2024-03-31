@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
-import useCheckAnswer from "../../../hooks/useCheckAnswers";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 import { useSelector } from "react-redux";
@@ -13,6 +12,7 @@ import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 import { InputRef } from "antd/lib/input";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { selectUserExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import useCheckAnswer from '../hooks/useCheckAnswers';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
