@@ -172,22 +172,6 @@ const ExerciseDetailsPage = () => {
                   }
                   placeholder="Antwort..."
                 />
-                {/* <Input
-                  style={{
-                    maxWidth: "100%",
-                    color: "#000000",
-                    fontSize: "1.5em",
-                  }}
-                  value={
-                    answerValue[currentTask._id]
-                      ? answerValue[currentTask._id][partIndex] || ""
-                      : ""
-                  }
-                  onChange={(e) =>
-                    handleInputChange(e, currentTask._id, partIndex)
-                  }
-                  placeholder="Antwort..."
-                /> */}
               </Col>
             )}
           </React.Fragment>
