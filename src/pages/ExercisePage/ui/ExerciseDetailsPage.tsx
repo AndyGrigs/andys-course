@@ -12,6 +12,7 @@ import useExerciseFetching from '../hooks/useExerciseFetching';
 import { useAnswerState } from '../hooks/useAnswerState';
 import { useTaskNavigation } from '../hooks/useTaskNavigation';
 import ExerciseBlocksContainer from '../compnents/ExerciseBlockContainer';
+import { RootState } from '../../../redux/store';
 // import { useCheckAllInputsFilled } from '../hooks/useCheckingInput';
 
 const ExerciseDetailsPage = () => {
@@ -28,7 +29,7 @@ const ExerciseDetailsPage = () => {
   const { currentTaskIndex, goToNextTask } = useTaskNavigation(exercise ? exercise.tasks.length : 0)
 
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-
+  const answerValue = useSelector((state: RootState) => state.answerValue.value);
 
   useEffect(() => {
     console.log("User Exercise Progress:", userExerciseProgress);
