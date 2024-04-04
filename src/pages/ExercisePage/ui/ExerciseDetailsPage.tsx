@@ -81,9 +81,10 @@ const ExerciseDetailsPage = () => {
     []
   );
 
-  const allInputsEmpty = Object.values(answerValue).every((answers) =>
-    answers.every((answer) => answer.trim() === "")
-  );
+  // const allInputsEmpty = Object.values(answerValue).every((answers) =>
+  //   answers.every((answer) => answer.trim() === "")
+  // );
+
 
   const handleCheckAnswer = () => {
     if (!exercise) {
@@ -136,6 +137,7 @@ const ExerciseDetailsPage = () => {
 
   const currentTask = exercise.tasks[currentTaskIndex];
   const parts = currentTask.content.split("{{input}}");
+  const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every((answer) => answer.trim() === "");
 
   return (
     <div style={{ textAlign: "center" }}>
