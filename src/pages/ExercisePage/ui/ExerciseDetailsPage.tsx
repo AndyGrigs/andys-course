@@ -12,7 +12,6 @@ import useExerciseFetching from '../hooks/useExerciseFetching';
 import { useAnswerState } from '../hooks/useAnswerState';
 import { useTaskNavigation } from '../hooks/useTaskNavigation';
 import ExerciseBlocksContainer from '../compnents/ExerciseBlockContainer';
-import { RootState } from '../../../redux/store';
 // import { useCheckAllInputsFilled } from '../hooks/useCheckingInput';
 
 const ExerciseDetailsPage = () => {
@@ -29,7 +28,7 @@ const ExerciseDetailsPage = () => {
   const { currentTaskIndex, goToNextTask } = useTaskNavigation(exercise ? exercise.tasks.length : 0)
 
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-  const answerValue = useSelector((state: RootState) => state.answerValue.value);
+  // const answerValue = useSelector((state: RootState) => state.answerValue.value);
 
   useEffect(() => {
     console.log("User Exercise Progress:", userExerciseProgress);
@@ -43,7 +42,9 @@ const ExerciseDetailsPage = () => {
     }
   }, [userResults]);
 
-
+  const getAnswerValue = (answerValue: Record<string, string[]>) => {
+    return answerValue;
+  }
 
   const handleCheckAnswer = () => {
     if (!exercise) {
@@ -54,7 +55,7 @@ const ExerciseDetailsPage = () => {
     const isCorrect = checkAnswer(
       currentTask._id,
       currentTaskIndex,
-      answerValue,
+      getAnswerValue(),
       exercise
     );
     setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
@@ -93,7 +94,7 @@ const ExerciseDetailsPage = () => {
       <Divider />
 
       <React.Fragment>
-        {currentTask && <ExerciseBlocksContainer parts={parts} currentTask={currentTask} />}
+        {currentTask && <ExerciseBlocksContainer parts={parts} currentTask={currentTask} getAnswer={getAnswerValue} />}
       </React.Fragment>
 
       <Flex>

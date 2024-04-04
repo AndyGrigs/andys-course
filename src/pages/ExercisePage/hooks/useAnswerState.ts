@@ -1,6 +1,4 @@
 import { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAnswerValue } from '../../../redux/slices/answerValueSlice';
 
 interface UseAnswerState {
     answerValue: Record<string, string[]>;
@@ -11,29 +9,39 @@ interface UseAnswerState {
 
 
 export const useAnswerState = (): UseAnswerState => {
-    const dispatch = useDispatch();
-    const [answerValue, setAnswerValueState] = useState<Record<string, string[]>>({});
-    const allInputsEmpty = Object.values(answerValue).every(values => values.every(value => value.trim() === ''));
+    const [answerValue, setAnswerValue] = useState<Record<string, string[]>>({});
+    const getAnswerValue = () => {
+        return answerValue;
+    }
+    // const handleInputChange = (taskId: string, partIndex: number, value: string) => {
+    //     setAnswerValue(prevState => {
+    //         const updatedAnswers = { ...prevState };
+    //         if (!updatedAnswers[taskId]) {
+    //             updatedAnswers[taskId] = [];
+    //         }
+    //         const trimmedValue = typeof value === 'string' ? value.trim() : '';
+    //         updatedAnswers[taskId][partIndex] = trimmedValue;
+    //         return updatedAnswers;
+    //     });
+    // };
+
+
 
     const handleInputChange = useCallback((taskId: string, partIndex: number, value: string) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        dispatch(setAnswerValue((prevState) => {
+        setAnswerValue(prevState => {
             const updatedAnswers = { ...prevState };
             if (!updatedAnswers[taskId]) {
                 updatedAnswers[taskId] = [];
             }
             const trimmedValue = typeof value === 'string' ? value.trim() : '';
             updatedAnswers[taskId][partIndex] = trimmedValue;
-
             return updatedAnswers;
-        }));
-    }, [dispatch]); // Include dispatch in the dependency array
+        });
+    }, []);
 
+    const allInputsEmpty = Object.values(answerValue).every(answers =>
+        answers.every(answer => answer.trim() === "")
+    );
 
-    return {
-        answerValue,
-        handleInputChange,
-        allInputsEmpty,
-    };
+    return { answerValue, handleInputChange, allInputsEmpty };
 }
