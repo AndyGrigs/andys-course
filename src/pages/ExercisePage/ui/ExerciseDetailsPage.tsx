@@ -25,7 +25,7 @@ const ExerciseDetailsPage = () => {
   const { currentTaskIndex, goToNextTask } = useTaskNavigation(exercise ? exercise.tasks.length : 0)
 
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-  const { answerValue, handleInputChange, allInputsEmpty } = useAnswerState()
+  const { answerValue, handleInputChange } = useAnswerState()
 
   const [resultMessage, setResultMessage] = useState<string>('');
 
@@ -90,6 +90,7 @@ const ExerciseDetailsPage = () => {
 
   const currentTask = exercise.tasks[currentTaskIndex];
   const parts = currentTask.content.split("{{input}}");
+  const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every((answer) => answer.trim() === "");
   return (
     <div style={{ textAlign: "center" }}>
       <Title level={3}>{exercise.number}</Title>
@@ -106,8 +107,8 @@ const ExerciseDetailsPage = () => {
       </Flex>
 
       <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
-        <Button disabled={allInputsEmpty} onClick={handleCheckAnswer}>
-          {!allInputsEmpty ? "Наступне Завдання" : "Перевірити відповідь"}
+        <Button disabled={!allInputsEmpty} onClick={handleCheckAnswer}>
+          {allInputsEmpty ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
       </Flex>
     </div>
