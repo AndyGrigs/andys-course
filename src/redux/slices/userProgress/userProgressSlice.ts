@@ -1,56 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { updateUserModuleProgress } from './userProgressOperations';
 
 
 
-interface FetchModuleProgressPayload {
-  userId: string;
-  moduleId: string;
-}
-interface FetchExerciseProgressPayload {
-  userId: string;
-  moduleId: string;
-}
-
-// export const fetchModuleProgress = createAsyncThunk('progress/module/fetch', async (payload: FetchModuleProgressPayload, thunkAPI) => {
-//   try {
-//     const { userId, moduleId } = payload;
-//     const data = await fetchUserModuleProgress(userId, moduleId);
-//     return data;
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     } else {
-//       return thunkAPI.rejectWithValue('An unknown error occurred');
-//     }
-//   }
-// });
-
-
-
-// export const fetchExerciseProgress = createAsyncThunk('progress/exersise/fetch', async (payload: FetchExerciseProgressPayload, thunkAPI) => {
-//   try {
-//     const { userId, moduleId } = payload;
-//     const data = await fetchUserExerciseProgress(userId, moduleId);
-//     return data;
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     } else {
-//       return thunkAPI.rejectWithValue('An unknown error occurred');
-//     }
-//   }
-// });
 
 interface ProgressState {
   moduleProgress: number;
   exerciseProgress: number;
+  error: string | null;
 }
 
 const initialState: ProgressState = {
   moduleProgress: 0,
-  exerciseProgress: 0
+  exerciseProgress: 0,
+  error: null,
 };
 
 export const userProgressSlice = createSlice({
@@ -64,19 +28,32 @@ export const userProgressSlice = createSlice({
       state.exerciseProgress = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchModuleProgress.fulfilled, (state, action) => {
-  //     if (action.payload !== undefined) {
-  //       state.moduleProgress = action.payload;
-  //     }
-  //   });
-  //   builder.addCase(fetchExerciseProgress.fulfilled, (state, action) => {
-  //     if (action.payload !== undefined) {
-  //       state.exerciseProgress = action.payload;
-  //     }
-  //   });
+  extraReducers: (builder) => {
+    builder.addCase(updateUserModuleProgress.fulfilled, (state, action) => {
+      // Assuming the response contains the updated progress
+      // You might need to adjust this based on the actual structure of your response
+      state.moduleProgress = action.payload.moduleProgress;
+      state.exerciseProgress = action.payload.exerciseProgress;
+      state.error = null; // Clear any previous error
+    });
 
-  // }
+    builder.addCase(updateUserModuleProgress.rejected, (state, action) => {
+      // Handle the error case
+      // action.error contains the error message passed by rejectWithValue
+      state.error = action.error.message || 'An unknown error occurred';
+    });
+    //   builder.addCase(fetchModuleProgress.fulfilled, (state, action) => {
+    //     if (action.payload !== undefined) {
+    //       state.moduleProgress = action.payload;
+    //     }
+    //   });
+    //   builder.addCase(fetchExerciseProgress.fulfilled, (state, action) => {
+    //     if (action.payload !== undefined) {
+    //       state.exerciseProgress = action.payload;
+    //     }
+    //   });
+
+  }
 });
 
 export const { setModuleProgress, setExerciseProgress } = userProgressSlice.actions;
