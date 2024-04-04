@@ -6,7 +6,7 @@ import { Loader } from "../../../components/Loader";
 import { useEffect, useState } from "react";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { selectUserExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
 import useExerciseFetching from '../hooks/useExerciseFetching';
 import { useAnswerState } from '../hooks/useAnswerState';
@@ -22,13 +22,13 @@ const ExerciseDetailsPage = () => {
   const [resultMessage, setResultMessage] = useState("");
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
   const { checkAnswer, userResults } = useCheckAnswer();
-
   const { exercise, isLoading, isError } = useExerciseFetching(exerciseId ?? '');
 
   const { currentTaskIndex, goToNextTask } = useTaskNavigation(exercise ? exercise.tasks.length : 0)
 
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
   // const answerValue = useSelector((state: RootState) => state.answerValue.value);
+  const { answerValue, handleInputChange, allInputsEmpty } = useAnswerState()
 
   useEffect(() => {
     console.log("User Exercise Progress:", userExerciseProgress);
@@ -42,9 +42,6 @@ const ExerciseDetailsPage = () => {
     }
   }, [userResults]);
 
-  const getAnswerValue = (answerValue: Record<string, string[]>) => {
-    return answerValue;
-  }
 
   const handleCheckAnswer = () => {
     if (!exercise) {
@@ -55,7 +52,7 @@ const ExerciseDetailsPage = () => {
     const isCorrect = checkAnswer(
       currentTask._id,
       currentTaskIndex,
-      getAnswerValue(),
+      answerValue,
       exercise
     );
     setResultMessage(isCorrect ? "Correct!" : "Incorrect. Try again.");
@@ -94,7 +91,7 @@ const ExerciseDetailsPage = () => {
       <Divider />
 
       <React.Fragment>
-        {currentTask && <ExerciseBlocksContainer parts={parts} currentTask={currentTask} getAnswer={getAnswerValue} />}
+        {currentTask && <ExerciseBlocksContainer parts={parts} currentTask={currentTask} handleInputChange={handleInputChange} answerValue={answerValue} />}
       </React.Fragment>
 
       <Flex>
@@ -117,7 +114,7 @@ const ExerciseDetailsPage = () => {
       </Flex>
 
       <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
-        <Button onClick={handleCheckAnswer}>
+        <Button disabled={allInputsEmpty} onClick={handleCheckAnswer}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
       </Flex>

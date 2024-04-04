@@ -7,7 +7,7 @@ import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { useCreateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
 import { setCurrentExercise } from '../../../redux/slices/exerciseSlice';
-import { setExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
 const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();

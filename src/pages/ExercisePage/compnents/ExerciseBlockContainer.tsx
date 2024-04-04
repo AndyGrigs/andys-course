@@ -7,14 +7,13 @@ import { useAnswerState } from '../hooks/useAnswerState';
 interface ExerciseBlockProps {
     parts: string[];
     currentTask: ITask;
-    getAnswer: (answerValue: Record<string, string[]>) => Record<string, string[]>;
+    handleInputChange: (taskId: string, partIndex: number, value: string) => void;
+    answerValue: Record<string, string[]>;
 }
 
-const ExerciseBlocksContainer: React.FC<ExerciseBlockProps> = ({ parts, currentTask, getAnswer }) => {
+const ExerciseBlocksContainer: React.FC<ExerciseBlockProps> = ({ parts, currentTask, handleInputChange, answerValue }) => {
     const inputRef = useRef<InputRef>(null);
 
-    const { answerValue, handleInputChange } = useAnswerState();
-    getAnswer(answerValue)
 
 
 

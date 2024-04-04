@@ -39,8 +39,7 @@ export const useAnswerState = (): UseAnswerState => {
         });
     }, []);
 
-    const allInputsEmpty = Object.values(answerValue).every(answers =>
-        answers.every(answer => answer.trim() === "")
+    const allInputsEmpty = Object.values(answerValue).every(answers => answers.every(answer => answer.trim() === "")
     );
 
     return { answerValue, handleInputChange, allInputsEmpty };
