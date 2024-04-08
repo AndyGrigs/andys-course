@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 import { InputRef } from "antd/lib/input";
 import { selectUser } from "../../../redux/slices/authSlice";
-import { selectUserExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
 
 const ExerciseDetailsPage = () => {

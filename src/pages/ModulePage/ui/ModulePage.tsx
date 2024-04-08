@@ -8,7 +8,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useCreateUserModuleProgressMutation } from "../../../redux/services/progressApi";
-import { setModuleProgress } from '../../../redux/slices/userProgressSlice';
+import { setModuleProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
