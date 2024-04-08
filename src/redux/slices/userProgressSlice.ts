@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { updateUserModuleProgress } from './userProgressOperations';
 
 
 

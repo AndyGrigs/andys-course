@@ -5,7 +5,6 @@ import { listenerMiddleware } from "../middleware/authMid";
 import module from "./slices/moduleSlice";
 import { moduleApi } from "./services/modules";
 import { progressApi } from "./services/progressApi";
-import userProgressReducer from "./slices/userProgress/userProgressSlice";
 import { exercisesApi } from "./services/exersiceApi";
 import exerciseReducer from "./slices/exerciseSlice";
 // import answerValueReducer from './slices/answerValueSlice';
