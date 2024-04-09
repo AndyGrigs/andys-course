@@ -1,5 +1,5 @@
 import { IExercise } from "../../types";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { exercisesApi } from "../services/exersiceApi";
 import { RootState } from "../store";
 
@@ -35,7 +35,7 @@ export default exerciseSlice.reducer;
 
 export const { setCurrentExercise } = exerciseSlice.actions;
 
-export const selectOneExercise = (state: RootState) =>
+export const selectCurrentExercise = (state: RootState) =>
   state.exercise.currentExercise;
 
 export const selectExerciseById = (state: RootState, exerciseId: string) =>

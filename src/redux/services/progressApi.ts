@@ -74,7 +74,7 @@ export const progressApi = api.injectEndpoints({
 
     updateUserExerciseProgress: builder.mutation<
       ExerciseProgress,
-      { userId: string; progress: object }
+      { userId: string; progress: number }
     >({
       query: ({ userId, progress }) => ({
         url: `progress/exercise/update/${userId}`,

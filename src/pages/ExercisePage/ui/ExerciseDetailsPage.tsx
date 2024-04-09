@@ -8,16 +8,15 @@ import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 import { useSelector } from "react-redux";
-import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 import { InputRef } from "antd/lib/input";
-import { selectUser } from "../../../redux/slices/authSlice";
 import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
+import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress';
+import { useSendProgress } from '../hooks/useSendUserProgress';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-  const user = useSelector(selectUser);
-
+  const { isLoading: isProgressLoading, error: progressError, data: progressData } = useSendProgress();
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -33,7 +32,6 @@ const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-  const currentModule = useSelector(selectCurrentModule);
 
 
   useEffect(() => {
@@ -55,6 +53,18 @@ const ExerciseDetailsPage = () => {
       setIconClass("");
     }
   }, [resultMessage]);
+
+
+  useCalculateExerciseProgress({ userResults })
+
+  useEffect(() => {
+    if (progressError) {
+      console.error("Error updating user progress:", progressError);
+    }
+    if (progressData) {
+      console.log("User progress updated successfully:", progressData);
+    }
+  }, [userResults]);
 
   useEffect(() => {
     if (userResults) {

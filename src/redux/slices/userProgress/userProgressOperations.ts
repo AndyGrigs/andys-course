@@ -1,8 +1,8 @@
-// userProgressOperations.ts
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useUpdateUserModuleProgressMutation } from '../../services/progressApi';
+/* eslint-disable @typescript-eslint/ban-types */
+import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
+import { useUpdateUserExerciseProgressMutation, useUpdateUserModuleProgressMutation } from '../../services/progressApi';
 
-// Define the async thunk action creator
+
 export const updateUserModuleProgress = createAsyncThunk(
     'userProgress/update',
     async ({ userId, progress }: { userId: string; progress: object }, thunkAPI) => {
@@ -19,6 +19,54 @@ export const updateUserModuleProgress = createAsyncThunk(
         }
     }
 );
+
+interface UpdateUserExerciseProgressPayload {
+    userId: string;
+    progress: number;
+}
+
+type UpdateUserExerciseProgressReturnValue = unknown;
+
+
+
+// export const updateUserExerciseProgressThunk = createAsyncThunk(
+//  'userProgress/updateExerciseProgress',
+//  async ({ userId, progress }: { userId: string; progress: number }, thunkAPI) => {
+//     try {
+//       // Dispatch the mutation action
+//       const action = useUpdateUserExerciseProgressMutation({ userId, progress });
+//       // Assuming you have access to the Redux store's dispatch function
+//       const dispatch = thunkAPI.dispatch;
+//       await dispatch(action);
+//       // Optionally, you can return the result of the mutation
+//       return action.payload;
+//     } catch (error) {
+//       // Handle errors
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//  }
+// );
+
+// export const updateUserExerciseProgress: AsyncThunk<
+//     UpdateUserExerciseProgressReturnValue,
+//     UpdateUserExerciseProgressPayload,
+//     {}
+// > = createAsyncThunk(
+//     'userProgress/update',
+//     async ({ userId, progress }: { userId: string; progress: number }, thunkAPI) => {
+//         try { const [] = useUpdateUserExerciseProgressMutation();
+           
+//             const response = await updateUserModuleProgress({ userId, progress }).unwrap();
+//             return response;
+//         } catch (error) {
+//             if (error instanceof Error) {
+//                 return thunkAPI.rejectWithValue(error.message);
+//             } else {
+//                 return thunkAPI.rejectWithValue('An unknown error occurred');
+//             }
+//         }
+//     }
+// );
 
 // interface FetchModuleProgressPayload {
 //   userId: string;
