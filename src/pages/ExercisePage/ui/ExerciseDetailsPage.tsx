@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
+// import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
 import useExerciseFetching from '../hooks/useExerciseFetching';
 import { useAnswerState } from '../hooks/useAnswerState';

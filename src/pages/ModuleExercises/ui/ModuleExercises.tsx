@@ -7,7 +7,7 @@ import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { useCreateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
 import { setCurrentExercise } from '../../../redux/slices/exerciseSlice';
-import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
+// import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
 const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
@@ -27,7 +27,7 @@ const ModuleExercises = () => {
 
     try {
       const existingProgress = user?.exerciseProgress.find((progress) => {
-        dispatch(setExerciseProgress(progress.progress))
+        // dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId
       })
 
@@ -43,7 +43,7 @@ const ModuleExercises = () => {
             completed: "false",
           }
         }).unwrap()
-        dispatch(setExerciseProgress(result.progress))
+        // dispatch(setExerciseProgress(result.progress))
         console.log("Success:", result);
       } else {
         console.log("Progress already exists for this exercise.");
