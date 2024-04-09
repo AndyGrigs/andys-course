@@ -35,7 +35,6 @@ export const userProgressSlice = createSlice({
     });
 
     builder.addCase(updateUserModuleProgress.rejected, (state, action) => {
-
       state.error = action.error.message || 'An unknown error occurred';
     });
 

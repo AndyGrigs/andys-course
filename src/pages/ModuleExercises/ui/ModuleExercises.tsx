@@ -26,6 +26,7 @@ const ModuleExercises = () => {
   const handleCreateUserExerciseProgress = async (exerciseId: string, exerciseNumber: number) => {
 
     try {
+      //call to the database or invalidate tag
       const existingProgress = user?.exerciseProgress.find((progress) => {
         dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId

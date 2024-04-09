@@ -4,14 +4,17 @@ import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { AppDispatch } from '../../../redux/store';
+import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+import { selectUser } from '../../../redux/slices/authSlice';
 
 interface UserResults {
     [taskId: string]: boolean;
 }
 
 export const useCalculateExerciseProgress = ({ userResults }: { userResults: UserResults }) => {
-
+    const user = useSelector(selectUser)
     const currentExercise = useSelector(selectCurrentExercise);
+    const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -24,7 +27,15 @@ export const useCalculateExerciseProgress = ({ userResults }: { userResults: Use
             const totalTasks = currentExercise.tasks.length;
             const completedTasks = Object.keys(userResults).length;
             const progress = Math.floor((completedTasks / totalTasks) * 100);
-            dispatch(setExerciseProgress(progress))
+
+            const data = {
+                userId: user?._id || '', // Provide an empty string as a default value
+                exerciseId: currentExercise?._id as string || '',
+                progress
+            };
+            updateUserExerciseProgress(data)
+            //відправка в бд
+            // dispatch(setExerciseProgress(progress))
 
         } else {
             dispatch(setExerciseProgress(0));

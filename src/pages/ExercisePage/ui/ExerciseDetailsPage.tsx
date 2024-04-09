@@ -18,7 +18,7 @@ import { useAppSelector } from '../../../redux/slices/reduxHooks';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-  const dispatch: AppDispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -44,11 +44,11 @@ const ExerciseDetailsPage = () => {
 
 
 
-  useEffect(() => {
-    return () => {
-      dispatch(updateUserExerciseProgress({ exerciseId: exercise?._id || "", progress: progress }));
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(updateUserExerciseProgress({ exerciseId: exercise?._id || "", progress: progress }));
+  //   };
+  // }, [dispatch]);
 
 
 
