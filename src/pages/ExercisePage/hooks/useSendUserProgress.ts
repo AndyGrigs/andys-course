@@ -5,19 +5,20 @@ import { useAppSelector } from '../../../redux/slices/reduxHooks';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 
 export const useSendProgress = () => {
     const user = useAppSelector(selectUser);
     const progress = useAppSelector(selectUserExerciseProgress);
 
+    const userAndProgress = useMemo(() => ({ user, progress }), [user, progress]);
     // Extract the mutation trigger function and state object
     const [triggerMutation, { data, error, isLoading }] = useUpdateUserExerciseProgressMutation();
 
     useEffect(() => {
-        if (user?._id && progress) {
-            triggerMutation({ userId: user._id, progress })
+        if (userAndProgress.user?._id && userAndProgress.progress) {
+            triggerMutation({ userId: user?._id ?? '', progress })
                 .unwrap()
                 .then((result) => {
                     console.log(result);
@@ -26,7 +27,7 @@ export const useSendProgress = () => {
                     console.log(error);
                 });
         }
-    }, [user, progress, triggerMutation]);
+    }, [user, userAndProgress.progress, triggerMutation]);
 
     // You can return isLoading, error, or data as needed
     return { isLoading, error, data };

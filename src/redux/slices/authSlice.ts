@@ -1,7 +1,12 @@
 import { IUser } from "../../types";
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../services/auth";
 import { RootState } from "../store";
+
+interface UpdateExerciseProgressPayload {
+  exerciseId: string;
+  progress: number;
+}
 
 interface InitialState {
   user: (IUser & { token: string }) | null;
@@ -18,6 +23,16 @@ const slice = createSlice({
   initialState,
   reducers: {
     logout: () => initialState,
+    updateUserExerciseProgress: (state, action: PayloadAction<UpdateExerciseProgressPayload>) => {
+      if (state.user) {
+        state.user.exerciseProgress.find(progress => {
+          progress.exerciseId === action.payload.exerciseId;
+          if (progress) {
+            progress.progress = action.payload.progress;
+          }
+        })
+      }
+    }
   },
   extraReducers: (builder) => {
     builder

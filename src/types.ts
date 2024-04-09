@@ -16,10 +16,7 @@ export interface ModuleProgress {
 
 export interface ExerciseProgress {
   exerciseId: string;
-  exerciseNumber?: number;
-  exerciseAnswers: Map<string, string>;
   progress: number;
-  completed: boolean;
 }
 
 

@@ -23,7 +23,7 @@ export const useCalculateExerciseProgress = ({ userResults }: { userResults: Use
         if (currentExercise) {
             const totalTasks = currentExercise.tasks.length;
             const completedTasks = Object.keys(userResults).length;
-            const progress = (completedTasks / totalTasks) * 100;
+            const progress = Math.floor((completedTasks / totalTasks) * 100);
             dispatch(setExerciseProgress(progress))
 
         } else {

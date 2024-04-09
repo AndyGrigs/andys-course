@@ -7,16 +7,18 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
 import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress';
-import { useSendProgress } from '../hooks/useSendUserProgress';
+import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+import { selectUser } from '../../../redux/slices/authSlice';
+import { useAppSelector } from '../../../redux/slices/reduxHooks';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-  const { isLoading: isProgressLoading, error: progressError, data: progressData } = useSendProgress();
+  const dispatch: AppDispatch = useDispatch();
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -32,11 +34,23 @@ const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-
+  const user = useAppSelector(selectUser);
+  const progress = useAppSelector(selectUserExerciseProgress);
+  const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
 
   useEffect(() => {
     console.log("User Exercise Progress:", userExerciseProgress);
   }, [userExerciseProgress]);
+
+
+
+  useEffect(() => {
+    return () => {
+      dispatch(updateUserExerciseProgress({ exerciseId: exercise?._id || "", progress: progress }));
+    };
+  }, [dispatch]);
+
+
 
 
   useEffect(() => {
@@ -57,14 +71,6 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults })
 
-  useEffect(() => {
-    if (progressError) {
-      console.error("Error updating user progress:", progressError);
-    }
-    if (progressData) {
-      console.log("User progress updated successfully:", progressData);
-    }
-  }, [userResults]);
 
   useEffect(() => {
     if (userResults) {
@@ -91,6 +97,21 @@ const ExerciseDetailsPage = () => {
     []
   );
 
+  const handleAddProgress = async () => {
+    try {
+
+      const data = {
+        userId: user?._id || '', // Provide an empty string as a default value
+        exerciseId: exercise?._id as string || '',
+        progress
+      };
+
+      await updateUserExerciseProgress(data);
+    } catch (error) {
+      console.error("Error updating user progress:", error);
+    }
+  };
+
   // const allInputsEmpty = Object.values(answerValue).every((answers) =>
   //   answers.every((answer) => answer.trim() === "")
   // );
@@ -115,6 +136,7 @@ const ExerciseDetailsPage = () => {
 
   const clearResultMessage = () => {
     setResultMessage("");
+    handleAddProgress()
   };
 
   const goToNextTask = () => {
@@ -132,6 +154,7 @@ const ExerciseDetailsPage = () => {
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
       setIsAnswerChecked(false);
+
     }
   };
 

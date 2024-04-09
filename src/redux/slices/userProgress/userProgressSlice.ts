@@ -38,16 +38,6 @@ export const userProgressSlice = createSlice({
 
       state.error = action.error.message || 'An unknown error occurred';
     });
-    //   builder.addCase(fetchModuleProgress.fulfilled, (state, action) => {
-    //     if (action.payload !== undefined) {
-    //       state.moduleProgress = action.payload;
-    //     }
-    //   });
-    //   builder.addCase(fetchExerciseProgress.fulfilled, (state, action) => {
-    //     if (action.payload !== undefined) {
-    //       state.exerciseProgress = action.payload;
-    //     }
-    //   });
 
   }
 });
