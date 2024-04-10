@@ -27,7 +27,7 @@ const ModuleExercises = () => {
 
     try {
       //call to the database or invalidate tag
-      const existingProgress = user?.exerciseProgress.find((progress) => {
+      const existingProgress = user?.exerciseProgress.find((progress: { progress: number; exerciseId: string; }) => {
         dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId
       })
@@ -75,7 +75,7 @@ const ModuleExercises = () => {
       dataSource={exercises}
       renderItem={(exercise) => {
         const exerciseProgress = user?.exerciseProgress.find(
-          (progress) => progress.exerciseId === exercise._id
+          (progress: { exerciseId: string; }) => progress.exerciseId === exercise._id
         );
 
         const progressPercentage = exerciseProgress

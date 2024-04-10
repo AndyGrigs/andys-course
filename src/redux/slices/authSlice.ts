@@ -23,7 +23,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     logout: () => initialState,
-    updateUserExerciseProgress: (state, action: PayloadAction<UpdateExerciseProgressPayload>) => {
+    updateLokalUserExerciseProgress: (state, action: PayloadAction<UpdateExerciseProgressPayload>) => {
       if (state.user) {
         state.user.exerciseProgress.find(progress => {
           progress.exerciseId === action.payload.exerciseId;
@@ -54,7 +54,7 @@ const slice = createSlice({
   },
 });
 
-export const { logout } = slice.actions;
+export const { logout, updateLokalUserExerciseProgress } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) =>

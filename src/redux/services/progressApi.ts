@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { api } from "./api";
 import { ModuleProgress, ExerciseProgress } from "../../types";
 
+// Define tags for the queries
+// export const USER_EXERCISE_PROGRESS_QUERY_TAG = 'UserExerciseProgress';
+
+// type UserExerciseProgressTag = { type: 'UserExerciseProgress', id: 'LIST' };
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserModuleProgress: builder.query<
@@ -54,13 +59,17 @@ export const progressApi = api.injectEndpoints({
 
     getUserExerciseProgress: builder.query<
       ExerciseProgress,
-      { userId: string; moduleId: string }
+      { userId: string; exerciseId: string }
     >({
-      query: ({ userId, moduleId }) => ({
-        url: `/progress/exercise/${userId}/${moduleId}`,
+      query: ({ userId, exerciseId }) => ({
+        url: `/progress/exercise/${userId}/${exerciseId}`,
         method: "GET",
       }),
+      //@ts-ignore
+      // providesTags: (result, error, { userId, exerciseId }) => [{ type: 'UserExerciseProgress', id: '7cj7echs0wq0' } as UserExerciseProgressTag],
     }),
+
+
     createUserExerciseProgress: builder.mutation<
       ExerciseProgress,
       { userId: string; progress: object }
@@ -81,6 +90,9 @@ export const progressApi = api.injectEndpoints({
         method: "PUT",
         body: { exerciseId, progress },
       }),
+      //@ts-ignore
+      // invalidatesTags: [{ type: 'UserExerciseProgress', id: '7cj7echs0wq0' }],
+
     }),
   }),
 });

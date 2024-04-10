@@ -12,6 +12,7 @@ import { setModuleProgress } from '../../../redux/slices/userProgress/userProgre
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
+
   const user = useSelector(selectUser);
 
   const {

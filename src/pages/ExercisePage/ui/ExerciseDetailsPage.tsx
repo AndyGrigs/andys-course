@@ -15,10 +15,14 @@ import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress
 import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { useAppSelector } from '../../../redux/slices/reduxHooks';
+import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-  // const dispatch: AppDispatch = useDispatch();
+
+  const dispatch = useDispatch();
+  const user = useAppSelector(selectUser);
+
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
@@ -34,9 +38,10 @@ const ExerciseDetailsPage = () => {
     isError,
   } = useGetOneExercisesQuery(exerciseId);
   const userExerciseProgress = useSelector(selectUserExerciseProgress);
-  const user = useAppSelector(selectUser);
   const progress = useAppSelector(selectUserExerciseProgress);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
+
+
 
   useEffect(() => {
     console.log("User Exercise Progress:", userExerciseProgress);
@@ -69,8 +74,9 @@ const ExerciseDetailsPage = () => {
   }, [resultMessage]);
 
 
-  useCalculateExerciseProgress({ userResults })
+  const isEndOfExercise = currentTaskIndex === (exercise?.tasks.length ?? 0) - 1;
 
+  useCalculateExerciseProgress({ userResults })
 
   useEffect(() => {
     if (userResults) {
@@ -101,7 +107,7 @@ const ExerciseDetailsPage = () => {
     try {
 
       const data = {
-        userId: user?._id || '', // Provide an empty string as a default value
+        userId: user?._id || '',
         exerciseId: exercise?._id as string || '',
         progress
       };
@@ -171,6 +177,7 @@ const ExerciseDetailsPage = () => {
   const currentTask = exercise.tasks[currentTaskIndex];
   const parts = currentTask.content.split("{{input}}");
   const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every((answer) => answer.trim() === "");
+
 
   return (
     <div style={{ textAlign: "center" }}>
