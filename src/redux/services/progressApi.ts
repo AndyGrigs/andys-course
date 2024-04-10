@@ -65,8 +65,7 @@ export const progressApi = api.injectEndpoints({
         url: `/progress/exercise/${userId}/${exerciseId}`,
         method: "GET",
       }),
-      //@ts-ignore
-      // providesTags: (result, error, { userId, exerciseId }) => [{ type: 'UserExerciseProgress', id: '7cj7echs0wq0' } as UserExerciseProgressTag],
+
     }),
 
 
@@ -91,8 +90,18 @@ export const progressApi = api.injectEndpoints({
         body: { exerciseId, progress },
       }),
       //@ts-ignore
-      // invalidatesTags: [{ type: 'UserExerciseProgress', id: '7cj7echs0wq0' }],
+      invalidateTags: ['User'],
+    }),
 
+    updateUserExerciseCompleted: builder.mutation<
+      ExerciseProgress,
+      { userId: string; exerciseId: string, completed: boolean }
+    >({
+      query: ({ userId, exerciseId, completed }) => ({
+        url: `progress/exercise/update/completed/${userId}`,
+        method: "PUT",
+        body: { exerciseId, completed },
+      }),
     }),
   }),
 });
@@ -104,9 +113,11 @@ export const {
   useUpdateUserExerciseProgressMutation,
   useCreateUserExerciseProgressMutation,
   useCreateUserModuleProgressMutation,
+  useUpdateUserExerciseCompletedMutation
 } = progressApi;
 
 export const { endpoints: {
   updateUserExerciseProgress,
-  updateUserModuleProgress
+  updateUserModuleProgress,
+  updateUserExerciseCompleted
 } } = progressApi;

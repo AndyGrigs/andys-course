@@ -2,11 +2,13 @@ import { IUser } from "../../types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../services/auth";
 import { RootState } from "../store";
+import { progressApi } from '../services/progressApi';
 
 interface UpdateExerciseProgressPayload {
   exerciseId: string;
   progress: number;
 }
+
 
 interface InitialState {
   user: (IUser & { token: string }) | null;
@@ -32,13 +34,26 @@ const slice = createSlice({
           }
         })
       }
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
         state.user = action.payload;
         state.isAuthenticated = true;
+      })
+      .addMatcher(progressApi.endpoints.updateUserExerciseProgress.matchFulfilled, (state, action) => {
+        if (state.user) {
+          const updatedProgress = action.payload; // Припустимо, це об'єкт з оновленим прогресом
+          // Знайдіть вправу в списку прогресу користувача і оновіть її
+          state.user.exerciseProgress = state.user.exerciseProgress.map(progress => {
+            if (progress.exerciseId === updatedProgress.exerciseId) {
+              return updatedProgress; // Оновіть прогрес цієї вправи
+            }
+            return progress; // Збережіть старий прогрес для інших вправ
+          });
+        }
+
       })
       .addMatcher(
         authApi.endpoints.register.matchFulfilled,

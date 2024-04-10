@@ -17,6 +17,7 @@ export interface ModuleProgress {
 export interface ExerciseProgress {
   exerciseId: string;
   progress: number;
+
 }
 
 
@@ -25,19 +26,7 @@ export interface IUser {
   fullName: string;
   email: string;
   passwordHash: string;
-  // moduleProgress: {
-  //   moduleId: string;
-  //   moduleNumber: number;
-  //   progress: number;
-  //   completed: "in_progress" | "completed" | "not_started";
-  // }[];
   moduleProgress: ModuleProgress[];
-  // exerciseProgress: {
-  //   exerciseId: string;
-  //   exerciseNumber: number;
-  //   progress: number;
-  //   completed: "in_progress" | "completed" | "not_started";
-  // }[];
   exerciseProgress: ExerciseProgress[];
   avatarUrl: string;
   createdAt: string;

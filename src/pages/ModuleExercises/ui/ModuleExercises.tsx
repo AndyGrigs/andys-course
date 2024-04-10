@@ -26,7 +26,6 @@ const ModuleExercises = () => {
   const handleCreateUserExerciseProgress = async (exerciseId: string, exerciseNumber: number) => {
 
     try {
-      //call to the database or invalidate tag
       const existingProgress = user?.exerciseProgress.find((progress: { progress: number; exerciseId: string; }) => {
         dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId
@@ -45,7 +44,6 @@ const ModuleExercises = () => {
           }
         }).unwrap()
         dispatch(setExerciseProgress(result.progress))
-        console.log("Success:", result);
       } else {
         console.log("Progress already exists for this exercise.");
       }
