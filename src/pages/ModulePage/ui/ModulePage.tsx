@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
-import { useCreateUserModuleProgressMutation } from "../../../redux/services/progressApi";
+import { useCreateUserModuleProgressMutation, useGetAllUserModuleProgressQuery } from "../../../redux/services/progressApi";
 import { setModuleProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
 const ModulePage: React.FC = () => {
@@ -24,10 +24,10 @@ const ModulePage: React.FC = () => {
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
 
   const navigate = useNavigate();
+  const { data: allUserModuleProgresses, isLoading: isAllUserModuleProgressesLoading, isError: isAllUserModuleProgressesError } = useGetAllUserModuleProgressQuery(user?._id ?? '');
 
   const handleCreateUserModuleProgress = async (moduleId: string) => {
     try {
-      // If the progress does not exist in the local storage, find it in the user's moduleProgress
       const existingProgress = user?.moduleProgress.find((progress) => {
         dispatch(setModuleProgress(progress.progress))
         return progress.moduleId === moduleId;
@@ -60,6 +60,14 @@ const ModulePage: React.FC = () => {
     navigate(`/module/${moduleId}/exercises`);
   };
 
+  if (isModulesLoading || isAllUserModuleProgressesLoading) {
+    return <Loader />;
+  }
+
+  if (isModulesError || isAllUserModuleProgressesError) {
+    return <div>Error loading Modules...</div>;
+  }
+
   if (isModulesLoading) {
     return <Loader />;
   }
@@ -83,7 +91,7 @@ const ModulePage: React.FC = () => {
         dataSource={modulesData}
         renderItem={(module) => {
           // Find the progress object for the current module
-          const moduleProgress = user?.moduleProgress.find(
+          const moduleProgress = allUserModuleProgresses?.find(
             (progress) => progress.moduleId === module._id
           );
 

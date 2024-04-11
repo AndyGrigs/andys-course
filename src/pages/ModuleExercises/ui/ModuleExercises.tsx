@@ -5,7 +5,7 @@ import { Loader } from "../../../components/Loader";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 import { selectUser } from '../../../redux/slices/authSlice';
-import { useCreateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+import { useCreateUserExerciseProgressMutation, useGetAllUserExerciseProgressQuery } from '../../../redux/services/progressApi';
 import { setCurrentExercise } from '../../../redux/slices/exerciseSlice';
 import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
@@ -16,6 +16,7 @@ const ModuleExercises = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(selectUser);
+  const { data: allUserExerciseProgresses, isLoading: isAllUserExerciseProgressesLoading, isError: isAllUserExerciseProgressesError } = useGetAllUserExerciseProgressQuery(user?._id ?? '');
 
   const [createUserExerciseProgress] = useCreateUserExerciseProgressMutation();
 
@@ -52,6 +53,14 @@ const ModuleExercises = () => {
     }
   };
 
+  if (isAllUserExerciseProgressesLoading) {
+    return <Loader />;
+  }
+
+  if (isAllUserExerciseProgressesError) {
+    return (<div> Error loading Exercise...</div>)
+  }
+
   if (isLoading) {
     return <Loader />;
   }
@@ -72,7 +81,7 @@ const ModuleExercises = () => {
     <List
       dataSource={exercises}
       renderItem={(exercise) => {
-        const exerciseProgress = user?.exerciseProgress.find(
+        const exerciseProgress = allUserExerciseProgresses?.find(
           (progress: { exerciseId: string; }) => progress.exerciseId === exercise._id
         );
 

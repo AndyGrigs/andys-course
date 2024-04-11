@@ -39,15 +39,15 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
-    updateUserModuleProgress: builder.mutation({
-      query: ({ userId, progress }) => ({
+    updateUserModuleProgress: builder.mutation<ModuleProgress, { userId: string, moduleId: string, progress: number }>({
+      query: ({ userId, moduleId, progress }) => ({
         url: `progress/module/update/${userId}`,
         method: "PUT",
-        body: progress,
+        body: { moduleId, progress },
       }),
     }),
 
-    getAllUserExerciseeProgress: builder.query<
+    getAllUserExerciseProgress: builder.query<
       ExerciseProgress[],
       string | undefined
     >({
@@ -89,8 +89,6 @@ export const progressApi = api.injectEndpoints({
         method: "PUT",
         body: { exerciseId, progress },
       }),
-      //@ts-ignore
-      invalidateTags: ['User'],
     }),
 
     updateUserExerciseCompleted: builder.mutation<
@@ -107,6 +105,8 @@ export const progressApi = api.injectEndpoints({
 });
 
 export const {
+  useGetAllUserModuleProgressQuery,
+  useGetAllUserExerciseProgressQuery,
   useGetUserModuleProgressQuery,
   useGetUserExerciseProgressQuery,
   useUpdateUserModuleProgressMutation,

@@ -7,6 +7,7 @@ import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/p
 import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 
+
 const useExerciseNavigation = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -16,9 +17,9 @@ const useExerciseNavigation = () => {
    const currentModule = useSelector(selectCurrentModule)
 
 
+
+
    const handleRepeatExercise = async (moduleId: string, exerciseId: string) => {
-      // Logic to repeat the current exercise
-      // For example, navigate to the same exercise page
       navigate(`/module/${moduleId}/exercises/${exerciseId}`);
       dispatch(setExerciseProgress(0))
       dispatch(updateLokalUserExerciseProgress({ exerciseId, progress: 0 }))
@@ -36,6 +37,7 @@ const useExerciseNavigation = () => {
    };
 
    const handleExerciseList = async (moduleId: string) => {
+
       navigate(`/module/${moduleId}/exercises`);
       try {
          const finalResult = {
@@ -47,6 +49,7 @@ const useExerciseNavigation = () => {
       } catch (error) {
          console.log(error)
       }
+
    };
 
    return { handleRepeatExercise, handleExerciseList };

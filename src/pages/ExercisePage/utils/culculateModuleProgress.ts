@@ -9,9 +9,11 @@ export const useCalculateModuleProgress = () => {
 
     const completedExercises = user?.exerciseProgress?.filter(exercise => exercise.progress === 100) || [];
 
-    const completedPercentage = currentModule
-        ? (completedExercises.length / currentModule.exercises.length) * 100
+    const moduleProgress = currentModule
+        ? Math.floor((completedExercises.length / currentModule.exercises.length) * 100)
         : 0;
 
-    return { completedPercentage, completedExercises };
+
+
+    return { moduleProgress };
 }

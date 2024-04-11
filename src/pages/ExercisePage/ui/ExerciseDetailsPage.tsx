@@ -12,12 +12,13 @@ import { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
 import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress';
-import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+import { useUpdateUserExerciseProgressMutation, useUpdateUserModuleProgressMutation } from '../../../redux/services/progressApi';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { useAppSelector } from '../../../redux/slices/reduxHooks';
 import ResultsModal from './ResultsModal';
 import useExerciseNavigation from '../hooks/useExerciseNavigation';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
+import { useCalculateModuleProgress } from '../utils/culculateModuleProgress';
 // import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
 const ExerciseDetailsPage = () => {
@@ -46,6 +47,13 @@ const ExerciseDetailsPage = () => {
   const currentModule = useAppSelector(selectCurrentModule)
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
+  const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
+  const { moduleProgress } = useCalculateModuleProgress();
+
+
+
+
+
 
   const handleCloseModal = () => {
     setIsModalResultVisible(false);
@@ -63,6 +71,18 @@ const ExerciseDetailsPage = () => {
       console.log(error)
     }
   }
+  const handleModuleProgress = async () => {
+    try {
+      const data = {
+        userId: user?._id || '',
+        moduleId: currentModule?._id || '',
+        progress: moduleProgress
+      };
+      await updateUserModuleProgress(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     console.log("User Exercise Progress:", progress);
@@ -73,6 +93,7 @@ const ExerciseDetailsPage = () => {
     if (progress === 100) {
       setIsModalResultVisible(true);
       handleFinalProgress()
+      handleModuleProgress()
     }
   }, [progress]);
 

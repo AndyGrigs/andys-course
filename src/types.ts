@@ -11,7 +11,6 @@ export interface ModuleProgress {
   moduleId: string;
   moduleNumber?: number;
   progress: number;
-  completed: boolean;
 }
 
 export interface ExerciseProgress {
@@ -49,6 +48,7 @@ export interface IVocabulary {
   id: string;
 }
 export interface ITask {
+  image: string;
   content: string;
   solution: string;
   _id: string;
