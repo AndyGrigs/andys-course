@@ -28,8 +28,8 @@ const slice = createSlice({
     updateLokalUserExerciseProgress: (state, action: PayloadAction<UpdateExerciseProgressPayload>) => {
       if (state.user) {
         state.user.exerciseProgress.find(progress => {
-          progress.exerciseId === action.payload.exerciseId;
-          if (progress) {
+          if (progress.exerciseId === action.payload.exerciseId
+          ) {
             progress.progress = action.payload.progress;
           }
         })
@@ -44,13 +44,13 @@ const slice = createSlice({
       })
       .addMatcher(progressApi.endpoints.updateUserExerciseProgress.matchFulfilled, (state, action) => {
         if (state.user) {
-          const updatedProgress = action.payload; // Припустимо, це об'єкт з оновленим прогресом
-          // Знайдіть вправу в списку прогресу користувача і оновіть її
+          const updatedProgress = action.payload;
+
           state.user.exerciseProgress = state.user.exerciseProgress.map(progress => {
             if (progress.exerciseId === updatedProgress.exerciseId) {
-              return updatedProgress; // Оновіть прогрес цієї вправи
+              return updatedProgress;
             }
-            return progress; // Збережіть старий прогрес для інших вправ
+            return progress;
           });
         }
 
