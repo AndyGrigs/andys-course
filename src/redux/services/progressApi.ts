@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { api } from "./api";
 import { ModuleProgress, ExerciseProgress } from "../../types";
 
+// Define tags for the queries
+// export const USER_EXERCISE_PROGRESS_QUERY_TAG = 'UserExerciseProgress';
+
+// type UserExerciseProgressTag = { type: 'UserExerciseProgress', id: 'LIST' };
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserModuleProgress: builder.query<
@@ -34,15 +39,15 @@ export const progressApi = api.injectEndpoints({
       }),
     }),
 
-    updateUserModuleProgress: builder.mutation({
-      query: ({ userId, progress }) => ({
+    updateUserModuleProgress: builder.mutation<ModuleProgress, { userId: string, moduleId: string, progress: number }>({
+      query: ({ userId, moduleId, progress }) => ({
         url: `progress/module/update/${userId}`,
         method: "PUT",
-        body: progress,
+        body: { moduleId, progress },
       }),
     }),
 
-    getAllUserExerciseeProgress: builder.query<
+    getAllUserExerciseProgress: builder.query<
       ExerciseProgress[],
       string | undefined
     >({
@@ -54,13 +59,16 @@ export const progressApi = api.injectEndpoints({
 
     getUserExerciseProgress: builder.query<
       ExerciseProgress,
-      { userId: string; moduleId: string }
+      { userId: string; exerciseId: string }
     >({
-      query: ({ userId, moduleId }) => ({
-        url: `/progress/exercise/${userId}/${moduleId}`,
+      query: ({ userId, exerciseId }) => ({
+        url: `/progress/exercise/${userId}/${exerciseId}`,
         method: "GET",
       }),
+
     }),
+
+
     createUserExerciseProgress: builder.mutation<
       ExerciseProgress,
       { userId: string; progress: object }
@@ -74,22 +82,42 @@ export const progressApi = api.injectEndpoints({
 
     updateUserExerciseProgress: builder.mutation<
       ExerciseProgress,
-      { userId: string; progress: object }
+      { userId: string; exerciseId: string, progress: number }
     >({
-      query: ({ userId, progress }) => ({
+      query: ({ userId, exerciseId, progress }) => ({
         url: `progress/exercise/update/${userId}`,
         method: "PUT",
-        body: progress,
+        body: { exerciseId, progress },
+      }),
+    }),
+
+    updateUserExerciseCompleted: builder.mutation<
+      ExerciseProgress,
+      { userId: string; exerciseId: string, completed: boolean }
+    >({
+      query: ({ userId, exerciseId, completed }) => ({
+        url: `progress/exercise/update/completed/${userId}`,
+        method: "PUT",
+        body: { exerciseId, completed },
       }),
     }),
   }),
 });
 
 export const {
+  useGetAllUserModuleProgressQuery,
+  useGetAllUserExerciseProgressQuery,
   useGetUserModuleProgressQuery,
   useGetUserExerciseProgressQuery,
   useUpdateUserModuleProgressMutation,
   useUpdateUserExerciseProgressMutation,
   useCreateUserExerciseProgressMutation,
   useCreateUserModuleProgressMutation,
+  useUpdateUserExerciseCompletedMutation
 } = progressApi;
+
+export const { endpoints: {
+  updateUserExerciseProgress,
+  updateUserModuleProgress,
+  updateUserExerciseCompleted
+} } = progressApi;

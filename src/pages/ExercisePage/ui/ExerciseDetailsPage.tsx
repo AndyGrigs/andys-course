@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Input, Col, Flex, Typography, Divider } from "antd";
+import { Button, Input, Col, Flex, Typography, Divider, Image } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
@@ -7,22 +7,32 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
-import { useSelector } from "react-redux";
-import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { InputRef } from "antd/lib/input";
-import { selectUser } from "../../../redux/slices/authSlice";
-import { selectUserExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 import useCheckAnswer from '../hooks/useCheckAnswers';
+import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress';
+import { useUpdateUserExerciseProgressMutation, useUpdateUserModuleProgressMutation } from '../../../redux/services/progressApi';
+import { selectUser } from '../../../redux/slices/authSlice';
+import { useAppSelector } from '../../../redux/slices/reduxHooks';
+import ResultsModal from './ResultsModal';
+import useExerciseNavigation from '../hooks/useExerciseNavigation';
+import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
+import { useCalculateModuleProgress } from '../utils/culculateModuleProgress';
+// import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-  const user = useSelector(selectUser);
+
+  const dispatch = useDispatch();
+  const user = useAppSelector(selectUser);
 
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
+  const [isModaResultlVisible, setIsModalResultVisible] = useState(false);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [resultMessage, setResultMessage] = useState("");
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
@@ -32,14 +42,79 @@ const ExerciseDetailsPage = () => {
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
-  const userExerciseProgress = useSelector(selectUserExerciseProgress);
-  const currentModule = useSelector(selectCurrentModule);
+
+  const progress = useAppSelector(selectUserExerciseProgress);
+  const currentModule = useAppSelector(selectCurrentModule)
+  const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
+  const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
+  const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
+  const { moduleProgress } = useCalculateModuleProgress();
+  const totalTasks = exercise?.tasks.length || 0;
+
+
+
+
+
+  const handleCloseModal = () => {
+    setIsModalResultVisible(false);
+  };
+
+  // const handleFinalProgress = async () => {
+  //   try {
+  //     const finalResult = {
+  //       userId: user?._id || '',
+  //       exerciseId: exercise?._id ? String(exercise._id) : '',
+  //       progress: 100
+  //     };
+  //     await updateUserExerciseProgress(finalResult)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+
+  // Inside your component
+  const handleFinalProgress = useCallback(async () => {
+    try {
+      const finalResult = {
+        userId: user?._id || '',
+        exerciseId: exercise?._id ? String(exercise._id) : '',
+        progress: 100
+      };
+      await updateUserExerciseProgress(finalResult);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user, exercise, updateUserExerciseProgress]);
+
+
+
+  const handleModuleProgress = useCallback(async () => {
+    try {
+      const data = {
+        userId: user?._id || '',
+        moduleId: currentModule?._id || '',
+        progress: moduleProgress
+      };
+      await updateUserModuleProgress(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user, currentModule, moduleProgress, updateUserModuleProgress]);
+
+  useEffect(() => {
+    console.log("User Exercise Progress:", progress);
+  }, [progress]);
+
 
 
   useEffect(() => {
-    console.log("User Exercise Progress:", userExerciseProgress);
-  }, [userExerciseProgress]);
-
+    if (currentTaskIndex === totalTasks - 1) {
+      setIsModalResultVisible(true);
+      handleFinalProgress();
+      handleModuleProgress();
+    }
+  }, [currentTaskIndex, totalTasks, handleFinalProgress, handleModuleProgress]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -47,20 +122,13 @@ const ExerciseDetailsPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (resultMessage) {
-      setIconClass(styles.fadeIn);
-      setTimeout(() => setIconClass(styles.fadeOut), 2000);
-    } else {
-      setIconClass("");
-    }
-  }, [resultMessage]);
+  useCalculateExerciseProgress({ userResults })
 
   useEffect(() => {
     if (userResults) {
       console.log(userResults);
     }
-  }, [userResults]); // This effect runs whenever `userResults` changes
+  }, [userResults]);
 
   const handleInputChange = useCallback(
     (
@@ -81,9 +149,21 @@ const ExerciseDetailsPage = () => {
     []
   );
 
-  // const allInputsEmpty = Object.values(answerValue).every((answers) =>
-  //   answers.every((answer) => answer.trim() === "")
-  // );
+  const handleAddProgress = async () => {
+    try {
+
+      const data = {
+        userId: user?._id || '',
+        exerciseId: exercise?._id as string || '',
+        progress
+      };
+
+
+      await updateUserExerciseProgress(data);
+    } catch (error) {
+      console.error("Error updating user progress:", error);
+    }
+  };
 
 
   const handleCheckAnswer = () => {
@@ -105,6 +185,7 @@ const ExerciseDetailsPage = () => {
 
   const clearResultMessage = () => {
     setResultMessage("");
+    handleAddProgress()
   };
 
   const goToNextTask = () => {
@@ -122,6 +203,7 @@ const ExerciseDetailsPage = () => {
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
       setIsAnswerChecked(false);
+
     }
   };
 
@@ -138,6 +220,7 @@ const ExerciseDetailsPage = () => {
   const currentTask = exercise.tasks[currentTaskIndex];
   const parts = currentTask.content.split("{{input}}");
   const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every((answer) => answer.trim() === "");
+
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -178,6 +261,7 @@ const ExerciseDetailsPage = () => {
             )}
           </React.Fragment>
         ))}
+
       </Flex>
 
       <Flex>
@@ -200,7 +284,29 @@ const ExerciseDetailsPage = () => {
         </div>
       </Flex>
 
-      <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
+      <ResultsModal
+        visible={isModaResultlVisible}
+        onClose={handleCloseModal}
+        userResults={userResults}
+        onRepeatExercise={() => {
+          if (exercise && typeof exercise._id === 'string' && currentModule?._id) {
+            handleRepeatExercise(currentModule._id, exercise._id);
+          } else {
+            // Handle the case where exercise._id is not a string or is undefined
+            console.error('Exercise ID is not available');
+          }
+        }}
+        onHandleExerciseList={() => {
+          if (currentModule && currentModule._id) {
+            handleExerciseList(currentModule._id);
+          } else {
+            // Handle the case where currentModule or currentModule._id is undefined
+            console.error('Module ID is not available');
+          }
+        }}
+      />
+      <Flex vertical={true} align="center" justify="center" style={{ marginTop: "2.5em" }}>
+        <div style={{ marginBottom: '2em' }}><Image width={90} src={currentTask.image} /></div>
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>

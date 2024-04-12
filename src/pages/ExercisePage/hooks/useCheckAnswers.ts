@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { IExerciseResponse } from '../../../types';
 
 
+
 function compareAnswer(userAnswer: string, solution: string): boolean {
     return userAnswer === solution;
 }
@@ -9,6 +10,7 @@ function compareAnswer(userAnswer: string, solution: string): boolean {
 
 const useCheckAnswer = () => {
     const [userResults, setUserResults] = useState({});
+
 
     const concatAnswerValue = useCallback((taskId: string, obj: { [key: string]: string[] }) => {
         if (!obj[taskId]) return " ";
@@ -34,6 +36,8 @@ const useCheckAnswer = () => {
             ...prevResults,
             [taskIndex]: isCorrect,
         }));
+
+
 
         console.log(
             `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`

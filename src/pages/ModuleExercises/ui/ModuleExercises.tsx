@@ -5,9 +5,9 @@ import { Loader } from "../../../components/Loader";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 import { selectUser } from '../../../redux/slices/authSlice';
-import { useCreateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+import { useCreateUserExerciseProgressMutation, useGetAllUserExerciseProgressQuery } from '../../../redux/services/progressApi';
 import { setCurrentExercise } from '../../../redux/slices/exerciseSlice';
-import { setExerciseProgress } from '../../../redux/slices/userProgressSlice';
+import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
 
 const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
@@ -16,6 +16,7 @@ const ModuleExercises = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(selectUser);
+  const { data: allUserExerciseProgresses, isLoading: isAllUserExerciseProgressesLoading, isError: isAllUserExerciseProgressesError } = useGetAllUserExerciseProgressQuery(user?._id ?? '');
 
   const [createUserExerciseProgress] = useCreateUserExerciseProgressMutation();
 
@@ -26,7 +27,7 @@ const ModuleExercises = () => {
   const handleCreateUserExerciseProgress = async (exerciseId: string, exerciseNumber: number) => {
 
     try {
-      const existingProgress = user?.exerciseProgress.find((progress) => {
+      const existingProgress = user?.exerciseProgress.find((progress: { progress: number; exerciseId: string; }) => {
         dispatch(setExerciseProgress(progress.progress))
         return progress.exerciseId === exerciseId
       })
@@ -44,7 +45,6 @@ const ModuleExercises = () => {
           }
         }).unwrap()
         dispatch(setExerciseProgress(result.progress))
-        console.log("Success:", result);
       } else {
         console.log("Progress already exists for this exercise.");
       }
@@ -52,6 +52,14 @@ const ModuleExercises = () => {
       console.error("Failed:", error);
     }
   };
+
+  if (isAllUserExerciseProgressesLoading) {
+    return <Loader />;
+  }
+
+  if (isAllUserExerciseProgressesError) {
+    return (<div> Error loading Exercise...</div>)
+  }
 
   if (isLoading) {
     return <Loader />;
@@ -73,8 +81,8 @@ const ModuleExercises = () => {
     <List
       dataSource={exercises}
       renderItem={(exercise) => {
-        const exerciseProgress = user?.exerciseProgress.find(
-          (progress) => progress.exerciseId === exercise._id
+        const exerciseProgress = allUserExerciseProgresses?.find(
+          (progress: { exerciseId: string; }) => progress.exerciseId === exercise._id
         );
 
         const progressPercentage = exerciseProgress

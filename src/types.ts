@@ -11,15 +11,12 @@ export interface ModuleProgress {
   moduleId: string;
   moduleNumber?: number;
   progress: number;
-  completed: boolean;
 }
 
 export interface ExerciseProgress {
   exerciseId: string;
-  exerciseNumber?: number;
-  exerciseAnswers: Map<string, string>;
   progress: number;
-  completed: boolean;
+
 }
 
 
@@ -28,19 +25,7 @@ export interface IUser {
   fullName: string;
   email: string;
   passwordHash: string;
-  // moduleProgress: {
-  //   moduleId: string;
-  //   moduleNumber: number;
-  //   progress: number;
-  //   completed: "in_progress" | "completed" | "not_started";
-  // }[];
   moduleProgress: ModuleProgress[];
-  // exerciseProgress: {
-  //   exerciseId: string;
-  //   exerciseNumber: number;
-  //   progress: number;
-  //   completed: "in_progress" | "completed" | "not_started";
-  // }[];
   exerciseProgress: ExerciseProgress[];
   avatarUrl: string;
   createdAt: string;
@@ -64,6 +49,7 @@ export interface IVocabulary {
 }
 export interface ITask {
   content: string;
+  image: string;
   solution: string;
   _id: string;
 }
