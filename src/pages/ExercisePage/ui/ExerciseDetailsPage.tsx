@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Input, Col, Flex, Typography, Divider } from "antd";
+import { Button, Input, Col, Flex, Typography, Divider, Image } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
@@ -49,7 +49,7 @@ const ExerciseDetailsPage = () => {
   const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
   const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
   const { moduleProgress } = useCalculateModuleProgress();
-
+  const totalTasks = exercise?.tasks.length || 0;
 
 
 
@@ -59,43 +59,62 @@ const ExerciseDetailsPage = () => {
     setIsModalResultVisible(false);
   };
 
-  const handleFinalProgress = async () => {
+  // const handleFinalProgress = async () => {
+  //   try {
+  //     const finalResult = {
+  //       userId: user?._id || '',
+  //       exerciseId: exercise?._id ? String(exercise._id) : '',
+  //       progress: 100
+  //     };
+  //     await updateUserExerciseProgress(finalResult)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+
+  // Inside your component
+  const handleFinalProgress = useCallback(async () => {
     try {
       const finalResult = {
         userId: user?._id || '',
         exerciseId: exercise?._id ? String(exercise._id) : '',
         progress: 100
       };
-      await updateUserExerciseProgress(finalResult)
+      await updateUserExerciseProgress(finalResult);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  const handleModuleProgress = async () => {
+  }, [user, exercise, updateUserExerciseProgress]);
+
+
+
+  const handleModuleProgress = useCallback(async () => {
     try {
       const data = {
         userId: user?._id || '',
         moduleId: currentModule?._id || '',
         progress: moduleProgress
       };
-      await updateUserModuleProgress(data)
+      await updateUserModuleProgress(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  }, [user, currentModule, moduleProgress, updateUserModuleProgress]);
 
   useEffect(() => {
     console.log("User Exercise Progress:", progress);
   }, [progress]);
 
 
+
   useEffect(() => {
-    if (progress === 100) {
+    if (currentTaskIndex === totalTasks - 1) {
       setIsModalResultVisible(true);
-      handleFinalProgress()
-      handleModuleProgress()
+      handleFinalProgress();
+      handleModuleProgress();
     }
-  }, [progress]);
+  }, [currentTaskIndex, totalTasks, handleFinalProgress, handleModuleProgress]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -109,7 +128,7 @@ const ExerciseDetailsPage = () => {
     if (userResults) {
       console.log(userResults);
     }
-  }, [userResults]); // This effect runs whenever `userResults` changes
+  }, [userResults]);
 
   const handleInputChange = useCallback(
     (
@@ -242,6 +261,7 @@ const ExerciseDetailsPage = () => {
             )}
           </React.Fragment>
         ))}
+
       </Flex>
 
       <Flex>
@@ -285,7 +305,8 @@ const ExerciseDetailsPage = () => {
           }
         }}
       />
-      <Flex align="center" justify="center" style={{ marginTop: "2.5em" }}>
+      <Flex vertical={true} align="center" justify="center" style={{ marginTop: "2.5em" }}>
+        <div style={{ marginBottom: '2em' }}><Image width={90} src={currentTask.image} /></div>
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>

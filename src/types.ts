@@ -48,8 +48,8 @@ export interface IVocabulary {
   id: string;
 }
 export interface ITask {
-  image: string;
   content: string;
+  image: string;
   solution: string;
   _id: string;
 }
