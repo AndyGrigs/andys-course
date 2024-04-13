@@ -18,7 +18,8 @@ import { useAppSelector } from '../../../redux/slices/reduxHooks';
 import ResultsModal from './ResultsModal';
 import useExerciseNavigation from '../hooks/useExerciseNavigation';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { useCalculateModuleProgress } from '../utils/culculateModuleProgress';
+import { IModuleProgress, useCalculateModuleProgress } from '../utils/culculateModuleProgress';
+
 // import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
 const ExerciseDetailsPage = () => {
@@ -48,7 +49,8 @@ const ExerciseDetailsPage = () => {
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
   const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
-  const { moduleProgress } = useCalculateModuleProgress();
+  const { moduleProgressPercentage } = useCalculateModuleProgress() as IModuleProgress;
+
   const totalTasks = exercise?.tasks.length || 0;
 
 
@@ -89,18 +91,18 @@ const ExerciseDetailsPage = () => {
 
 
 
-  const handleModuleProgress = useCallback(async () => {
+  const handleUpdateModuleProgress = useCallback(async () => {
     try {
       const data = {
         userId: user?._id || '',
         moduleId: currentModule?._id || '',
-        progress: moduleProgress
+        progress: moduleProgressPercentage
       };
       await updateUserModuleProgress(data);
     } catch (error) {
       console.log(error);
     }
-  }, [user, currentModule, moduleProgress, updateUserModuleProgress]);
+  }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
 
   useEffect(() => {
     console.log("User Exercise Progress:", progress);
@@ -112,9 +114,9 @@ const ExerciseDetailsPage = () => {
     if (currentTaskIndex === totalTasks - 1) {
       setIsModalResultVisible(true);
       handleFinalProgress();
-      handleModuleProgress();
+      handleUpdateModuleProgress();
     }
-  }, [currentTaskIndex, totalTasks, handleFinalProgress, handleModuleProgress]);
+  }, [currentTaskIndex, totalTasks, handleFinalProgress, handleUpdateModuleProgress]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -310,6 +312,7 @@ const ExerciseDetailsPage = () => {
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
+        <img src="./assets/pronomen/ich.jpg" alt="" />
       </Flex>
     </div>
   );

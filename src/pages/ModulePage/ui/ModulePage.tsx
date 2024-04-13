@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, List, Flex, Progress } from "antd";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useNavigate } from "react-router-dom";
@@ -24,39 +24,62 @@ const ModulePage: React.FC = () => {
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
 
   const navigate = useNavigate();
+
   const { data: allUserModuleProgresses, isLoading: isAllUserModuleProgressesLoading, isError: isAllUserModuleProgressesError } = useGetAllUserModuleProgressQuery(user?._id ?? '');
+  // Correct usage of a custom hoo
+  // Ensure this is called at the top level of a component or another custom hook
 
-  const handleCreateUserModuleProgress = async (moduleId: string) => {
-    try {
-      const existingProgress = user?.moduleProgress.find((progress) => {
-        dispatch(setModuleProgress(progress.progress))
-        return progress.moduleId === moduleId;
-      });
 
-      if (!existingProgress) {
-        const result = await createUserModuleProgress({
-          userId: user?._id ?? '',
-          progress: {
-            moduleId: moduleId,
-            moduleNumber: 1,
-            progress: 0,
-            completed: "false",
-          },
-        }).unwrap();
-        console.log("Success:", result);
-        dispatch(setModuleProgress(result.progress))
-      } else {
-        console.log("Progress already exists for this module.");
+
+  const createModuleProgress = async (userId: string, moduleId: string, moduleName: string, progress: number) => {
+    const existingModuleProgress = allUserModuleProgresses?.find(progress => progress.moduleId === moduleId)
+    if (existingModuleProgress) {
+      console.log('Progress for this module already exists')
+    } else {
+      try {
+        await createUserModuleProgress({ userId, moduleId, moduleName, progress })
+      } catch (error) {
+        console.log(error)
       }
-    } catch (error) {
-      console.error("Failed:", error);
+
     }
-  };
+
+  }
+
+  // const handleCreateUserModuleProgress = async (moduleId: string, moduleName: string) => {
+  //   try {
+  //     const existingProgress = user?.moduleProgress.find((progress) => {
+  //       dispatch(setModuleProgress(progress.progress))
+  //       return progress.moduleId === moduleId;
+  //     });
+
+  //     if (!existingProgress) {
+  //       const result = await createUserModuleProgress({
+  //         userId: user?._id ?? '',
+  //         progress: {
+  //           moduleId: moduleId,
+  //           moduleName: moduleName,
+  //           progress: 0,
+  //         },
+  //       }).unwrap();
+  //       console.log("Success:", result);
+  //       dispatch(setModuleProgress(result.progress))
+  //     } else {
+  //       console.log("Progress already exists for this module.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed:", error);
+  //   }
+  // };
+  const progress = 0;
+  //useCalculateModuleProgress()
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);
-    handleCreateUserModuleProgress(currentModule?._id || "");
+    // handleCreateUserModuleProgress(currentModule?._id || "", currentModule?.name || '');
     dispatch(setCurrentModule(currentModule));
+    createModuleProgress(user?._id || '', currentModule?._id || '', currentModule?.name || '', progress)
+    console.log(user?._id || '', currentModule?._id || '', currentModule?.name || '', progress)
     navigate(`/module/${moduleId}/exercises`);
   };
 
@@ -90,15 +113,16 @@ const ModulePage: React.FC = () => {
         }}
         dataSource={modulesData}
         renderItem={(module) => {
-          // Find the progress object for the current module
+
           const moduleProgress = allUserModuleProgresses?.find(
-            (progress) => progress.moduleId === module._id
+            (progress: { moduleId: string; }) => progress.moduleId === module._id
           );
 
           // Calculate the progress percentage
-          const progressPercentage = moduleProgress
+          const progressPercentage = moduleProgress?.progress
             ? moduleProgress.progress
             : 0;
+
 
           return (
             <List.Item key={module._id}>
@@ -124,6 +148,7 @@ const ModulePage: React.FC = () => {
           );
         }}
       />
+
     </Card>
   );
 };

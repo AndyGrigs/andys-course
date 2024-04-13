@@ -9,14 +9,22 @@ export type ErrorWithMessage = {
 
 export interface ModuleProgress {
   moduleId: string;
-  moduleNumber?: number;
+  moduleName: string;
   progress: number;
 }
+// "exerciseId": "6574a1258a71715508c69d2d",
+//     "exerciseNumber": 2,
+//     "moduleName": "Module 1",
+//     "exerciseAnswers": {},
+//     "progress": 100,
+//     "completed": false
 
 export interface ExerciseProgress {
   exerciseId: string;
+  moduleName: string;
+  exerciseAnswers: object;
   progress: number;
-
+  completed: boolean;
 }
 
 

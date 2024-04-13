@@ -30,12 +30,12 @@ export const progressApi = api.injectEndpoints({
 
     createUserModuleProgress: builder.mutation<
       ModuleProgress,
-      { userId: string; progress: object }
+      { userId: string; moduleId: string; moduleName: string; progress: number }
     >({
-      query: ({ userId, progress }) => ({
+      query: ({ userId, moduleId, moduleName, progress }) => ({
         url: `progress/module/create/${userId}`,
         method: "POST",
-        body: progress,
+        body: { moduleId, moduleName, progress },
       }),
     }),
 
