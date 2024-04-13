@@ -29,7 +29,7 @@ const useCheckAnswer = () => {
 
         const isCorrect = compareAnswer(
             concatAnswerValue(taskId, answerValue),
-            task.solution[0].replace(/\s/g, "")
+            task.solution[0].replace(/\s/g, "").toLowerCase()
         );
 
         setUserResults((prevResults) => ({
