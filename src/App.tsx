@@ -11,7 +11,7 @@ function App() {
   const [theme, setTheme] = useState("light");
 
   const darkTheme = {
-    colorPrimary: "lightblue",
+    colorPrimary: "#121212",
     colorTextBase: "lightblue",
   };
   const lightTheme = {
