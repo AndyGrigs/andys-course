@@ -1,6 +1,5 @@
 import { Card, Form, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
-import { PasswordInput } from "../../../components/ui/passwordInput";
 import { AppInput } from "../../../components/ui/input";
 import { AppButton } from "../../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,11 +28,10 @@ const Login: React.FC = () => {
       navigate("/dashboard");
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
-
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("Неизвестная ошибка");
+        setError("Unbekanter Felhler");
       }
     }
   };
@@ -41,17 +39,21 @@ const Login: React.FC = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Війти" style={{ width: "30rem" }}>
+        <Card title="Einlogen" style={{ width: "30rem" }}>
           <Form onFinish={login}>
-            <AppInput type="email" name="email" placeholder="email" />
-            <PasswordInput name="password" placeholder="Пароль" />
+            <AppInput type="text" name="fullName" placeholder="Name" />
+            <AppInput name="code" placeholder="Code" />
             <AppButton type="primary" htmlType="submit">
-              Війти
+              Eintreten
             </AppButton>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Нема аккаунту? <Link to="/register">Зареєструйтесь</Link>
+              Kein Konto?<Link to="/register">Зареєструйтесь</Link>
+            </Typography.Text>
+            <Typography.Text>
+              Ein Code vergessen?
+              <Link to="/register-update">Neues Code erhalten</Link>
             </Typography.Text>
             <ErrorMessage message={error} />
           </Space>

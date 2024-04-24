@@ -3,7 +3,10 @@ import { PrivateRoute } from "../components/PrivatRoute";
 import { Auth } from "../features/authLoader";
 import { ModulePageAsync } from "../pages/ModulePage";
 import { LoginPageAsync } from "../pages/Login";
-import { RegistrationPageAsync } from "../pages/Registration";
+import {
+  ReRegistrationPageAsync,
+  RegistrationPageAsync,
+} from "../pages/Registration";
 import { HomePageAsync } from "../pages/Home";
 import { ModuleExercisesPageAsync } from "../pages/ModuleExercises";
 import { ExercisePageAsync } from "../pages/ExercisePage";
@@ -17,6 +20,10 @@ export const AppRouter: React.FC = () => {
           <Route path="/" element={<HomePageAsync />} />
           <Route path="/login" element={<LoginPageAsync />} />
           <Route path="/register" element={<RegistrationPageAsync />} />
+          <Route
+            path="/register-update"
+            element={<ReRegistrationPageAsync />}
+          />
 
           <Route path="" element={<PrivateRoute />}>
             <Route path="/dashboard" element={<ModulePageAsync />} />

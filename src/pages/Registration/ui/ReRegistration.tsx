@@ -1,30 +1,29 @@
-import { Card, Form, Row, Space, Typography } from "antd";
-import Layout from "../../../components/Layout";
+import { Layout, Row, Card, Form, Space, Typography } from "antd";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
 import { AppInput } from "../../../components/ui/input";
+import { useReRegisterMutation } from "../../../redux/services/auth";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
-import { useEffect, useState } from "react";
-import { useRegisterMutation } from "../../../redux/services/auth";
-import { IUser } from "../../../types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
+import { IUser } from "../../../types";
 
-type registerData = Omit<IUser, "id"> & { confirmPassword: string };
+type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
-const Registration = () => {
+const ReRegistration = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
-  const [registerUser] = useRegisterMutation();
+  const [reRegisterUser] = useReRegisterMutation();
 
   useEffect(() => {
     if (user) navigate("/dashboard");
   }, [navigate, user]);
 
-  const register = async (data: registerData) => {
+  const reRegister = async (data: registerData) => {
     try {
-      await registerUser(data).unwrap();
+      await reRegisterUser(data).unwrap();
       navigate("/dashboard");
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
@@ -36,12 +35,14 @@ const Registration = () => {
       }
     }
   };
+
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Anmeldung" style={{ width: "30rem" }}>
-          <Form onFinish={register}>
+        <Card title="Anmeldung aktualizieren" style={{ width: "30rem" }}>
+          <Form onFinish={reRegister}>
             <AppInput name="fullName" placeholder="Name" />
+            <AppInput name="fullName" placeholder="Wiederhol den Name" />
             <AppButton type="primary" htmlType="submit">
               Anmelden
             </AppButton>
@@ -57,4 +58,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default ReRegistration;
