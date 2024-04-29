@@ -1,4 +1,4 @@
-import { Card, Form, Row, Space, Typography } from "antd";
+import { Button, Card, Form, Input, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { AppInput } from "../../../components/ui/input";
 import { AppButton } from "../../../components/ui/button";
@@ -22,17 +22,30 @@ const Login: React.FC = () => {
     }
   }, [user, navigate]);
 
-  const login = async (data: UserData) => {
+  // const login = async (data: UserData) => {
+  //   try {
+  //     await loginUser(data).unwrap();
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //     const maybeError = isErrorWithMessage(err);
+  //     if (maybeError) {
+  //       setError(err.data.message);
+  //     } else {
+  //       setError("Unbekanter Felhler");
+  //     }
+  //   }
+  // };
+
+  const onFinish = async (data: UserData) => {
     try {
-      await loginUser(data).unwrap();
+      const response = await loginUser(data).unwrap();
+      const { token } = response;
+      localStorage.setItem("token", token); // Store the token in localStorage or your preferred storage mechanism
+      console.log("Logged in successfully");
+      // Redirect the user or perform other actions upon successful login
       navigate("/dashboard");
-    } catch (err) {
-      const maybeError = isErrorWithMessage(err);
-      if (maybeError) {
-        setError(err.data.message);
-      } else {
-        setError("Unbekanter Felhler");
-      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -40,12 +53,37 @@ const Login: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Einlogen" style={{ width: "30rem" }}>
-          <Form onFinish={login}>
+          {/* <Form onFinish={login}>
             <AppInput type="text" name="fullName" placeholder="Name" />
             <AppInput name="code" placeholder="Code" />
             <AppButton type="primary" htmlType="submit">
               Eintreten
             </AppButton>
+          </Form> */}
+          <Form onFinish={onFinish}>
+            <Form.Item
+              name="fullName"
+              label="Full Name"
+              rules={[
+                { required: true, message: "Please enter your full name" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              name="code"
+              label="Code"
+              rules={[{ required: true, message: "Please enter your code" }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Login
+              </Button>
+            </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>

@@ -9,16 +9,22 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { InputRef } from "antd/lib/input";
-import { selectUserExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
-import useCheckAnswer from '../hooks/useCheckAnswers';
-import { useCalculateExerciseProgress } from '../utils/culculateExerciseProgress';
-import { useUpdateUserExerciseProgressMutation, useUpdateUserModuleProgressMutation } from '../../../redux/services/progressApi';
-import { selectUser } from '../../../redux/slices/authSlice';
-import { useAppSelector } from '../../../redux/slices/reduxHooks';
-import ResultsModal from './ResultsModal';
-import useExerciseNavigation from '../hooks/useExerciseNavigation';
-import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { IModuleProgress, useCalculateModuleProgress } from '../utils/culculateModuleProgress';
+import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
+import useCheckAnswer from "../hooks/useCheckAnswers";
+import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
+import {
+  useUpdateUserExerciseProgressMutation,
+  useUpdateUserModuleProgressMutation,
+} from "../../../redux/services/progressApi";
+import { selectUser } from "../../../redux/slices/authSlice";
+import { useAppSelector } from "../../../redux/slices/reduxHooks";
+import ResultsModal from "./ResultsModal";
+import useExerciseNavigation from "../hooks/useExerciseNavigation";
+import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
+import {
+  IModuleProgress,
+  useCalculateModuleProgress,
+} from "../utils/culculateModuleProgress";
 
 // import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
@@ -45,17 +51,14 @@ const ExerciseDetailsPage = () => {
   } = useGetOneExercisesQuery(exerciseId);
 
   const progress = useAppSelector(selectUserExerciseProgress);
-  const currentModule = useAppSelector(selectCurrentModule)
+  const currentModule = useAppSelector(selectCurrentModule);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
   const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
-  const { moduleProgressPercentage } = useCalculateModuleProgress() as IModuleProgress;
+  const { moduleProgressPercentage } =
+    useCalculateModuleProgress() as IModuleProgress;
 
   const totalTasks = exercise?.tasks.length || 0;
-
-
-
-
 
   const handleCloseModal = () => {
     setIsModalResultVisible(false);
@@ -74,14 +77,13 @@ const ExerciseDetailsPage = () => {
   //   }
   // }
 
-
   // Inside your component
   const handleFinalProgress = useCallback(async () => {
     try {
       const finalResult = {
-        userId: user?._id || '',
-        exerciseId: exercise?._id ? String(exercise._id) : '',
-        progress: 100
+        userId: user?._id || "",
+        exerciseId: exercise?._id ? String(exercise._id) : "",
+        progress: 100,
       };
       await updateUserExerciseProgress(finalResult);
     } catch (error) {
@@ -89,14 +91,12 @@ const ExerciseDetailsPage = () => {
     }
   }, [user, exercise, updateUserExerciseProgress]);
 
-
-
   const handleUpdateModuleProgress = useCallback(async () => {
     try {
       const data = {
-        userId: user?._id || '',
-        moduleId: currentModule?._id || '',
-        progress: moduleProgressPercentage
+        userId: user?._id || "",
+        moduleId: currentModule?._id || "",
+        progress: moduleProgressPercentage,
       };
       await updateUserModuleProgress(data);
     } catch (error) {
@@ -108,15 +108,18 @@ const ExerciseDetailsPage = () => {
     console.log("User Exercise Progress:", progress);
   }, [progress]);
 
-
-
   useEffect(() => {
     if (currentTaskIndex === totalTasks - 1) {
       setIsModalResultVisible(true);
       handleFinalProgress();
       handleUpdateModuleProgress();
     }
-  }, [currentTaskIndex, totalTasks, handleFinalProgress, handleUpdateModuleProgress]);
+  }, [
+    currentTaskIndex,
+    totalTasks,
+    handleFinalProgress,
+    handleUpdateModuleProgress,
+  ]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -124,7 +127,7 @@ const ExerciseDetailsPage = () => {
     }
   }, []);
 
-  useCalculateExerciseProgress({ userResults })
+  useCalculateExerciseProgress({ userResults });
 
   useEffect(() => {
     if (userResults) {
@@ -153,20 +156,17 @@ const ExerciseDetailsPage = () => {
 
   const handleAddProgress = async () => {
     try {
-
       const data = {
-        userId: user?._id || '',
-        exerciseId: exercise?._id as string || '',
-        progress
+        userId: user?._id || "",
+        exerciseId: (exercise?._id as string) || "",
+        progress,
       };
-
 
       await updateUserExerciseProgress(data);
     } catch (error) {
       console.error("Error updating user progress:", error);
     }
   };
-
 
   const handleCheckAnswer = () => {
     if (!exercise) {
@@ -187,7 +187,7 @@ const ExerciseDetailsPage = () => {
 
   const clearResultMessage = () => {
     setResultMessage("");
-    handleAddProgress()
+    handleAddProgress();
   };
 
   const goToNextTask = () => {
@@ -205,11 +205,8 @@ const ExerciseDetailsPage = () => {
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
       setIsAnswerChecked(false);
-
     }
   };
-
-
 
   if (isLoading) {
     return <Loader />;
@@ -221,8 +218,9 @@ const ExerciseDetailsPage = () => {
 
   const currentTask = exercise.tasks[currentTaskIndex];
   const parts = currentTask.content.split("{{input}}");
-  const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every((answer) => answer.trim() === "");
-
+  const allInputsEmpty = Object.values(
+    answerValue[currentTask._id] || []
+  ).every((answer) => answer.trim() === "");
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -263,7 +261,6 @@ const ExerciseDetailsPage = () => {
             )}
           </React.Fragment>
         ))}
-
       </Flex>
 
       <Flex>
@@ -291,11 +288,15 @@ const ExerciseDetailsPage = () => {
         onClose={handleCloseModal}
         userResults={userResults}
         onRepeatExercise={() => {
-          if (exercise && typeof exercise._id === 'string' && currentModule?._id) {
+          if (
+            exercise &&
+            typeof exercise._id === "string" &&
+            currentModule?._id
+          ) {
             handleRepeatExercise(currentModule._id, exercise._id);
           } else {
             // Handle the case where exercise._id is not a string or is undefined
-            console.error('Exercise ID is not available');
+            console.error("Exercise ID is not available");
           }
         }}
         onHandleExerciseList={() => {
@@ -303,12 +304,19 @@ const ExerciseDetailsPage = () => {
             handleExerciseList(currentModule._id);
           } else {
             // Handle the case where currentModule or currentModule._id is undefined
-            console.error('Module ID is not available');
+            console.error("Module ID is not available");
           }
         }}
       />
-      <Flex vertical={true} align="center" justify="center" style={{ marginTop: "2.5em" }}>
-        <div style={{ marginBottom: '2em' }}><Image width={90} src={currentTask.image} /></div>
+      <Flex
+        vertical={true}
+        align="center"
+        justify="center"
+        style={{ marginTop: "2.5em" }}
+      >
+        <div style={{ marginBottom: "2em" }}>
+          <Image width={90} height={90} src={currentTask.image} />
+        </div>
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>

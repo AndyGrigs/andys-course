@@ -1,4 +1,4 @@
-import { Card, Form, Row, Space, Typography } from "antd";
+import { Card, Form, Input, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
@@ -24,7 +24,8 @@ const Registration = () => {
 
   const register = async (data: registerData) => {
     try {
-      await registerUser(data).unwrap();
+      const response = await registerUser(data).unwrap();
+      // const { fullName, token, code } = response;
       navigate("/dashboard");
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
@@ -36,15 +37,39 @@ const Registration = () => {
       }
     }
   };
+
   return (
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Anmeldung" style={{ width: "30rem" }}>
-          <Form onFinish={register}>
+          {/* <Form onFinish={register}>
             <AppInput name="fullName" placeholder="Name" />
             <AppButton type="primary" htmlType="submit">
               Anmelden
             </AppButton>
+          </Form> */}
+          <Form onFinish={register}>
+            <Form.Item
+              name="fullName"
+              label="Full Name"
+              rules={[
+                { required: true, message: "Please enter your full name" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            {error && (
+              <Form.Item>
+                <Typography.Text type="danger">{error}</Typography.Text>
+              </Form.Item>
+            )}
+
+            <Form.Item>
+              <AppButton type="primary" htmlType="submit">
+                Register
+              </AppButton>
+            </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>

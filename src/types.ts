@@ -30,7 +30,7 @@ export interface ExerciseProgress {
 export interface IUser {
   _id: string;
   fullName: string;
-  codeHash: string;
+  code: string;
   moduleProgress: ModuleProgress[];
   exerciseProgress: ExerciseProgress[];
   avatarUrl: string;
