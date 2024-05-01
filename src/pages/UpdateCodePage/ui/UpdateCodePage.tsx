@@ -3,35 +3,37 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
 import { AppInput } from "../../../components/ui/input";
-import { useReRegisterMutation } from "../../../redux/services/auth";
+import { useUpdateCodeMutation } from "../../../redux/services/auth";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../types";
+import { Loader } from "../../../components/Loader";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
-const ReRegistration = () => {
+const UpdateCode = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
-  const [reRegisterUser] = useReRegisterMutation();
+  const [updateCode] = useUpdateCodeMutation();
 
   useEffect(() => {
     if (user) navigate("/dashboard");
   }, [navigate, user]);
 
-  const reRegister = async (data: registerData) => {
+  const onFinish = async (data: registerData) => {
     try {
-      await reRegisterUser(data).unwrap();
-      navigate("/dashboard");
+      const response = await updateCode(data).unwrap();
+      const { code } = response;
+      navigate("/user-code", { state: code });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("Ein Fehler((");
+        setError("es ist ein Fehler!");
       }
     }
   };
@@ -40,7 +42,7 @@ const ReRegistration = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Anmeldung aktualizieren" style={{ width: "30rem" }}>
-          <Form onFinish={reRegister}>
+          <Form onFinish={onFinish}>
             <AppInput name="fullName" placeholder="Name" />
             <AppInput name="fullName" placeholder="Wiederhol den Name" />
             <AppButton type="primary" htmlType="submit">
@@ -58,4 +60,4 @@ const ReRegistration = () => {
   );
 };
 
-export default ReRegistration;
+export default UpdateCode;

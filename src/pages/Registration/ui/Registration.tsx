@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../redux/services/auth";
 import { IUser } from "../../../types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
+import { Loader } from "../../../components/Loader/ui/Loader";
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
 
@@ -25,8 +26,9 @@ const Registration = () => {
   const register = async (data: registerData) => {
     try {
       const response = await registerUser(data).unwrap();
-      // const { fullName, token, code } = response;
-      navigate("/dashboard");
+      const { code, token } = response;
+      localStorage.setItem("token", token);
+      navigate("/user-code", { state: { code } });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 

@@ -21,7 +21,7 @@ export const authApi = api.injectEndpoints({
         body: userData,
       }),
     }),
-    reRegister: builder.mutation<ResponseLoginData, UserData>({
+    updateCode: builder.mutation<ResponseLoginData, UserData>({
       query: (userData) => ({
         url: "/auth/update",
         method: "PUT",
@@ -41,9 +41,9 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useCurrentQuery,
-  useReRegisterMutation,
+  useUpdateCodeMutation,
 } = authApi;
 
 export const {
-  endpoints: { login, register, current, reRegister },
+  endpoints: { login, register, current, updateCode },
 } = authApi;
