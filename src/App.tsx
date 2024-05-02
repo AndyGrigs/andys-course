@@ -12,7 +12,7 @@ function App() {
 
   const darkTheme = {
     colorPrimary: "#121212",
-    colorTextBase: "lightblue",
+    colorTextBase: "lightblue"
   };
   const lightTheme = {
     colorPrimary: "black",
