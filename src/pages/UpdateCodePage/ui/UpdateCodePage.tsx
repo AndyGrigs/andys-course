@@ -1,4 +1,4 @@
-import { Layout, Row, Card, Form, Space, Typography } from "antd";
+import { Row, Card, Form, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
@@ -9,6 +9,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../types";
 import { Loader } from "../../../components/Loader";
+import Layout from "../../../components/Layout";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
