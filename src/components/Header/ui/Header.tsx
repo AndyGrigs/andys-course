@@ -12,13 +12,16 @@ import style from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { useContext } from "react";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
 
 interface HeaderProps {
   handleTheme: (theme: string) => void;
   theme: string;
 }
-
-export const Header = ({ handleTheme, theme }: HeaderProps) => {
+//{ handleTheme, theme }: HeaderProps
+export const Header = () => {
+  const { handleTheme, theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,8 +34,9 @@ export const Header = ({ handleTheme, theme }: HeaderProps) => {
 
   return (
     <Layout.Header
-      className={`${style.header} ${theme === "dark" ? style.dark : style.light
-        }`}
+      className={`${style.header} ${
+        theme === "dark" ? style.dark : style.light
+      }`}
     >
       <Link to="/">
         <Space>
