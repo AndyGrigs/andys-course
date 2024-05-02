@@ -25,8 +25,9 @@ const UpdateCode = () => {
   const onFinish = async (data: registerData) => {
     try {
       const response = await updateCode(data).unwrap();
-      const { code } = response;
-      navigate("/user-code", { state: code });
+      const { code, fullName } = response;
+      console.log(code, fullName);
+      navigate("/user-code", { state: { code, fullName } });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 

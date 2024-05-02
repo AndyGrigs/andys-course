@@ -26,8 +26,6 @@ import {
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
 
-// import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
-
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
 
@@ -64,20 +62,6 @@ const ExerciseDetailsPage = () => {
     setIsModalResultVisible(false);
   };
 
-  // const handleFinalProgress = async () => {
-  //   try {
-  //     const finalResult = {
-  //       userId: user?._id || '',
-  //       exerciseId: exercise?._id ? String(exercise._id) : '',
-  //       progress: 100
-  //     };
-  //     await updateUserExerciseProgress(finalResult)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // Inside your component
   const handleFinalProgress = useCallback(async () => {
     try {
       const finalResult = {

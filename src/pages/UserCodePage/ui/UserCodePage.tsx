@@ -4,7 +4,8 @@ import { AppButton } from "../../../components/ui/button";
 
 const UserCodePage = () => {
   const location = useLocation();
-  const { code } = location.state || {};
+  const { fullName, code } = location.state;
+  console.log(code);
   const navigate = useNavigate();
 
   if (!code) {
@@ -16,7 +17,10 @@ const UserCodePage = () => {
   };
 
   return (
-    <Card title={`Gratuliere!`} style={{ width: "30rem", margin: "20px auto" }}>
+    <Card
+      title={`Hallo ${fullName}!`}
+      style={{ width: "30rem", margin: "20px auto" }}
+    >
       <div style={{ textAlign: "center" }}>
         <h3>Trage dein code ins Heft ein!</h3>
         <h1>{code}</h1>
