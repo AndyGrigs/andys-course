@@ -1,17 +1,18 @@
 import "./App.css";
 import { Header } from "./components/Header";
-import { Layout, Breadcrumb, Space, Switch } from "antd";
+import { Layout, Breadcrumb } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
 import { AppRouter } from "./routes/Router";
 import { useState } from "react";
 import { ConfigProvider } from "antd";
 
 function App() {
+  // const { theme, toggleTheme } = useTheme();
   const [theme, setTheme] = useState("light");
 
   const darkTheme = {
     colorPrimary: "#121212",
-    colorTextBase: "lightblue",
+    colorTextBase: "lightgrey",
   };
   const lightTheme = {
     colorPrimary: "black",
