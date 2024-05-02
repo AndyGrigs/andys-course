@@ -27,7 +27,7 @@ const UpdateCode = () => {
     try {
       const response = await updateCode(data).unwrap();
       const { code, fullName } = response;
-      console.log(code, fullName);
+
       navigate("/user-code", { state: { code, fullName } });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);

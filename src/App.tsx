@@ -3,7 +3,6 @@ import { Header } from "./components/Header";
 import { Layout, Breadcrumb, Space, Switch } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
 import { AppRouter } from "./routes/Router";
-import AppSidebar from "./components/sidebar";
 import { useState } from "react";
 import { ConfigProvider } from "antd";
 
@@ -12,7 +11,7 @@ function App() {
 
   const darkTheme = {
     colorPrimary: "#121212",
-    colorTextBase: "lightblue"
+    colorTextBase: "lightblue",
   };
   const lightTheme = {
     colorPrimary: "black",
