@@ -26,6 +26,9 @@ import {
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
 
+import ResultMessage from "../pageElemnts/ResultMessage";
+
+
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
 
@@ -61,6 +64,7 @@ const ExerciseDetailsPage = () => {
   const handleCloseModal = () => {
     setIsModalResultVisible(false);
   };
+
 
   const handleFinalProgress = useCallback(async () => {
     try {
@@ -247,25 +251,7 @@ const ExerciseDetailsPage = () => {
         ))}
       </Flex>
 
-      <Flex>
-        <div
-          className={iconClass}
-          style={{
-            position: "absolute",
-            top: "17em",
-            right: "7em",
-            zIndex: 1000,
-            opacity: resultMessage ? 1 : 0,
-            transition: "opacity  0.5s",
-          }}
-        >
-          {resultMessage === "Correct!" ? (
-            <CheckCircleOutlined style={{ color: "green", fontSize: "96px" }} />
-          ) : resultMessage === "Incorrect. Try again." ? (
-            <CloseCircleOutlined style={{ color: "red", fontSize: "96px" }} />
-          ) : null}
-        </div>
-      </Flex>
+      <ResultMessage resultMessage={resultMessage} />
 
       <ResultsModal
         visible={isModaResultlVisible}
@@ -299,7 +285,9 @@ const ExerciseDetailsPage = () => {
         style={{ marginTop: "2.5em" }}
       >
         <div style={{ marginBottom: "2em" }}>
+
           <Image width={90} height={90} src={currentTask.image} />
+
         </div>
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
