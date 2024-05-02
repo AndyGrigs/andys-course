@@ -27,12 +27,10 @@ export interface ExerciseProgress {
   completed: boolean;
 }
 
-
 export interface IUser {
   _id: string;
   fullName: string;
-  email: string;
-  passwordHash: string;
+  code: string;
   moduleProgress: ModuleProgress[];
   exerciseProgress: ExerciseProgress[];
   avatarUrl: string;

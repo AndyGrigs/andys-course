@@ -25,9 +25,9 @@ import {
   IModuleProgress,
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
+
 import ResultMessage from "../pageElemnts/ResultMessage";
 
-// import { useEndOfExerciseNotification } from '../hooks/useEndOfExerciseNotification';
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
@@ -65,20 +65,7 @@ const ExerciseDetailsPage = () => {
     setIsModalResultVisible(false);
   };
 
-  // const handleFinalProgress = async () => {
-  //   try {
-  //     const finalResult = {
-  //       userId: user?._id || '',
-  //       exerciseId: exercise?._id ? String(exercise._id) : '',
-  //       progress: 100
-  //     };
-  //     await updateUserExerciseProgress(finalResult)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
-  // Inside your component
   const handleFinalProgress = useCallback(async () => {
     try {
       const finalResult = {
@@ -298,7 +285,9 @@ const ExerciseDetailsPage = () => {
         style={{ marginTop: "2.5em" }}
       >
         <div style={{ marginBottom: "2em" }}>
-          <Image width={90} src={currentTask.image} />
+
+          <Image width={90} height={90} src={currentTask.image} />
+
         </div>
         <Button disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}

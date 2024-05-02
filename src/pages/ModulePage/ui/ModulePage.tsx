@@ -7,8 +7,10 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
-import { useCreateUserModuleProgressMutation, useGetAllUserModuleProgressQuery } from "../../../redux/services/progressApi";
-import { setModuleProgress } from '../../../redux/slices/userProgress/userProgressSlice';
+import {
+  useCreateUserModuleProgressMutation,
+  useGetAllUserModuleProgressQuery,
+} from "../../../redux/services/progressApi";
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,52 +27,37 @@ const ModulePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: allUserModuleProgresses, isLoading: isAllUserModuleProgressesLoading, isError: isAllUserModuleProgressesError } = useGetAllUserModuleProgressQuery(user?._id ?? '');
-  // Correct usage of a custom hoo
-  // Ensure this is called at the top level of a component or another custom hook
+  const {
+    data: allUserModuleProgresses,
+    isLoading: isAllUserModuleProgressesLoading,
+    isError: isAllUserModuleProgressesError,
+  } = useGetAllUserModuleProgressQuery(user?._id ?? "");
 
-
-
-  const createModuleProgress = async (userId: string, moduleId: string, moduleName: string, progress: number) => {
-    const existingModuleProgress = allUserModuleProgresses?.find(progress => progress.moduleId === moduleId)
+  const createModuleProgress = async (
+    userId: string,
+    moduleId: string,
+    moduleName: string,
+    progress: number
+  ) => {
+    const existingModuleProgress = allUserModuleProgresses?.find(
+      (progress) => progress.moduleId === moduleId
+    );
     if (existingModuleProgress) {
-      console.log('Progress for this module already exists')
+      console.log("Progress for this module already exists");
     } else {
       try {
-        await createUserModuleProgress({ userId, moduleId, moduleName, progress })
+        await createUserModuleProgress({
+          userId,
+          moduleId,
+          moduleName,
+          progress,
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-
     }
+  };
 
-  }
-
-  // const handleCreateUserModuleProgress = async (moduleId: string, moduleName: string) => {
-  //   try {
-  //     const existingProgress = user?.moduleProgress.find((progress) => {
-  //       dispatch(setModuleProgress(progress.progress))
-  //       return progress.moduleId === moduleId;
-  //     });
-
-  //     if (!existingProgress) {
-  //       const result = await createUserModuleProgress({
-  //         userId: user?._id ?? '',
-  //         progress: {
-  //           moduleId: moduleId,
-  //           moduleName: moduleName,
-  //           progress: 0,
-  //         },
-  //       }).unwrap();
-  //       console.log("Success:", result);
-  //       dispatch(setModuleProgress(result.progress))
-  //     } else {
-  //       console.log("Progress already exists for this module.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed:", error);
-  //   }
-  // };
   const progress = 0;
   //useCalculateModuleProgress()
 
@@ -78,8 +65,18 @@ const ModulePage: React.FC = () => {
     const currentModule = modulesData?.find((module) => module._id);
     // handleCreateUserModuleProgress(currentModule?._id || "", currentModule?.name || '');
     dispatch(setCurrentModule(currentModule));
-    createModuleProgress(user?._id || '', currentModule?._id || '', currentModule?.name || '', progress)
-    console.log(user?._id || '', currentModule?._id || '', currentModule?.name || '', progress)
+    createModuleProgress(
+      user?._id || "",
+      currentModule?._id || "",
+      currentModule?.name || "",
+      progress
+    );
+    console.log(
+      user?._id || "",
+      currentModule?._id || "",
+      currentModule?.name || "",
+      progress
+    );
     navigate(`/module/${moduleId}/exercises`);
   };
 
@@ -113,16 +110,14 @@ const ModulePage: React.FC = () => {
         }}
         dataSource={modulesData}
         renderItem={(module) => {
-
           const moduleProgress = allUserModuleProgresses?.find(
-            (progress: { moduleId: string; }) => progress.moduleId === module._id
+            (progress: { moduleId: string }) => progress.moduleId === module._id
           );
 
           // Calculate the progress percentage
           const progressPercentage = moduleProgress?.progress
             ? moduleProgress.progress
             : 0;
-
 
           return (
             <List.Item key={module._id}>
@@ -148,7 +143,6 @@ const ModulePage: React.FC = () => {
           );
         }}
       />
-
     </Card>
   );
 };
