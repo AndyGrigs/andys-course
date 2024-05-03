@@ -34,3 +34,22 @@ body {
   );
   color: #474040;
 }
+
+.card-dark {
+  /* background: linear-gradient(
+    to top,
+    rgb(9, 32, 63) 0%,
+    rgb(83, 120, 149) 100%
+  ); */
+  background-color: #2e5090;
+}
+
+.card-light {
+  /* background: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
+    radial-gradient(
+      91% 146%,
+      rgba(255, 255, 255, 0.5) 47%,
+      rgba(0, 0, 0, 0.5) 100%
+    ); */
+  background-color: rgba(255, 255, 255, 0.582);
+}

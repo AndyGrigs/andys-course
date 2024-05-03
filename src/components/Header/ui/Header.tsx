@@ -15,11 +15,6 @@ import { useDispatch } from "react-redux";
 import { useContext } from "react";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
 
-interface HeaderProps {
-  handleTheme: (theme: string) => void;
-  theme: string;
-}
-//{ handleTheme, theme }: HeaderProps
 export const Header = () => {
   const { handleTheme, theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
@@ -62,14 +57,6 @@ export const Header = () => {
                 Вийти
               </Button>
             </Space>
-            <Space>
-              <Switch
-                onChange={(checked) => handleTheme(checked ? "dark" : "light")}
-                checkedChildren={<MoonOutlined />}
-                unCheckedChildren={<SunOutlined />}
-                defaultChecked
-              />
-            </Space>
           </>
         ) : (
           <>
@@ -89,6 +76,13 @@ export const Header = () => {
             </Space>
           </>
         )}
+        <Space>
+          <Button
+            type="text"
+            onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
+            icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
+          />
+        </Space>
       </div>
     </Layout.Header>
   );

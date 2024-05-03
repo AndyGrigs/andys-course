@@ -3,9 +3,10 @@ import { Header } from "./components/Header";
 import { Layout, Breadcrumb } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
 import { AppRouter } from "./routes/Router";
-import { useState } from "react";
-import { ConfigProvider } from "antd";
-import { ThemeProvider } from "./hooks/ThemeProvider";
+import { useContext } from "react";
+
+import { ThemeContext } from "./hooks/ThemeProvider";
+import TopNav from "./components/Header/topNav/TopNav";
 
 function App() {
   // const { theme, toggleTheme } = useTheme();
@@ -22,6 +23,8 @@ function App() {
 
   // const handleTheme = (theme: string) => setTheme(theme);
   //handleTheme={handleTheme} theme={theme}
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
       {/* <ConfigProvider
@@ -32,7 +35,7 @@ function App() {
       <Layout style={{ minHeight: "100vh" }}>
         {/* <AppSidebar /> */}
         <Layout
-          // className={theme === "dark" ? "layout-dark" : "layout-light"}
+          className={theme === "dark" ? "layout-dark" : "layout-light"}
           style={{ minHeight: "100vh" }}
         >
           <Header />

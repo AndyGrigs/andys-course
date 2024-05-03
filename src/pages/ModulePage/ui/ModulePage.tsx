@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Card, List, Flex, Progress } from "antd";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +11,11 @@ import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
 
   const user = useSelector(selectUser);
 
@@ -97,7 +99,12 @@ const ModulePage: React.FC = () => {
   }
 
   return (
-    <Card title="Твої модулі" bordered={false} style={{ width: "100%" }}>
+    <Card
+      className={theme === "dark" ? "card-dark" : "card-light"}
+      title="Твої модулі"
+      bordered={false}
+      style={{ width: "100%" }}
+    >
       <List
         grid={{
           gutter: 16,
@@ -121,7 +128,11 @@ const ModulePage: React.FC = () => {
 
           return (
             <List.Item key={module._id}>
-              <Card style={{ textAlign: "center" }} title={module.name}>
+              <Card
+                className={theme === "dark" ? "card-dark" : "card-light"}
+                style={{ textAlign: "center" }}
+                title={module.name}
+              >
                 <Flex justify="center" align="center" vertical gap={10}>
                   <li key={module.name}>
                     <Progress
