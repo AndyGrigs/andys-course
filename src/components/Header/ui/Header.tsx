@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Layout, Space, Typography, Button, Switch } from "antd";
+import { Layout, Space, Typography, Button, Menu, Drawer } from "antd";
 import {
   BookOutlined,
   LoginOutlined,
@@ -7,13 +7,26 @@ import {
   MoonOutlined,
   SunOutlined,
   UserAddOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
-import style from "./Header.module.scss";
+import styles from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
+
+type MenuItem = {
+  key: string;
+  label: string;
+};
+
+const menuItems: MenuItem[] = [
+  { key: "home", label: "Home" },
+  { key: "about", label: "About" },
+  { key: "services", label: "Services" },
+  { key: "contact", label: "Contact" },
+];
 
 export const Header = () => {
   const { handleTheme, theme } = useContext(ThemeContext);
@@ -29,16 +42,16 @@ export const Header = () => {
 
   return (
     <Layout.Header
-      className={`${style.header} ${
-        theme === "dark" ? style.dark : style.light
+      className={`${styles.header} ${
+        theme === "dark" ? styles.dark : styles.light
       }`}
     >
       <Link to="/">
         <Space>
-          <Typography.Title level={4}>Lernst du Deutsch?</Typography.Title>
+          <Typography.Title level={4}></Typography.Title>
         </Space>
       </Link>
-      <div>
+      <div className={styles.links}>
         {user ? (
           <>
             <Space>
@@ -86,4 +99,7 @@ export const Header = () => {
       </div>
     </Layout.Header>
   );
+  // return (
+
+  // );
 };
