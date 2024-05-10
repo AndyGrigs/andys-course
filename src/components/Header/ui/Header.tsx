@@ -1,6 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Layout, Space, Typography, Button, Drawer, Menu } from "antd";
+import {
+  Layout,
+  Space,
+  Typography,
+  Button,
+  Drawer,
+  Flex,
+  MenuProps,
+} from "antd";
 import {
   BookOutlined,
   LoginOutlined,
@@ -9,6 +17,9 @@ import {
   SunOutlined,
   UserAddOutlined,
   MenuOutlined,
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
@@ -19,71 +30,13 @@ import type {
   DrawerClassNames,
   DrawerStyles,
 } from "antd/es/drawer/DrawerPanel";
-import { ConfigProvider } from "antd/lib";
+import { HeaderItems } from "./HeaderItems";
 
 export const Header = () => {
   const { handleTheme, theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const [open, setOpen] = useState([false, false]);
-  const token = useTheme();
-
-  // const useStyle = createStyles(({ token }) => ({
-  //   "my-drawer-body": {
-  //     background: token.blue1,
-  //   },
-  //   "my-drawer-mask": {
-  //     boxShadow: `inset 0 0 15px #fff`,
-  //   },
-  //   "my-drawer-header": {
-  //     background: token.green1,
-  //   },
-  //   "my-drawer-footer": {
-  //     color: token.colorPrimary,
-  //   },
-  //   "my-drawer-content": {
-  //     borderLeft: "2px dotted #333",
-  //   },
-  // }));
-
-  // const toggleDrawer = () => {
-  //   setDrawerVisible(!drawerVisible);
-  // };
-
-  // const toggleDrawer = (idx: number, target: boolean) => {
-  //   setOpen((p) => {
-  //     p[idx] = target;
-  //     return [...p];
-  //   });
-  // };
-
-  // const classNames: DrawerClassNames = {
-  //   body: styles["my-drawer-body"],
-  //   mask: styles["my-drawer-mask"],
-  //   header: styles["my-drawer-header"],
-  //   footer: styles["my-drawer-footer"],
-  //   content: styles["my-drawer-content"],
-  // };
-
-  // const drawerStyles: DrawerStyles = {
-  //   mask: {
-  //     backdropFilter: "blur(10px)",
-  //   },
-  //   content: {
-  //     boxShadow: "-10px 0 10px #666",
-  //   },
-  //   header: {
-  //     borderBottom: `1px solid ${token.colorPrimary}`,
-  //   },
-  //   body: {
-  //     fontSize: token.fontSizeLG,
-  //   },
-  //   footer: {
-  //     borderTop: `1px solid ${token.colorBorder}`,
-  //   },
-  // };
 
   const onLogoutClick = () => {
     dispatch(logout());
@@ -91,84 +44,68 @@ export const Header = () => {
     navigate("/login");
   };
 
-  // const menuItems = [
-  //   {
-  //     key: "1",
-  //     label: user ? (
-  //       <Link to="/dashboard">
-  //         <Button icon={<BookOutlined />} type="text">
-  //           Модулі
-  //         </Button>
-  //       </Link>
-  //     ) : null,
-  //   },
-  //   {
-  //     key: "2",
-  //     label: user ? null : (
-  //       <Link to="/login">
-  //         <Button icon={<LoginOutlined />} type="text">
-  //           Увійти
-  //         </Button>
-  //       </Link>
-  //     ),
-  //   },
-  //   {
-  //     key: "3",
-  //     label: user ? null : (
-  //       <Link to="/register">
-  //         <Button icon={<UserAddOutlined />} type="text">
-  //           Зареєструватись
-  //         </Button>
-  //       </Link>
-  //     ),
-  //   },
-  //   {
-  //     key: "4",
-  //     label: user ? (
-  //       <Button icon={<LogoutOutlined />} onClick={onLogoutClick} type="text">
-  //         Вийти
-  //       </Button>
-  //     ) : null,
-  //   },
-  // ];
-
-  // const drawerClassName =
-  //   theme === "dark" ? `${styles.drawerDark}` : `${styles.drawerLight}`;
-
-  const useStyle = createStyles(({ token }) => ({
-    "my-drawer-body": {
-      background: "red",
-    },
+  const useStyle = createStyles(() => ({
     "my-drawer-mask": {
       boxShadow: `inset 0 0 15px #fff`,
     },
-    "my-drawer-header": {
+    "drawer-header-light": {
       background: "green",
     },
-    "my-drawer-footer": {
-      color: "pink",
+    "drawer-header-dark": {
+      background: "green",
     },
+    "my-drawer-footer": {},
     "my-drawer-content": {
-      borderLeft: "2px dotted #333",
+      borderLeft: "2px solid #333",
+    },
+    "drawer-body-dark": {
+      // color: "#fff",
+      backgroundColor: "#5585b5",
+    },
+    "drawer-body-light": {
+      backgroundColor:
+        "radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%)",
     },
   }));
 
-  const Menu: React.FC = () => {
-    const [open, setOpen] = useState([false, false]);
+  // const AppHeaderMenu: React.FC = () => {
+  //   const onClick: MenuProps["onClick"] = (e) => {
+  //     console.log("click ", e);
+  //   };
+
+  //   return (
+  //     <Menu
+  //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //       //@ts-ignore
+  //       onClick={onClick}
+  //       style={{ width: 256 }}
+  //       defaultSelectedKeys={["1"]}
+  //       defaultOpenKeys={["sub1"]}
+  //       mode="inline"
+  //       items={items}
+  //     />
+  //   );
+  // };
+
+  const Menu = () => {
     const { styles } = useStyle();
     const token = useTheme();
+    const [isOpen, setIsOpen] = useState(false); // Manage the open state within the component
 
-    const toggleDrawer = (idx: number, target: boolean) => {
-      setOpen((p) => {
-        p[idx] = target;
-        return [...p];
-      });
+    const toggleDrawer = () => {
+      setIsOpen(!isOpen); // Toggle the open state
     };
 
     const classNames: DrawerClassNames = {
-      body: styles["my-drawer-body"],
+      body:
+        theme === "dark"
+          ? styles["drawer-body-dark"]
+          : styles["drawer-body-light"],
       mask: styles["my-drawer-mask"],
-      header: styles["my-drawer-header"],
+      header:
+        theme === "dark"
+          ? styles["drawer-body-dark"]
+          : styles["drawer-body-light"],
       footer: styles["my-drawer-footer"],
       content: styles["my-drawer-content"],
     };
@@ -194,27 +131,63 @@ export const Header = () => {
     return (
       <>
         <Space>
-          <Button type="primary" onClick={() => toggleDrawer(0, true)}>
-            Open
-          </Button>
-          <Button type="primary" onClick={() => toggleDrawer(1, true)}>
-            ConfigProvider
-          </Button>
+          <Button
+            icon={<MenuOutlined />}
+            onClick={toggleDrawer}
+            type="text"
+            style={{ marginBottom: 16 }}
+          />
         </Space>
+
         <Drawer
-          title="ß Drawer"
+          title="Cabinet"
           placement="right"
-          footer="Footer"
-          onClose={() => toggleDrawer(0, false)}
-          open={open[0]}
+          // footer="Footer"
+          onClose={toggleDrawer}
+          open={isOpen}
           classNames={classNames}
           styles={drawerStyles}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          {/* <Menu
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            defaultOpenKeys={["sub1", "sub2", "sub4"]}
+            items={items}
+            style={{ height: "100%", borderRight: 0 }}
+          /> */}
+          {user ? (
+            <Flex vertical align="center">
+              <Link to="/dashboard">
+                <Button icon={<BookOutlined />} type="text">
+                  Кабінет
+                </Button>
+              </Link>
+              <Button
+                icon={<LogoutOutlined />}
+                onClick={onLogoutClick}
+                type="text"
+              >
+                Вийти
+              </Button>
+            </Flex>
+          ) : (
+            <Space>
+              <Link to="/login">
+                <Button icon={<LoginOutlined />} type="text">
+                  Увійти
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button icon={<UserAddOutlined />} type="text">
+                  Зареєструватись
+                </Button>
+              </Link>
+            </Space>
+          )}
+          <HeaderItems />
+          {/* <AppHeaderMenu /> */}
         </Drawer>
-        <ConfigProvider
+        {/* <ConfigProvider
           drawer={{
             classNames,
             styles: drawerStyles,
@@ -231,10 +204,12 @@ export const Header = () => {
             <p>Some contents...</p>
             <p>Some contents...</p>
           </Drawer>
-        </ConfigProvider>
+        </ConfigProvider> */}
       </>
     );
   };
+
+  type MenuItem = Required<MenuProps>["items"][number];
 
   return (
     <Layout.Header
@@ -248,6 +223,11 @@ export const Header = () => {
         </Space>
       </Link>
       <div className={styles.links}>
+        <Button
+          type="text"
+          onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
+          icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
+        />
         <Menu />
         {/* {user ? (
           <Space>
@@ -278,18 +258,8 @@ export const Header = () => {
             </Link>
           </Space>
         )} */}
-        {/* <Button
-          type="text"
-          onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
-          icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
-        />
-        <Button
-          icon={<MenuOutlined />}
-          // onClick={toggleDrawer}
-          onClick={() => toggleDrawer(0, true)}
-          type="text"
-          style={{ marginBottom: 16 }}
-        /> */}
+        {/*
+         */}
         {/* <ConfigProvider>
           <Drawer
             className={`${theme === "dark" ? styles.dark : styles.light}`}

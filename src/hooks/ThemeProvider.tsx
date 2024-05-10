@@ -3,12 +3,12 @@ import React, { useState, createContext } from "react";
 import { ConfigProvider } from "antd";
 
 const darkTheme = {
-  colorPrimary: "#121212",
-  colorTextBase: "lightgrey",
+  colorPrimary: "#00204a",
+  colorTextBase: "#e3f6f5",
 };
 
 const lightTheme = {
-  colorPrimary: "black",
+  colorPrimary: "grey",
   colorTextBase: " #474040",
 };
 
