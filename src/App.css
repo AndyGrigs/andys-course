@@ -42,6 +42,7 @@ body {
     rgb(83, 120, 149) 100%
   ); */
   background-color: #2e5090;
+  border: none;
 }
 
 .card-light {
