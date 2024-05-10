@@ -148,13 +148,6 @@ export const Header = () => {
           classNames={classNames}
           styles={drawerStyles}
         >
-          {/* <Menu
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1", "sub2", "sub4"]}
-            items={items}
-            style={{ height: "100%", borderRight: 0 }}
-          /> */}
           {user ? (
             <Flex vertical align="center">
               <Link to="/dashboard">
@@ -209,7 +202,6 @@ export const Header = () => {
     );
   };
 
-  type MenuItem = Required<MenuProps>["items"][number];
 
   return (
     <Layout.Header
@@ -219,7 +211,7 @@ export const Header = () => {
     >
       <Link to="/">
         <Space>
-          <Typography.Title level={4}>Logo</Typography.Title>
+          <Typography.Title level={4}>32890</Typography.Title>
         </Space>
       </Link>
       <div className={styles.links}>

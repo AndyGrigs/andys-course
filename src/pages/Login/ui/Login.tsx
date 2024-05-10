@@ -7,6 +7,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { ErrorMessage } from "../../../components/Error";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -26,8 +27,14 @@ const Login: React.FC = () => {
       const response = await loginUser(data).unwrap();
       const { token } = response;
       localStorage.setItem("token", token);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err);
+
+      if (maybeError) {
+        setError(err.data.message);
+      } else {
+        setError("сталась помилка...");
+      }
     }
   };
 
@@ -35,7 +42,7 @@ const Login: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card
-          title="Einlogen"
+          title="Увійти в аккаунт"
           // style={{ width: "30rem" }}
           style={
             theme === "dark"
@@ -46,31 +53,31 @@ const Login: React.FC = () => {
           <Form onFinish={onFinish}>
             <Form.Item
               name="fullName"
-              label="Full Name"
+              label="Ім'я"
               rules={[
-                { required: true, message: "Please enter your full name" },
+                { required: true, message: "Напиши своє ім'я" },
               ]}
             >
-              <Input />
+             <Input style={theme === 'dark'? { color: 'darkblue' } : {}} />
             </Form.Item>
 
             <Form.Item
               name="code"
-              label="Code"
-              rules={[{ required: true, message: "Please enter your code" }]}
+              label="Код"
+              rules={[{ required: true, message: "Напиши свій код" }]}
             >
-              <Input.Password />
+              <Input.Password style={theme === 'dark'? { color: 'darkblue' } : {}}/>
             </Form.Item>
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Login
+                Увійти
               </Button>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Kein Konto?
+              Нема аккаунту?
               <Link
                 to="/register"
                 style={
@@ -91,7 +98,7 @@ const Login: React.FC = () => {
               </Link>
             </Typography.Text>
             <Typography.Text>
-              Ein Code vergessen?
+              Не знаєш код?
               <Link
                 style={
                   theme === "dark"
@@ -108,7 +115,7 @@ const Login: React.FC = () => {
                 }
                 to="/register-update"
               >
-                Neues Code erhalten
+                Відновити
               </Link>
             </Typography.Text>
             <ErrorMessage message={error} />

@@ -25,5 +25,26 @@
     .fadeOut {
       animation: fadeOut 0.5s ease-in-out;
     }
+    
   }
 }
+
+.exerciseInput{
+  
+  width: 100%;
+}
+
+.exPar{
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .exerciseInput {
+   min-width: 4em;
+   min-height: 10px;
+   }
+   .exPar{
+     font-size: 15px;
+  
+   }
+  }

@@ -129,8 +129,12 @@ const ModulePage: React.FC = () => {
           return (
             <List.Item key={module._id}>
               <Card
-                className={theme === "dark" ? "card-dark" : "card-light"}
-                style={{ textAlign: "center" }}
+                // className={theme === "dark" ? "card-dark" : "card-light"}
+                style={
+                  theme === "dark"
+                    ? { textAlign: "center", background: "#5a7cbb" }
+                    : { textAlign: "center" }
+                }
                 title={module.name}
               >
                 <Flex justify="center" align="center" vertical gap={10}>
@@ -143,6 +147,7 @@ const ModulePage: React.FC = () => {
                   </li>
                   <div>{module.exercises.length} вправ</div>
                   <Button
+                    type="primary"
                     onClick={() => handleStartClick(module._id)}
                     size="small"
                   >
