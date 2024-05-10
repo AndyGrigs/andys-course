@@ -67,13 +67,14 @@ const ExerciseDetailsPage = () => {
       const finalResult = {
         userId: user?._id || "",
         exerciseId: exercise?._id ? String(exercise._id) : "",
+        answers: userResults,
         progress: 100,
       };
       await updateUserExerciseProgress(finalResult);
     } catch (error) {
       console.log(error);
     }
-  }, [user, exercise, updateUserExerciseProgress]);
+  }, [user?._id, userResults, updateUserExerciseProgress]);
 
   const handleUpdateModuleProgress = useCallback(async () => {
     try {
@@ -144,6 +145,7 @@ const ExerciseDetailsPage = () => {
         userId: user?._id || "",
         exerciseId: (exercise?._id as string) || "",
         progress,
+        answers: userResults,
       };
 
       await updateUserExerciseProgress(data);
@@ -222,7 +224,10 @@ const ExerciseDetailsPage = () => {
           <React.Fragment key={partIndex}>
             {part && (
               <Col>
-                <Paragraph className={styles.exPar} style={{ margin: "0 .2em" }}>
+                <Paragraph
+                  className={styles.exPar}
+                  style={{ margin: "0 .2em" }}
+                >
                   {part}
                 </Paragraph>
               </Col>
@@ -235,7 +240,7 @@ const ExerciseDetailsPage = () => {
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
-                    margin: "0 -3em"
+                    margin: "0 -3em",
                     // fontSize: "1.5em",
                   }}
                   value={
