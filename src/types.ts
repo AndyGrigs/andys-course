@@ -43,6 +43,10 @@ export interface Module {
   _id: string;
   name: string;
   moduleGrammar: string[];
+  text: {
+    title: string;
+    content: string;
+  };
   videos: string[];
   vocabulary: IVocabulary[];
   exercises: string[];
@@ -51,7 +55,9 @@ export interface Module {
 export interface IVocabulary {
   word: string;
   translation: string;
-  id: string;
+  instruction: string;
+  correctAnswer: string;
+  options: { answer: string }[];
 }
 export interface ITask {
   content: string;

@@ -10,10 +10,13 @@ import { ExercisePageAsync } from "../pages/ExercisePage";
 import { Suspense } from "react";
 import { UpdateCodePageAsync } from "../pages/UpdateCodePage";
 import { UserCodePageAsync } from "../pages/UserCodePage";
+import { Loader } from "../components/Loader";
+import { TextPageAsync } from "../pages/TextPage";
+import { VocabularyPageAsync } from "../pages/vocabularyPage";
 
 export const AppRouter: React.FC = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader/>}>
       <Auth>
         <Routes>
           <Route path="/" element={<HomePageAsync />} />
@@ -27,10 +30,14 @@ export const AppRouter: React.FC = () => {
               path="module/:moduleId/exercises"
               element={<ModuleExercisesPageAsync />}
             />
-            {/* <Route
-            path="module/:moduleId/exercises/:exerciseId"
-            element={<ExercisePage />}
-          /> */}
+            <Route
+              path="module/:moduleId/text"
+              element={<TextPageAsync />}
+            />
+            <Route
+            path="module/:moduleId/vocabulary"
+            element={<VocabularyPageAsync />}
+          />
             <Route
               path="module/:moduleId/exercises/:exerciseId"
               element={<ExercisePageAsync />}

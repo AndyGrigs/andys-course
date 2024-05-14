@@ -34,15 +34,7 @@ import { HeaderItems } from "./HeaderItems";
 
 export const Header = () => {
   const { handleTheme, theme } = useContext(ThemeContext);
-  const user = useSelector(selectUser);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const onLogoutClick = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
 
   const useStyle = createStyles(() => ({
     "my-drawer-mask": {
@@ -68,32 +60,13 @@ export const Header = () => {
     },
   }));
 
-  // const AppHeaderMenu: React.FC = () => {
-  //   const onClick: MenuProps["onClick"] = (e) => {
-  //     console.log("click ", e);
-  //   };
-
-  //   return (
-  //     <Menu
-  //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //       //@ts-ignore
-  //       onClick={onClick}
-  //       style={{ width: 256 }}
-  //       defaultSelectedKeys={["1"]}
-  //       defaultOpenKeys={["sub1"]}
-  //       mode="inline"
-  //       items={items}
-  //     />
-  //   );
-  // };
-
   const Menu = () => {
     const { styles } = useStyle();
     const token = useTheme();
     const [isOpen, setIsOpen] = useState(false); // Manage the open state within the component
 
     const toggleDrawer = () => {
-      setIsOpen(!isOpen); // Toggle the open state
+      setIsOpen(!isOpen); 
     };
 
     const classNames: DrawerClassNames = {
@@ -148,7 +121,7 @@ export const Header = () => {
           classNames={classNames}
           styles={drawerStyles}
         >
-          {user ? (
+          {/* {user ? (
             <Flex vertical align="center">
               <Link to="/dashboard">
                 <Button icon={<BookOutlined />} type="text">
@@ -176,28 +149,10 @@ export const Header = () => {
                 </Button>
               </Link>
             </Space>
-          )}
+          )} */}
           <HeaderItems />
-          {/* <AppHeaderMenu /> */}
+          
         </Drawer>
-        {/* <ConfigProvider
-          drawer={{
-            classNames,
-            styles: drawerStyles,
-          }}
-        >
-          <Drawer
-            title="Basic Drawer"
-            placement="right"
-            footer="Footer"
-            onClose={() => toggleDrawer(1, false)}
-            open={open[1]}
-          >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </Drawer>
-        </ConfigProvider> */}
       </>
     );
   };
@@ -221,66 +176,6 @@ export const Header = () => {
           icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
         />
         <Menu />
-        {/* {user ? (
-          <Space>
-            <Link to="/dashboard">
-              <Button icon={<BookOutlined />} type="text">
-                Кабінет
-              </Button>
-            </Link>
-            <Button
-              icon={<LogoutOutlined />}
-              onClick={onLogoutClick}
-              type="text"
-            >
-              Вийти
-            </Button>
-          </Space>
-        ) : (
-          <Space>
-            <Link to="/login">
-              <Button icon={<LoginOutlined />} type="text">
-                Увійти
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button icon={<UserAddOutlined />} type="text">
-                Зареєструватись
-              </Button>
-            </Link>
-          </Space>
-        )} */}
-        {/*
-         */}
-        {/* <ConfigProvider>
-          <Drawer
-            className={`${theme === "dark" ? styles.dark : styles.light}`}
-            title=""
-            placement="right"
-            // footer="Footer"
-            onClose={() => toggleDrawer(0, false)}
-            open={open[0]}
-            // classNames={classNames}
-            // className={drawerClassName}
-            styles={drawerStyles}
-          >
-            <Menu
-              className={`${theme === "dark" ? styles.dark : styles.light}`}
-              mode="vertical"
-              // defaultSelectedKeys={["1"]}
-              items={menuItems}
-            />
-          </Drawer>
-        </ConfigProvider> */}
-        {/* <Drawer
-          // className={drawerClassName}
-          title="Navigation Menu"
-          placement="right"
-          onClose={toggleDrawer}
-          open={drawerVisible}
-        >
-      
-        </Drawer> */}
       </div>
     </Layout.Header>
   );

@@ -24,7 +24,6 @@ import {
   IModuleProgress,
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
-
 import ResultMessage from "../pageElemnts/ResultMessage";
 
 const ExerciseDetailsPage = () => {
@@ -210,8 +209,7 @@ const ExerciseDetailsPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Title level={3}>{exercise.number}</Title>
-      <Title level={4}>{exercise.instruction}</Title>
+      <Title level={4}>{exercise.number}.  {exercise.instruction}</Title>
       <Title level={2}>{exercise.example}</Title>
       <Divider />
       <Flex
@@ -259,7 +257,7 @@ const ExerciseDetailsPage = () => {
         ))}
       </Flex>
 
-      <ResultMessage resultMessage={resultMessage} />
+      <ResultMessage resultMessage={resultMessage} correctAnswer={currentTask.solution}/>
 
       <ResultsModal
         visible={isModaResultlVisible}
@@ -295,7 +293,7 @@ const ExerciseDetailsPage = () => {
         <div style={{ marginBottom: "2em" }}>
           <Image width={90} height={90} src={currentTask.image} />
         </div>
-        <Button disabled={allInputsEmpty} onClick={goToNextTask}>
+        <Button type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
         <img src="./assets/pronomen/ich.jpg" alt="" />

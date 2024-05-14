@@ -61,7 +61,7 @@ const ModulePage: React.FC = () => {
   };
 
   const progress = 0;
-  //useCalculateModuleProgress()
+
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);
