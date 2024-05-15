@@ -21,7 +21,7 @@ const useCheckAnswer = () => {
 
     function checkAnswer(taskId: string, taskIndex: number, answerValue: { [key: string]: string[]; }, exercise: IExerciseResponse) {
         const task = exercise.tasks.find((t) => t._id === taskId);
-console.log(answerValue)
+     console.log(answerValue)
         if (!task) {
             console.error("Task not found");
 
@@ -29,11 +29,12 @@ console.log(answerValue)
         }
 
         const isCorrect = compareAnswer(
-            concatAnswerValue(taskId, answerValue),
+            concatAnswerValue(taskId, answerValue).replace(/\s/g, "").toLowerCase(),
             task.solution[0].replace(/\s/g, "").toLowerCase()
         );
 
-    
+        console.log(concatAnswerValue(taskId, answerValue).toLowerCase())
+        console.log(task.solution[0].replace(/\s/g, "").toLowerCase())
 
         setUserResults((prevResults) => ({
             ...prevResults,
@@ -42,9 +43,9 @@ console.log(answerValue)
 
 
 
-        console.log(
-            `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
-        );
+        // console.log(
+        //     `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
+        // );
         return isCorrect
     }
     return { userResults, checkAnswer }

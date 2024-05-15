@@ -88,9 +88,9 @@ const ExerciseDetailsPage = () => {
     }
   }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
 
-  useEffect(() => {
-    console.log("User Exercise Progress:", progress);
-  }, [progress]);
+  // useEffect(() => {
+  //   console.log("User Exercise Progress:", progress);
+  // }, [progress]);
 
   useEffect(() => {
     if (currentTaskIndex === totalTasks - 1) {
@@ -113,11 +113,11 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults });
 
-  useEffect(() => {
-    if (userResults) {
-      console.log(userResults);
-    }
-  }, [userResults]);
+  // useEffect(() => {
+  //   if (userResults) {
+  //     console.log(userResults);
+  //   }
+  // }, [userResults]);
 
   const handleInputChange = useCallback(
     (

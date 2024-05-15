@@ -25,8 +25,7 @@ const ModulePage: React.FC = () => {
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
   const {
     data: allUserModuleProgresses,
-    isLoading: isAllUserModuleProgressesLoading,
-    isError: isAllUserModuleProgressesError,
+
   } = useGetAllUserModuleProgressQuery(user?._id ?? "");
 
   const progress = 0;
@@ -59,7 +58,7 @@ const ModulePage: React.FC = () => {
     }
   };
 
-  const handleStartClick = (moduleId: string, moduleName: string) => {
+  const handleModuleLinkClick = (moduleId: string) => {
     const currentModule = modules?.find((module) => module._id === moduleId);
     dispatch(setCurrentModule(currentModule));
     createModuleProgress(
@@ -68,6 +67,7 @@ const ModulePage: React.FC = () => {
       currentModule?.name || "",
       progress
     );
+    navigate(`/modules/${moduleId}`)
   };
 
 
@@ -76,81 +76,33 @@ const ModulePage: React.FC = () => {
 
   return (
    <>
-   {/* <div style={{ padding: "20px" }}>
-      <Menu items={items} />
-      <h1>Modules</h1>
-      <List
-        grid={{ gutter: 16, column: 4 }}
-        dataSource={modules}
-        renderItem={(module) => (
-          <List.Item>
-            <Card title={module.name}>
-              <p><strong>Module Grammar:</strong> {module.moduleGrammar.length > 0 ? module.moduleGrammar.join(", ") : "None"}</p>
-              <p><strong>Videos:</strong> {module.videos.length}</p>
-              <p><strong>Text:</strong> {module.text ? "Available" : "None"}</p>
-              <p><strong>Text Questions:</strong></p>
-              <p><strong>Vocabulary:</strong> {module.vocabulary.length}</p>
-              <p><strong>Articles Exercises:</strong></p>
-              <p><strong>Exercises:</strong> {module.exercises.length}</p>
-              <Button type="primary" onClick={() => handleStartClick(module._id, module.name)}>
-                Start Module
-              </Button>
-            </Card>
-          </List.Item>
-        )}
-      />
-    </div> */}
-    <Card
-      className={theme === "dark" ? "card-dark" : "card-light"}
-      title="Твої модулі"
-      bordered={false}
-      style={{ width: "100%" }}
-    >
-      <List
-        grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
-        dataSource={modules}
-        renderItem={(module) => (
-          <List.Item key={module._id}>
-            <Card
-              style={theme === "dark" ? { background: "#5a7cbb" } : {}}
-              title={module.name}
-            >
-              <List
-                size="small"
-                dataSource={[
-                  //   { title: "Videos", link: `/modules/${module._id.$oid}/videos` },
-                  {
-                    title: "Text Content",
-                    link: `/modules/${module._id}/text`,
-                  },
-                  {
-                    title: "Vocabulary",
-                    link: `/modules/${module._id}/vocabulary`,
-                  },
-                  {
-                    title: "Exercises",
-                    link: `/modules/${module._id}/exercises`,
-                  },
-                ]}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button
-                      onClick={() => {
-                        handleStartClick(module._id, module.name);
-                        navigate(item.link); // Use navigate to programmatically navigate to the link
-                      }}
-                      type="text"
-                    >
-                      {item.title}
-                    </Button>
-                  </List.Item>
-                )}
-              />
-            </Card>
-          </List.Item>
-        )}
-      />
-    </Card>
+
+        <Card
+        className={theme === "dark"? "card-dark" : "card-light"}
+        title="Твої модулі"
+        bordered={false}
+        style={{ width: "100%" }}
+      >
+        <List
+          grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
+          dataSource={modules}
+          renderItem={(module) => (
+            <List.Item key={module._id}>
+              <Card
+                style={theme === "dark"? { background: "#5a7cbb" } : {}}
+                title={module.name}
+              >
+                <Button
+                  onClick={() => handleModuleLinkClick(module._id)}
+                  type="primary"
+                >
+                  View Details
+                </Button>
+              </Card>
+            </List.Item>
+          )}
+        />
+      </Card>
     <Outlet/>
    </>
   );

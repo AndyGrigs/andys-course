@@ -90,7 +90,7 @@ const ModuleExercises = () => {
     const currentexercise = exercises?.find((ex) => ex._id);
     dispatch(setCurrentExercise(currentexercise));
     handleCreateUserExerciseProgress(exerciseId, exerciseNumber);
-    navigate(`/module/${moduleId}/exercises/${exerciseId}`);
+    navigate(`/modules/${moduleId}/exercises/${exerciseId}`);
   };
 
   return (
