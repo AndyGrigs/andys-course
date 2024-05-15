@@ -16,7 +16,7 @@ import { VocabularyPageAsync } from "../pages/vocabularyPage";
 
 export const AppRouter: React.FC = () => {
   return (
-    <Suspense fallback={<Loader/>}>
+    <Suspense fallback={<Loader />}>
       <Auth>
         <Routes>
           <Route path="/" element={<HomePageAsync />} />
@@ -25,23 +25,25 @@ export const AppRouter: React.FC = () => {
           <Route path="/register-update" element={<UpdateCodePageAsync />} />
           <Route path="/user-code" element={<UserCodePageAsync />} />
           <Route path="" element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<ModulePageAsync />} />
-            <Route
-              path="module/:moduleId/exercises"
-              element={<ModuleExercisesPageAsync />}
-            />
-            <Route
-              path="module/:moduleId/text"
-              element={<TextPageAsync />}
-            />
-            <Route
-            path="module/:moduleId/vocabulary"
-            element={<VocabularyPageAsync />}
-          />
-            <Route
-              path="module/:moduleId/exercises/:exerciseId"
-              element={<ExercisePageAsync />}
-            />
+            <Route path="/modules" element={<ModulePageAsync />}/>
+              <Route
+                path="modules/:moduleId/exercises"
+                element={<ModuleExercisesPageAsync />}
+              />
+              <Route
+                path="modules/:moduleId/text"
+                element={<TextPageAsync />}
+              />
+              <Route
+                path="modules/:moduleId/vocabulary"
+                element={<VocabularyPageAsync />}
+              />
+              <Route
+                path="modules/:moduleId/exercises/:exerciseId"
+                element={<ExercisePageAsync />}
+              />
+
+           
           </Route>
         </Routes>
       </Auth>

@@ -5,6 +5,7 @@ import { IExerciseResponse } from '../../../types';
 
 function compareAnswer(userAnswer: string, solution: string): boolean {
     return userAnswer === solution;
+
 }
 
 
@@ -20,7 +21,7 @@ const useCheckAnswer = () => {
 
     function checkAnswer(taskId: string, taskIndex: number, answerValue: { [key: string]: string[]; }, exercise: IExerciseResponse) {
         const task = exercise.tasks.find((t) => t._id === taskId);
-
+console.log(answerValue)
         if (!task) {
             console.error("Task not found");
 
@@ -31,6 +32,8 @@ const useCheckAnswer = () => {
             concatAnswerValue(taskId, answerValue),
             task.solution[0].replace(/\s/g, "").toLowerCase()
         );
+
+    
 
         setUserResults((prevResults) => ({
             ...prevResults,

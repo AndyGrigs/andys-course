@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
 import { Card, List, Button } from "antd";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { Loader } from "../../../components/Loader";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useDispatch } from "react-redux";
-// import useCreateModuleProgress from "../hooks/useCreateModuleProgress";
 import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
@@ -20,13 +22,13 @@ const ModulePage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  // const createModuleProgress = useCreateModuleProgress();
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
   const {
     data: allUserModuleProgresses,
     isLoading: isAllUserModuleProgressesLoading,
     isError: isAllUserModuleProgressesError,
   } = useGetAllUserModuleProgressQuery(user?._id ?? "");
+
   const progress = 0;
 
   if (isLoading) return <Loader />;
@@ -58,8 +60,7 @@ const ModulePage: React.FC = () => {
   };
 
   const handleStartClick = (moduleId: string, moduleName: string) => {
-    const currentModule = modules?.find((module) => module._id);
-    // handleCreateUserModuleProgress(currentModule?._id || "", currentModule?.name || '');
+    const currentModule = modules?.find((module) => module._id === moduleId);
     dispatch(setCurrentModule(currentModule));
     createModuleProgress(
       user?._id || "",
@@ -69,7 +70,36 @@ const ModulePage: React.FC = () => {
     );
   };
 
+
+
+
+
   return (
+   <>
+   {/* <div style={{ padding: "20px" }}>
+      <Menu items={items} />
+      <h1>Modules</h1>
+      <List
+        grid={{ gutter: 16, column: 4 }}
+        dataSource={modules}
+        renderItem={(module) => (
+          <List.Item>
+            <Card title={module.name}>
+              <p><strong>Module Grammar:</strong> {module.moduleGrammar.length > 0 ? module.moduleGrammar.join(", ") : "None"}</p>
+              <p><strong>Videos:</strong> {module.videos.length}</p>
+              <p><strong>Text:</strong> {module.text ? "Available" : "None"}</p>
+              <p><strong>Text Questions:</strong></p>
+              <p><strong>Vocabulary:</strong> {module.vocabulary.length}</p>
+              <p><strong>Articles Exercises:</strong></p>
+              <p><strong>Exercises:</strong> {module.exercises.length}</p>
+              <Button type="primary" onClick={() => handleStartClick(module._id, module.name)}>
+                Start Module
+              </Button>
+            </Card>
+          </List.Item>
+        )}
+      />
+    </div> */}
     <Card
       className={theme === "dark" ? "card-dark" : "card-light"}
       title="Твої модулі"
@@ -91,15 +121,15 @@ const ModulePage: React.FC = () => {
                   //   { title: "Videos", link: `/modules/${module._id.$oid}/videos` },
                   {
                     title: "Text Content",
-                    link: `/module/${module._id}/text`,
+                    link: `/modules/${module._id}/text`,
                   },
                   {
                     title: "Vocabulary",
-                    link: `/module/${module._id}/vocabulary`,
+                    link: `/modules/${module._id}/vocabulary`,
                   },
                   {
                     title: "Exercises",
-                    link: `/module/${module._id}/exercises`,
+                    link: `/modules/${module._id}/exercises`,
                   },
                 ]}
                 renderItem={(item) => (
@@ -121,6 +151,8 @@ const ModulePage: React.FC = () => {
         )}
       />
     </Card>
+    <Outlet/>
+   </>
   );
 };
 

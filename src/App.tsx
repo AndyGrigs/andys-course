@@ -8,6 +8,10 @@ import { useContext } from "react";
 import { ThemeContext } from "./hooks/ThemeProvider";
 import TopNav from "./components/Header/topNav/HeaderMenu";
 import AppSidebar from "./components/sidebar";
+import { Breadcrumbs } from "./components/Breadcrumps/Breadcrumps";
+import { HomeOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { Divider } from "antd/lib";
 
 function App() {
   // const { theme, toggleTheme } = useTheme();
@@ -40,16 +44,13 @@ function App() {
           style={{ minHeight: "100vh" }}
         >
           <Header />
-          <Content style={{ margin: "0 16px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              {/* <Breadcrumb.Item>Student</Breadcrumb.Item>
-              <Breadcrumb.Item>Dashboard</Breadcrumb.Item> */}
-            </Breadcrumb>
+          <Content>
+            <div style={{ width: "80%", margin: "1em auto" }}>
+              <Breadcrumbs />
+            </div>
+            <Divider/>
             <AppRouter />
-            <div
-              className="site-layout-background"
-              style={{ padding: 24, minHeight: 360 }}
-            ></div>
+            <div className="site-layout-background"></div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
             Deutsch_course©2024 Created by Andriy Grygorov

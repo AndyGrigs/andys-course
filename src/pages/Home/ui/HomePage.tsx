@@ -13,10 +13,9 @@ const HomePage: React.FC = () => {
           <Paragraph>
             Мій курс допоможе вам швидко освоїти німецьку мову. 
           </Paragraph >
-          <Link to='/dashboard'>
-          <Button type="primary" href="/dashboard">
+
+          <Link to='/modules'>
             Почати!
-          </Button>
           </Link>
   
       </div>

@@ -130,8 +130,7 @@ const ExerciseDetailsPage = () => {
         if (!updatedAnswers[taskId]) {
           updatedAnswers[taskId] = [];
         }
-        updatedAnswers[taskId][partIndex] = e.target.value.trim().toLowerCase();
-
+        updatedAnswers[taskId][partIndex] = e.target.value;
         return updatedAnswers;
       });
     },
