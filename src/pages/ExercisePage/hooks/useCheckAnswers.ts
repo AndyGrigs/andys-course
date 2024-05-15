@@ -33,19 +33,11 @@ const useCheckAnswer = () => {
             task.solution[0].replace(/\s/g, "").toLowerCase()
         );
 
-        console.log(concatAnswerValue(taskId, answerValue).toLowerCase())
-        console.log(task.solution[0].replace(/\s/g, "").toLowerCase())
-
         setUserResults((prevResults) => ({
             ...prevResults,
             [taskIndex]: isCorrect,
         }));
 
-
-
-        // console.log(
-        //     `Answer for task ${taskId} is ${isCorrect ? "correct" : "incorrect"}`
-        // );
         return isCorrect
     }
     return { userResults, checkAnswer }
