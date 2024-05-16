@@ -13,7 +13,6 @@ interface UpdatePointsPayload {
   points: number;
 }
 
-
 interface InitialState {
   user: (IUser & { token: string }) | null;
   isAuthenticated: boolean;
