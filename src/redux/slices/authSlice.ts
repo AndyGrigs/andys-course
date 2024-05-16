@@ -10,6 +10,7 @@ interface UpdateExerciseProgressPayload {
 }
 
 interface UpdatePointsPayload {
+  userId: string;
   points: number;
 }
 
@@ -78,7 +79,7 @@ const slice = createSlice({
   },
 });
 
-export const { logout, updateLokalUserExerciseProgress } = slice.actions;
+export const { logout, updateLokalUserExerciseProgress, updateLokalUserPoints } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) =>

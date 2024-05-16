@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4444",
+  // baseUrl: "http://localhost:4444",
+  baseUrl: "https://lernst-du-deutsch-backend.onrender.com",
   prepareHeaders: (headers, { getState }) => {
     const token =
       (getState() as RootState).auth.user?.token ||
