@@ -2,14 +2,13 @@ import { Card, Form, Input, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
-import { AppInput } from "../../../components/ui/input";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../redux/services/auth";
 import { IUser } from "../../../types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
-import { Loader } from "../../../components/Loader/ui/Loader";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
 
@@ -18,24 +17,25 @@ const Registration = () => {
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
   const [registerUser] = useRegisterMutation();
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    if (user) navigate("/dashboard");
+    if (user) navigate("/modules");
   }, [navigate, user]);
 
   const register = async (data: registerData) => {
     try {
       const response = await registerUser(data).unwrap();
-      const { code, token } = response;
+      const { code, token, fullName } = response;
       localStorage.setItem("token", token);
-      navigate("/user-code", { state: { code } });
+      navigate("/user-code", { state: { code, fullName } });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("Ein Fehler((");
+        setError("сталась помилка...");
       }
     }
   };
@@ -43,7 +43,14 @@ const Registration = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Anmeldung" style={{ width: "30rem" }}>
+        <Card
+          title="Зареєструватись"
+          style={
+            theme === "dark"
+              ? { background: "#5585b5", border: "none" }
+              : { background: "#fff" }
+          }
+        >
           {/* <Form onFinish={register}>
             <AppInput name="fullName" placeholder="Name" />
             <AppButton type="primary" htmlType="submit">
@@ -53,12 +60,12 @@ const Registration = () => {
           <Form onFinish={register}>
             <Form.Item
               name="fullName"
-              label="Full Name"
-              rules={[
-                { required: true, message: "Please enter your full name" },
-              ]}
+              label="Ім'я"
+              rules={[{ required: true, message: "напиши своє ім'я" }]}
             >
-              <Input />
+              <Input 
+               onChange={(e) => e.target.value.trim()}
+              style={theme === "dark" ? { color: "darkblue" } : {}} />
             </Form.Item>
 
             {error && (
@@ -69,13 +76,31 @@ const Registration = () => {
 
             <Form.Item>
               <AppButton type="primary" htmlType="submit">
-                Register
+                Зареєструватись
               </AppButton>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Hast du schon ein Konto? <Link to="/login">Eintreten</Link>
+              Вже є аккаунт?{" "}
+              <Link
+                style={
+                  theme === "dark"
+                    ? {
+                        color: "#C6E2FB",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                    : {
+                        color: "",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                }
+                to="/login"
+              >
+                Увійти
+              </Link>
             </Typography.Text>
           </Space>
         </Card>

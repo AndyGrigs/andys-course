@@ -1,14 +1,13 @@
 import React, { useRef } from "react";
-import { Button, Input, Col, Flex, Typography, Divider, Image } from "antd";
+import { Button, Col, Flex, Typography, Divider, Image } from "antd";
 const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import styles from "./ExerciseDetailsPage.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { InputRef } from "antd/lib/input";
+import { useDispatch } from "react-redux";
+import Input, { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import useCheckAnswer from "../hooks/useCheckAnswers";
 import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
@@ -25,9 +24,7 @@ import {
   IModuleProgress,
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
-
 import ResultMessage from "../pageElemnts/ResultMessage";
-
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
@@ -44,7 +41,6 @@ const ExerciseDetailsPage = () => {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [resultMessage, setResultMessage] = useState("");
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
-  const [iconClass, setIconClass] = useState("");
   const {
     data: exercise,
     isLoading,
@@ -65,19 +61,19 @@ const ExerciseDetailsPage = () => {
     setIsModalResultVisible(false);
   };
 
-
   const handleFinalProgress = useCallback(async () => {
     try {
       const finalResult = {
         userId: user?._id || "",
         exerciseId: exercise?._id ? String(exercise._id) : "",
+        answers: userResults,
         progress: 100,
       };
       await updateUserExerciseProgress(finalResult);
     } catch (error) {
       console.log(error);
     }
-  }, [user, exercise, updateUserExerciseProgress]);
+  }, [user?._id, userResults, updateUserExerciseProgress]);
 
   const handleUpdateModuleProgress = useCallback(async () => {
     try {
@@ -92,9 +88,9 @@ const ExerciseDetailsPage = () => {
     }
   }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
 
-  useEffect(() => {
-    console.log("User Exercise Progress:", progress);
-  }, [progress]);
+  // useEffect(() => {
+  //   console.log("User Exercise Progress:", progress);
+  // }, [progress]);
 
   useEffect(() => {
     if (currentTaskIndex === totalTasks - 1) {
@@ -117,11 +113,11 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults });
 
-  useEffect(() => {
-    if (userResults) {
-      console.log(userResults);
-    }
-  }, [userResults]);
+  // useEffect(() => {
+  //   if (userResults) {
+  //     console.log(userResults);
+  //   }
+  // }, [userResults]);
 
   const handleInputChange = useCallback(
     (
@@ -134,8 +130,7 @@ const ExerciseDetailsPage = () => {
         if (!updatedAnswers[taskId]) {
           updatedAnswers[taskId] = [];
         }
-        updatedAnswers[taskId][partIndex] = e.target.value.trim().toLowerCase();
-
+        updatedAnswers[taskId][partIndex] = e.target.value;
         return updatedAnswers;
       });
     },
@@ -148,6 +143,7 @@ const ExerciseDetailsPage = () => {
         userId: user?._id || "",
         exerciseId: (exercise?._id as string) || "",
         progress,
+        answers: userResults,
       };
 
       await updateUserExerciseProgress(data);
@@ -212,16 +208,23 @@ const ExerciseDetailsPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Title level={3}>{exercise.number}</Title>
-      <Title level={4}>{exercise.instruction}</Title>
+      <Title level={4}>{exercise.number}.  {exercise.instruction}</Title>
       <Title level={2}>{exercise.example}</Title>
       <Divider />
-      <Flex justify="center" align="center" style={{ marginTop: "2.5em" }}>
+      <Flex
+        gap={8}
+        justify="center"
+        align="center"
+        style={{ marginTop: "2.5em" }}
+      >
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
               <Col>
-                <Paragraph style={{ margin: "0 1em 0 1em", fontSize: "1.5em" }}>
+                <Paragraph
+                  className={styles.exPar}
+                  style={{ margin: "0 .2em" }}
+                >
                   {part}
                 </Paragraph>
               </Col>
@@ -229,11 +232,13 @@ const ExerciseDetailsPage = () => {
             {partIndex < parts.length - 1 && (
               <Col span={3}>
                 <Input
+                  className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
                     maxWidth: "100%",
                     color: "#000000",
-                    fontSize: "1.5em",
+                    margin: "0 -3em",
+                    // fontSize: "1.5em",
                   }}
                   value={
                     answerValue[currentTask._id]
@@ -251,7 +256,7 @@ const ExerciseDetailsPage = () => {
         ))}
       </Flex>
 
-      <ResultMessage resultMessage={resultMessage} />
+      <ResultMessage resultMessage={resultMessage} correctAnswer={currentTask.solution}/>
 
       <ResultsModal
         visible={isModaResultlVisible}
@@ -285,11 +290,9 @@ const ExerciseDetailsPage = () => {
         style={{ marginTop: "2.5em" }}
       >
         <div style={{ marginBottom: "2em" }}>
-
           <Image width={90} height={90} src={currentTask.image} />
-
         </div>
-        <Button disabled={allInputsEmpty} onClick={goToNextTask}>
+        <Button type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
         <img src="./assets/pronomen/ich.jpg" alt="" />

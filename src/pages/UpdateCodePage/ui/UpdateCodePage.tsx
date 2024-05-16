@@ -1,5 +1,5 @@
 import { Row, Card, Form, Space, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
 import { AppInput } from "../../../components/ui/input";
@@ -8,8 +8,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../types";
-import { Loader } from "../../../components/Loader";
 import Layout from "../../../components/Layout";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
@@ -18,9 +18,11 @@ const UpdateCode = () => {
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
   const [updateCode] = useUpdateCodeMutation();
+  const { theme } = useContext(ThemeContext);
+
 
   useEffect(() => {
-    if (user) navigate("/dashboard");
+    if (user) navigate("/modules");
   }, [navigate, user]);
 
   const onFinish = async (data: registerData) => {
@@ -43,17 +45,36 @@ const UpdateCode = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Anmeldung aktualizieren" style={{ width: "30rem" }}>
+        <Card
+          title="Відновити вхід"
+          style={
+            theme === "dark"
+              ? { background: "#5585b5", border: "none" }
+              : { background: "#fff" }
+          }
+        >
           <Form onFinish={onFinish}>
-            <AppInput name="fullName" placeholder="Name" />
-            <AppInput name="fullName" placeholder="Wiederhol den Name" />
+            <AppInput name="fullName" placeholder="Ім'я" />
+            <AppInput name="repeatName" placeholder="Повтори своє ім'я" />
             <AppButton type="primary" htmlType="submit">
-              Anmelden
+              Отримати код
             </AppButton>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Hast du schon ein Konto? <Link to="/login">Eintreten</Link>
+              <Link 
+               style={
+                theme === "dark"
+                  ? {
+                      color: "#C6E2FB",
+                      borderBottom: "1px solid ",
+                    }
+                  : {
+                      color: "#030",
+                      borderBottom: "1px solid ",
+                    }
+              }
+              to="/login">Увійти в аккаунт</Link>
             </Typography.Text>
           </Space>
         </Card>

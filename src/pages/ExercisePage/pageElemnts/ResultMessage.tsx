@@ -1,22 +1,31 @@
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { Flex, Alert, Button } from "antd";
+import { Flex, Alert, Button, message } from "antd";
 import { Space } from "antd";
 interface ResultMessageProp {
   resultMessage: string;
+  correctAnswer: string;
 }
 
-function ResultMessage({ resultMessage }: ResultMessageProp) {
+function ResultMessage({ resultMessage, correctAnswer }: ResultMessageProp) {
   return (
+    // <>
+    //   {resultMessage === "Correct!"? (
+    //     message.success(`Success Correct answer is: ${correctAnswer}`, 5, () => {
+    //       // You can add any action you want to perform after the message is closed
+    //     })
+    //   ) : resultMessage === "Incorrect. Try again."? (
+    //     message.error(`Incorrect. Try again. Correct answer is: ${correctAnswer}`, 5, () => {
+    //       // You can add any action you want to perform after the message is closed
+    //     })
+    //   ) : null}
+    // </>
     <Flex justify="center">
       <div
         style={{
-          position: "absolute",
-          alignItems: "center",
-          margin: "auto",
-          //   top: 0,
-          //   right: 0,
-          //   left: 0,
-          //   bottom: 0,
+          position: 'absolute',
+          top: '10%',
+          left: '50%',
+          transform: 'translateX(-50%)',
           zIndex: 1000,
           opacity: resultMessage ? 1 : 0,
           transition: "opacity  0.5s",
@@ -24,7 +33,7 @@ function ResultMessage({ resultMessage }: ResultMessageProp) {
       >
         {resultMessage === "Correct!" ? (
           <Alert
-            message="Success Tips"
+            message="Richtig!"
             type="success"
             showIcon
             action={
@@ -36,15 +45,15 @@ function ResultMessage({ resultMessage }: ResultMessageProp) {
           />
         ) : resultMessage === "Incorrect. Try again." ? (
           <Alert
-            message=""
+            message={`Richtig ist:  ${correctAnswer}`}
             showIcon
-            description="Du hast unrichtig gemacht!    "
+            // description="Du hast unrichtig gemacht!    "
             type="error"
-            action={
-              <Button size="small" danger>
-                Detail
-              </Button>
-            }
+            // action={
+            //   <Button size="small" danger>
+            //     Detail
+            //   </Button>
+            // }
             closable
           />
         ) : null}

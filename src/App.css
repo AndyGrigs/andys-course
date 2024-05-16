@@ -1,8 +1,8 @@
 html,
 body,
-body > div {
-  height: 100%;
-}
+/* body > div {
+
+} */
 
 body {
   margin: 0;
@@ -21,7 +21,7 @@ body {
 .layout-dark {
   background: radial-gradient(
     circle at 10% 20%,
-    rgb(75, 108, 183) 0%,
+    #4b6cb7 0%,
     rgb(55, 82, 141) 90%
   );
 }
@@ -41,7 +41,8 @@ body {
     rgb(9, 32, 63) 0%,
     rgb(83, 120, 149) 100%
   ); */
-  background-color: #2e5090;
+  background-color: #5e749c;
+  border: white solid 1px;
 }
 
 .card-light {
@@ -51,5 +52,5 @@ body {
       rgba(255, 255, 255, 0.5) 47%,
       rgba(0, 0, 0, 0.5) 100%
     ); */
-  background-color: rgba(255, 255, 255, 0.582);
+  background-color: rgba(232, 229, 229, 0.582);
 }

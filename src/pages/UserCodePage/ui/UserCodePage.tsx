@@ -1,32 +1,33 @@
 import { Card } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppButton } from "../../../components/ui/button";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { useContext } from "react";
 
 const UserCodePage = () => {
   const location = useLocation();
   const { fullName, code } = location.state;
-  console.log(code);
-  const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
 
   if (!code) {
-    return <div>No code provided.</div>;
+    return <div>Нема коду...</div>;
   }
-
-  const handleNavigation = () => {
-    navigate("/dashboard");
-  };
 
   return (
     <Card
-      title={`Hallo ${fullName}!`}
-      style={{ width: "30rem", margin: "20px auto" }}
+      title={`Привіт ${fullName}!`}
+      style={
+        theme === "dark"
+          ? { background: "#5585b5", border: "none" }
+          : { background: "#fff" }
+      }
     >
       <div style={{ textAlign: "center" }}>
-        <h3>Trage dein code ins Heft ein!</h3>
+        <h3>Запиши свій новий код!</h3>
         <h1>{code}</h1>
-      </div>
 
-      <AppButton onClick={handleNavigation}>Let's go!</AppButton>
+        <Link to='/login'>Увійти з новим кодом</Link>
+      </div>
     </Card>
   );
 };

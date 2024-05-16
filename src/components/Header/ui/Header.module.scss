@@ -29,15 +29,22 @@
     );
 }
 
-// @media (max-width: 768px) {
-//   .header {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     padding: 10px;
-//   }
+.drawerLight {
+  .ant-drawer-body {
+    background-color: #fff;
+    color: #000;
+  }
+}
 
-//   .userIcon {
-//     margin-right: 0;
-//     margin-bottom: 10px;
-//   }
-// }
+.drawerDark {
+  .ant-drawer-body {
+    background-color: #333;
+    color: #fff;
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (max-width: 767px) {
+}

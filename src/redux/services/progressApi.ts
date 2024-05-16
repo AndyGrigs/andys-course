@@ -2,10 +2,6 @@
 import { api } from "./api";
 import { ModuleProgress, ExerciseProgress } from "../../types";
 
-// Define tags for the queries
-// export const USER_EXERCISE_PROGRESS_QUERY_TAG = 'UserExerciseProgress';
-
-// type UserExerciseProgressTag = { type: 'UserExerciseProgress', id: 'LIST' };
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserModuleProgress: builder.query<
@@ -82,12 +78,12 @@ export const progressApi = api.injectEndpoints({
 
     updateUserExerciseProgress: builder.mutation<
       ExerciseProgress,
-      { userId: string; exerciseId: string, progress: number }
+      { userId: string; exerciseId: string, answers: object, progress: number }
     >({
-      query: ({ userId, exerciseId, progress }) => ({
+      query: ({ userId, exerciseId, answers, progress }) => ({
         url: `progress/exercise/update/${userId}`,
         method: "PUT",
-        body: { exerciseId, progress },
+        body: { exerciseId, answers, progress },
       }),
     }),
 

@@ -1,14 +1,17 @@
 import { Button, Card, Form, Input, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { ErrorMessage } from "../../../components/Error";
+import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
   const [error, setError] = useState("");
   const user = useSelector(selectUser);
   const [loginUser] = useLoginMutation();
@@ -24,47 +27,96 @@ const Login: React.FC = () => {
       const response = await loginUser(data).unwrap();
       const { token } = response;
       localStorage.setItem("token", token);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      const maybeError = isErrorWithMessage(err);
+
+      if (maybeError) {
+        setError(err.data.message);
+      } else {
+        setError("сталась помилка...");
+      }
     }
   };
 
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Einlogen" style={{ width: "30rem" }}>
+        <Card
+          title="Увійти в аккаунт"
+          // style={{ width: "30rem" }}
+          style={
+            theme === "dark"
+              ? { background: "#5585b5", border: "none" }
+              : { background: "#fff" }
+          }
+        >
           <Form onFinish={onFinish}>
             <Form.Item
               name="fullName"
-              label="Full Name"
+              label="Ім'я"
               rules={[
-                { required: true, message: "Please enter your full name" },
+                { required: true, message: "Напиши своє ім'я" },
               ]}
             >
-              <Input />
+             <Input style={theme === 'dark'? { color: 'darkblue' } : {}} />
             </Form.Item>
 
             <Form.Item
               name="code"
-              label="Code"
-              rules={[{ required: true, message: "Please enter your code" }]}
+              label="Код"
+              rules={[{ required: true, message: "Напиши свій код" }]}
             >
-              <Input.Password />
+              <Input.Password style={theme === 'dark'? { color: 'darkblue' } : {}}/>
             </Form.Item>
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Login
+                Увійти
               </Button>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Kein Konto?<Link to="/register">Зареєструйтесь</Link>
+              Нема аккаунту?
+              <Link
+                to="/register"
+                style={
+                  theme === "dark"
+                    ? {
+                        color: "#C6E2FB",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                    : {
+                        color: "",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                }
+              >
+                Зареєструйтесь
+              </Link>
             </Typography.Text>
             <Typography.Text>
-              Ein Code vergessen?
-              <Link to="/register-update">Neues Code erhalten</Link>
+              Не знаєш код?
+              <Link
+                style={
+                  theme === "dark"
+                    ? {
+                        color: "#C6E2FB",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                    : {
+                        color: "",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
+                }
+                to="/register-update"
+              >
+                Відновити
+              </Link>
             </Typography.Text>
             <ErrorMessage message={error} />
           </Space>
