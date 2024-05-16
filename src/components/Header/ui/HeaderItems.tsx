@@ -102,7 +102,7 @@ export const HeaderItems: React.FC = () => {
               key: "dashboard",
               label: "Навчальння",
               icon: <BookOutlined />,
-              onClick: () => navigate("/dashboard"),
+              onClick: () => navigate("/modules"),
             },
             {
               key: "13",

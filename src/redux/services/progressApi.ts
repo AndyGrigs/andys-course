@@ -2,10 +2,6 @@
 import { api } from "./api";
 import { ModuleProgress, ExerciseProgress } from "../../types";
 
-// Define tags for the queries
-// export const USER_EXERCISE_PROGRESS_QUERY_TAG = 'UserExerciseProgress';
-
-// type UserExerciseProgressTag = { type: 'UserExerciseProgress', id: 'LIST' };
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserModuleProgress: builder.query<

@@ -12,12 +12,6 @@ export interface ModuleProgress {
   moduleName: string;
   progress: number;
 }
-// "exerciseId": "6574a1258a71715508c69d2d",
-//     "exerciseNumber": 2,
-//     "moduleName": "Module 1",
-//     "exerciseAnswers": {},
-//     "progress": 100,
-//     "completed": false
 
 export interface ExerciseProgress {
   exerciseId: string;
@@ -31,6 +25,7 @@ export interface IUser {
   _id: string;
   fullName: string;
   code: string;
+  points: number;
   moduleProgress: ModuleProgress[];
   exerciseProgress: ExerciseProgress[];
   avatarUrl: string;
@@ -77,7 +72,6 @@ export interface IExercise {
 export interface IExerciseResponse {
   _id: Key | null | undefined;
   number: number;
-  //instruction: ReactNode;
   instruction: string;
   example: string;
   tasks: ITask[];

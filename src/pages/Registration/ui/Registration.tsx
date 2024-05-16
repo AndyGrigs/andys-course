@@ -20,15 +20,15 @@ const Registration = () => {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    if (user) navigate("/dashboard");
+    if (user) navigate("/modules");
   }, [navigate, user]);
 
   const register = async (data: registerData) => {
     try {
       const response = await registerUser(data).unwrap();
-      const { code, token } = response;
+      const { code, token, fullName } = response;
       localStorage.setItem("token", token);
-      navigate("/user-code", { state: { code } });
+      navigate("/user-code", { state: { code, fullName } });
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 
@@ -63,7 +63,9 @@ const Registration = () => {
               label="Ім'я"
               rules={[{ required: true, message: "напиши своє ім'я" }]}
             >
-              <Input style={theme === "dark" ? { color: "darkblue" } : {}} />
+              <Input 
+               onChange={(e) => e.target.value.trim()}
+              style={theme === "dark" ? { color: "darkblue" } : {}} />
             </Form.Item>
 
             {error && (

@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../types";
-import { Loader } from "../../../components/Loader";
 import Layout from "../../../components/Layout";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
 
@@ -23,7 +22,7 @@ const UpdateCode = () => {
 
 
   useEffect(() => {
-    if (user) navigate("/dashboard");
+    if (user) navigate("/modules");
   }, [navigate, user]);
 
   const onFinish = async (data: registerData) => {

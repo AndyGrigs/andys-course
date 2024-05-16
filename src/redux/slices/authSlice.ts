@@ -9,6 +9,10 @@ interface UpdateExerciseProgressPayload {
   progress: number;
 }
 
+interface UpdatePointsPayload {
+  points: number;
+}
+
 
 interface InitialState {
   user: (IUser & { token: string }) | null;
@@ -33,6 +37,12 @@ const slice = createSlice({
             progress.progress = action.payload.progress;
           }
         })
+      }
+    },
+    updateLokalUserPoints: (state, action: PayloadAction<UpdatePointsPayload>) => {
+      if (state.user) {
+        state.user.points = action.payload.points
+       
       }
     },
   },
