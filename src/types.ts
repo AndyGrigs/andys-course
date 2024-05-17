@@ -8,6 +8,9 @@ export type ErrorWithMessage = {
 };
 
 export interface ModuleProgress {
+  [x: string]: number;
+  moduleProgress: number;
+  exerciseProgress: number;
   moduleId: string;
   moduleName: string;
   progress: number;

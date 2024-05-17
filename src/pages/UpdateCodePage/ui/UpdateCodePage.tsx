@@ -1,7 +1,6 @@
-import { Row, Card, Form, Space, Typography } from "antd";
+import { Row, Card, Form, Space, Typography, Button } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppButton } from "../../../components/ui/button";
 import { AppInput } from "../../../components/ui/input";
 import { useUpdateCodeMutation } from "../../../redux/services/auth";
 import { useSelector } from "react-redux";
@@ -16,7 +15,7 @@ type registerData = Omit<IUser, "id"> & { confirmCode: string };
 const UpdateCode = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const [error, setError] = useState("");
+  const [_, setError] = useState("");
   const [updateCode] = useUpdateCodeMutation();
   const { theme } = useContext(ThemeContext);
 
@@ -56,9 +55,9 @@ const UpdateCode = () => {
           <Form onFinish={onFinish}>
             <AppInput name="fullName" placeholder="Ім'я" />
             <AppInput name="repeatName" placeholder="Повтори своє ім'я" />
-            <AppButton type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit">
               Отримати код
-            </AppButton>
+            </Button>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>

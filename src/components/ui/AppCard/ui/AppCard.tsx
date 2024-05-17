@@ -1,5 +1,4 @@
 import { Card } from "antd";
-import style from "./AppCard.module.scss";
 import { ReactNode, useContext } from "react";
 import { ThemeContext } from "../../../../hooks/ThemeProvider";
 

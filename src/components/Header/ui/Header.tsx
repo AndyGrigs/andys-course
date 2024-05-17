@@ -1,28 +1,17 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link} from "react-router-dom";
 import {
   Layout,
   Space,
   Typography,
   Button,
-  Drawer,
-  Flex,
-  MenuProps,
+  Drawer
 } from "antd";
 import {
-  BookOutlined,
-  LoginOutlined,
-  LogoutOutlined,
   MoonOutlined,
   SunOutlined,
-  UserAddOutlined,
   MenuOutlined,
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, selectUser } from "../../../redux/slices/authSlice";
 import styles from "./Header.module.scss";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { createStyles, useTheme } from "antd-style";

@@ -1,14 +1,11 @@
-import React, { useContext, useState } from "react";
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import React, { useContext } from "react";
 import { Card, List, Button } from "antd";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { Loader } from "../../../components/Loader";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import {  Outlet, useNavigate } from "react-router-dom";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useDispatch } from "react-redux";
 import {

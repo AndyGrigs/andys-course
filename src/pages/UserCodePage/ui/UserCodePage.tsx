@@ -1,6 +1,5 @@
 import { Card } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AppButton } from "../../../components/ui/button";
+import { Link, useLocation} from "react-router-dom";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { useContext } from "react";
 

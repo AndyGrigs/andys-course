@@ -1,7 +1,6 @@
-import { Card, Form, Input, Row, Space, Typography } from "antd";
+import { Card, Form, Input, Row, Space, Typography, Button } from "antd";
 import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
-import { AppButton } from "../../../components/ui/button";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useContext, useEffect, useState } from "react";
@@ -75,9 +74,9 @@ const Registration = () => {
             )}
 
             <Form.Item>
-              <AppButton type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit">
                 Зареєструватись
-              </AppButton>
+              </Button>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">

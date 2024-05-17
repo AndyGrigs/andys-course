@@ -15,7 +15,7 @@ const lightTheme = {
 // Create a context for the theme
 const ThemeContext = createContext({
   theme: "light",
-  handleTheme: (theme: string) => {},
+  handleTheme: (_theme: string) => {},
 });
 
 interface ThemeProviderProps {

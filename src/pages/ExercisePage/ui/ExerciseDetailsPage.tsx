@@ -6,7 +6,6 @@ import { Loader } from "../../../components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
 import styles from "./ExerciseDetailsPage.module.scss";
-import { useDispatch } from "react-redux";
 import Input, { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import useCheckAnswer from "../hooks/useCheckAnswers";
@@ -29,7 +28,6 @@ import ResultMessage from "../pageElemnts/ResultMessage";
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
 
-  const dispatch = useDispatch();
   const user = useAppSelector(selectUser);
 
   const { exerciseId } = useParams<{ exerciseId: string }>();
@@ -73,7 +71,7 @@ const ExerciseDetailsPage = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [user?._id, userResults, updateUserExerciseProgress]);
+  }, [user?._id, exercise?._id, userResults, updateUserExerciseProgress]);
 
   const handleUpdateModuleProgress = useCallback(async () => {
     try {
