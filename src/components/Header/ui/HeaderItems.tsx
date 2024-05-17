@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
 import {
-  AppstoreOutlined,
   BookOutlined,
   LoginOutlined,
   LogoutOutlined,
-  MailOutlined,
-  SettingOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -14,8 +11,6 @@ import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
-import { useGetAllModulesQuery } from "../../../redux/services/modules";
-import { Loader } from "../../Loader";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -46,7 +41,6 @@ export const HeaderItems: React.FC = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-
 
   const items: MenuItem[] = [
     // {

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, updateLokalUserExerciseProgress } from '../../../redux/slices/authSlice';
 import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
 import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
-import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 
 
 const useExerciseNavigation = () => {
@@ -14,7 +13,6 @@ const useExerciseNavigation = () => {
    const user = useSelector(selectUser);
    const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
    const currentExercise = useSelector(selectCurrentExercise)
-   const currentModule = useSelector(selectCurrentModule)
 
 
 
@@ -27,7 +25,8 @@ const useExerciseNavigation = () => {
          const data = {
             userId: user?._id || '',
             exerciseId,
-            progress: 0
+            progress: 0,
+            answers: {}
          };
          await updateUserExerciseProgress(data)
 
@@ -43,7 +42,8 @@ const useExerciseNavigation = () => {
          const finalResult = {
             userId: user?._id || '',
             exerciseId: currentExercise?._id as string || '',
-            progress: 100
+            progress: 100,
+            answers: {}
          };
          await updateUserExerciseProgress(finalResult)
       } catch (error) {

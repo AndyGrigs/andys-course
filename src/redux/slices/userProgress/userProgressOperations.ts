@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-import { useUpdateUserExerciseProgressMutation, useUpdateUserModuleProgressMutation } from '../../services/progressApi';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { useUpdateUserModuleProgressMutation } from '../../services/progressApi';
 
 
 export const updateUserModuleProgress = createAsyncThunk(
     'userProgress/update',
-    async ({ userId, progress }: { userId: string; progress: object }, thunkAPI) => {
+    async ({ userId, progress }: { userId: string; progress: number }, thunkAPI) => {
         try {
             const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
-            const response = await updateUserModuleProgress({ userId, progress }).unwrap();
+            const response = await updateUserModuleProgress({
+                userId, progress,
+                moduleId: ''
+            }).unwrap();
             return response;
         } catch (error) {
             if (error instanceof Error) {
@@ -20,12 +23,8 @@ export const updateUserModuleProgress = createAsyncThunk(
     }
 );
 
-interface UpdateUserExerciseProgressPayload {
-    userId: string;
-    progress: number;
-}
 
-type UpdateUserExerciseProgressReturnValue = unknown;
+
 
 
 
