@@ -206,8 +206,9 @@ const ExerciseDetailsPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
+      
       <Title level={4}>{exercise.number}.  {exercise.instruction}</Title>
-      <Title level={2}>{exercise.example}</Title>
+      < Typography.Paragraph>{exercise.example}</Typography.Paragraph>
       <Divider />
       <Flex
         gap={8}

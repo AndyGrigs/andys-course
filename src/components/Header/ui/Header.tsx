@@ -1,17 +1,7 @@
 import { useState, useContext } from "react";
-import { Link} from "react-router-dom";
-import {
-  Layout,
-  Space,
-  Typography,
-  Button,
-  Drawer
-} from "antd";
-import {
-  MoonOutlined,
-  SunOutlined,
-  MenuOutlined,
-} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { Layout, Space, Typography, Button, Drawer } from "antd";
+import { MoonOutlined, SunOutlined, MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { createStyles, useTheme } from "antd-style";
@@ -20,10 +10,12 @@ import type {
   DrawerStyles,
 } from "antd/es/drawer/DrawerPanel";
 import { HeaderItems } from "./HeaderItems";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/slices/authSlice";
 
 export const Header = () => {
   const { handleTheme, theme } = useContext(ThemeContext);
-
+  const user = useSelector(selectUser);
 
   const useStyle = createStyles(() => ({
     "my-drawer-mask": {
@@ -52,10 +44,10 @@ export const Header = () => {
   const Menu = () => {
     const { styles } = useStyle();
     const token = useTheme();
-    const [isOpen, setIsOpen] = useState(false); // Manage the open state within the component
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggleDrawer = () => {
-      setIsOpen(!isOpen); 
+      setIsOpen(!isOpen);
     };
 
     const classNames: DrawerClassNames = {
@@ -102,7 +94,7 @@ export const Header = () => {
         </Space>
 
         <Drawer
-          title="Cabinet"
+          title={user ? user.fullName : ""}
           placement="right"
           // footer="Footer"
           onClose={toggleDrawer}
@@ -140,12 +132,10 @@ export const Header = () => {
             </Space>
           )} */}
           <HeaderItems />
-          
         </Drawer>
       </>
     );
   };
-
 
   return (
     <Layout.Header
@@ -155,10 +145,19 @@ export const Header = () => {
     >
       <Link to="/">
         <Space>
-          <Typography.Title level={4}>32890</Typography.Title>
+          <Typography.Title level={4}>
+            <img src=""/>
+          </Typography.Title>
         </Space>
       </Link>
       <div className={styles.links}>
+        <Space>
+          <Typography.Paragraph
+            style={{ fontSize: "1.5em", marginBottom: "0", fontWeight: "700" }}
+          >
+            🔥{user ? user.points : ""}
+          </Typography.Paragraph>
+        </Space>
         <Button
           type="text"
           onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
