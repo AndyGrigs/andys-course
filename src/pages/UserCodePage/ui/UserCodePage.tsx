@@ -25,7 +25,7 @@ const UserCodePage = () => {
         <h3>Запиши свій новий код!</h3>
         <h1>{code}</h1>
 
-        <Link to='/login'>Увійти з новим кодом</Link>
+        <Link to='/modules'>Start!</Link>
       </div>
     </Card>
   );
