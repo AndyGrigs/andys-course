@@ -22,7 +22,7 @@ const UserCodePage = () => {
       }
     >
       <div style={{ textAlign: "center" }}>
-        <h3>Запиши свій новий код!</h3>
+        <h3>Запиши свій код!</h3>
         <h1>{code}</h1>
 
         <Link to='/modules'>Start!</Link>

@@ -93,7 +93,7 @@ const ModulePage: React.FC = () => {
                   onClick={() => handleModuleLinkClick(module._id)}
                   type="primary"
                 >
-                  View Details
+                  Start!
                 </Button>
               </Card>
             </List.Item>
