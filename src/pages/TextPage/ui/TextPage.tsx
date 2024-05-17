@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Typography, Divider } from "antd";
+
+import { Card, Typography} from "antd";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 const { Title, Paragraph } = Typography;

@@ -1,6 +1,6 @@
 // Import necessary hooks and components at the top of OneModulePage.tsx
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
 import { ThemeContext } from '../../../hooks/ThemeProvider';
