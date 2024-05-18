@@ -35,6 +35,7 @@ const ExerciseDetailsPage = () => {
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
+  const [functionsCalled, setFunctionsCalled] = useState(false);
   const [isModaResultlVisible, setIsModalResultVisible] = useState(false);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [resultMessage, setResultMessage] = useState("");
@@ -48,7 +49,7 @@ const ExerciseDetailsPage = () => {
   const progress = useAppSelector(selectUserExerciseProgress);
   const currentModule = useAppSelector(selectCurrentModule);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
-  const { handleRepeatExercise, handleExerciseList } = useExerciseNavigation();
+  const { handleExerciseList } = useExerciseNavigation();
   const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
   const { moduleProgressPercentage } =
     useCalculateModuleProgress() as IModuleProgress;
@@ -90,18 +91,45 @@ const ExerciseDetailsPage = () => {
   //   console.log("User Exercise Progress:", progress);
   // }, [progress]);
 
+  // useEffect(() => {
+  //   // if (currentTaskIndex === totalTasks - 1) {
+  //   //   setIsModalResultVisible(true);
+  //   //   handleFinalProgress();
+  //   //   handleUpdateModuleProgress();
+  //   // }
+  //   if (currentTaskIndex === 2) {
+  //     setIsModalResultVisible(true);
+  //     handleFinalProgress();
+  //     handleUpdateModuleProgress();
+  //   }
+  // }, [
+  //   currentTaskIndex,
+  //   totalTasks,
+  //   handleFinalProgress,
+  //   handleUpdateModuleProgress,
+  // ]);
+
   useEffect(() => {
+    if (functionsCalled) return;
+
     if (currentTaskIndex === totalTasks - 1) {
       setIsModalResultVisible(true);
       handleFinalProgress();
       handleUpdateModuleProgress();
+
+      setFunctionsCalled(true);
     }
   }, [
     currentTaskIndex,
-    totalTasks,
+    functionsCalled,
     handleFinalProgress,
+    totalTasks,
     handleUpdateModuleProgress,
   ]);
+
+  useEffect(() => {
+    setFunctionsCalled(false);
+  }, []);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -206,9 +234,10 @@ const ExerciseDetailsPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      
-      <Title level={4}>{exercise.number}.  {exercise.instruction}</Title>
-      < Typography.Paragraph>{exercise.example}</Typography.Paragraph>
+      <Title level={4}>
+        {exercise.number}. {exercise.instruction}
+      </Title>
+      <Typography.Paragraph>{exercise.example}</Typography.Paragraph>
       <Divider />
       <Flex
         gap={8}
@@ -255,29 +284,19 @@ const ExerciseDetailsPage = () => {
         ))}
       </Flex>
 
-      <ResultMessage resultMessage={resultMessage} correctAnswer={currentTask.solution}/>
+      <ResultMessage
+        resultMessage={resultMessage}
+        correctAnswer={currentTask.solution}
+      />
 
       <ResultsModal
         visible={isModaResultlVisible}
         onClose={handleCloseModal}
         userResults={userResults}
-        onRepeatExercise={() => {
-          if (
-            exercise &&
-            typeof exercise._id === "string" &&
-            currentModule?._id
-          ) {
-            handleRepeatExercise(currentModule._id, exercise._id);
-          } else {
-            // Handle the case where exercise._id is not a string or is undefined
-            console.error("Exercise ID is not available");
-          }
-        }}
         onHandleExerciseList={() => {
           if (currentModule && currentModule._id) {
             handleExerciseList(currentModule._id);
           } else {
-            // Handle the case where currentModule or currentModule._id is undefined
             console.error("Module ID is not available");
           }
         }}

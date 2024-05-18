@@ -7,11 +7,11 @@ interface ResultsModalProps {
     visible: boolean;
     onClose: () => void;
     userResults: object;
-    onRepeatExercise: () => void;
+   
     onHandleExerciseList: () => void;
 }
 
-const ResultsModal: React.FC<ResultsModalProps> = ({ visible, onClose, userResults, onHandleExerciseList, onRepeatExercise }) => {
+const ResultsModal: React.FC<ResultsModalProps> = ({ visible, onClose, userResults, onHandleExerciseList }) => {
 
     return (
         <Modal
@@ -28,9 +28,6 @@ const ResultsModal: React.FC<ResultsModalProps> = ({ visible, onClose, userResul
                 ))}
             </Descriptions>
             <div style={{ marginTop: '20px' }}>
-                <Button type="primary" onClick={onRepeatExercise}>
-                    Повторити вправу
-                </Button>
                 <Button type="primary" style={{ marginLeft: '10px' }} onClick={onHandleExerciseList}>
                     Займатись далі
                 </Button>
