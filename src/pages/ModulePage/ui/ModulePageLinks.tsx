@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Card, List, Button } from "antd";
+//import style from './ModulePage.module.scss'
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
@@ -86,6 +87,7 @@ const ModulePage: React.FC = () => {
           renderItem={(module) => (
             <List.Item key={module._id}>
               <Card
+                //className={style.card}
                 style={theme === "dark"? { background: "#5a7cbb" } : {}}
                 title={module.name}
               >
