@@ -1,19 +1,15 @@
 // src/hooks/useExerciseNavigation.ts
 import { useNavigate } from 'react-router-dom';
-import { setExerciseProgress } from '../../../redux/slices/userProgress/userProgressSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, updateLokalUserExerciseProgress } from '../../../redux/slices/authSlice';
+import {useSelector } from 'react-redux';
+import { selectUser } from '../../../redux/slices/authSlice';
 import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
 import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
-import { useState } from 'react';
 
 
 const useExerciseNavigation = () => {
    const navigate = useNavigate();
-   const dispatch = useDispatch();
    const user = useSelector(selectUser);
    const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
-   const [isExecuting, setIsExecuting] = useState(false)
    const currentExercise = useSelector(selectCurrentExercise)
 
    // const handleRepeatExercise = async (moduleId: string, exerciseId: string) => {
