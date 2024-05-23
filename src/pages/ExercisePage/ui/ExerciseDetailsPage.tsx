@@ -87,45 +87,25 @@ const ExerciseDetailsPage = () => {
     }
   }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
 
-  // useEffect(() => {
-  //   console.log("User Exercise Progress:", progress);
-  // }, [progress]);
 
-  // useEffect(() => {
-  //   // if (currentTaskIndex === totalTasks - 1) {
-  //   //   setIsModalResultVisible(true);
-  //   //   handleFinalProgress();
-  //   //   handleUpdateModuleProgress();
-  //   // }
-  //   if (currentTaskIndex === 2) {
-  //     setIsModalResultVisible(true);
-  //     handleFinalProgress();
-  //     handleUpdateModuleProgress();
-  //   }
-  // }, [
-  //   currentTaskIndex,
-  //   totalTasks,
-  //   handleFinalProgress,
-  //   handleUpdateModuleProgress,
-  // ]);
 
   useEffect(() => {
     if (functionsCalled) return;
-
     if (currentTaskIndex === totalTasks - 1) {
       setIsModalResultVisible(true);
-      handleFinalProgress();
       handleUpdateModuleProgress();
+      //handleFinalProgress();
 
       setFunctionsCalled(true);
     }
   }, [
     currentTaskIndex,
     functionsCalled,
-    handleFinalProgress,
+     handleFinalProgress,
     totalTasks,
     handleUpdateModuleProgress,
   ]);
+
 
   useEffect(() => {
     setFunctionsCalled(false);
@@ -139,11 +119,11 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults });
 
-  // useEffect(() => {
-  //   if (userResults) {
-  //     console.log(userResults);
-  //   }
-  // }, [userResults]);
+  useEffect(() => {
+    if (userResults) {
+      console.log(totalTasks, currentTaskIndex);
+    }
+  }, [totalTasks, currentTaskIndex, userResults]);
 
   const handleInputChange = useCallback(
     (
@@ -214,6 +194,7 @@ const ExerciseDetailsPage = () => {
       setCurrentTaskIndex(
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
+      //setCurrentTaskIndex((currentIndex) => currentIndex + 1);
       setIsAnswerChecked(false);
     }
   };

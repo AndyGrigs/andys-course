@@ -38,13 +38,14 @@ const ModuleExercises = () => {
     exerciseNumber: number
   ) => {
     try {
-      const existingProgress = user?.exerciseProgress.find(
+      const existingProgress = allUserExerciseProgresses?.find(
         (progress: { progress: number; exerciseId: string }) => {
           dispatch(setExerciseProgress(progress.progress));
           return progress.exerciseId === exerciseId;
-        }
+        } 
       );
 
+      console.log(allUserExerciseProgresses)
       if (!existingProgress) {
         const result = await createUserExerciseProgress({
           userId: user?._id ?? "",

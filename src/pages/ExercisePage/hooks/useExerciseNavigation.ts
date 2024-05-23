@@ -1,16 +1,16 @@
 // src/hooks/useExerciseNavigation.ts
 import { useNavigate } from 'react-router-dom';
-import {useSelector } from 'react-redux';
-import { selectUser } from '../../../redux/slices/authSlice';
-import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
-import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
+// import {useSelector } from 'react-redux';
+// import { selectUser } from '../../../redux/slices/authSlice';
+// import { useUpdateUserExerciseProgressMutation } from '../../../redux/services/progressApi';
+// import { selectCurrentExercise } from '../../../redux/slices/exerciseSlice';
 
 
 const useExerciseNavigation = () => {
    const navigate = useNavigate();
-   const user = useSelector(selectUser);
-   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
-   const currentExercise = useSelector(selectCurrentExercise)
+   // const user = useSelector(selectUser);
+   // const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
+   // const currentExercise = useSelector(selectCurrentExercise)
 
    // const handleRepeatExercise = async (moduleId: string, exerciseId: string) => {
    //    // Prevent execution if already in progress
@@ -64,17 +64,17 @@ const useExerciseNavigation = () => {
    const handleExerciseList = async (moduleId: string) => {
 
       navigate(`/modules/${moduleId}/exercises`);
-      try {
-         const finalResult = {
-            userId: user?._id || '',
-            exerciseId: currentExercise?._id as string || '',
-            progress: 100,
-            answers: {}
-         };
-         await updateUserExerciseProgress(finalResult)
-      } catch (error) {
-         console.log(error)
-      }
+      // try {
+      //    const finalResult = {
+      //       userId: user?._id || '',
+      //       exerciseId: currentExercise?._id as string || '',
+      //       progress: 100,
+      //       answers: {}
+      //    };
+      //    await updateUserExerciseProgress(finalResult)
+      // } catch (error) {
+      //    console.log(error)
+      // }
 
    };
 
