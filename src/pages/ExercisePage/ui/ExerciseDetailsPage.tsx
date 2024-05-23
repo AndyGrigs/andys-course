@@ -12,7 +12,7 @@ import useCheckAnswer from "../hooks/useCheckAnswers";
 import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
 import {
   useUpdateUserExerciseProgressMutation,
-  useUpdateUserModuleProgressMutation,
+  // useUpdateUserModuleProgressMutation,
 } from "../../../redux/services/progressApi";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useAppSelector } from "../../../redux/slices/reduxHooks";
@@ -35,7 +35,7 @@ const ExerciseDetailsPage = () => {
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
-  const [functionsCalled, setFunctionsCalled] = useState(false);
+  const [_, setFunctionsCalled] = useState(false);
   const [isModaResultlVisible, setIsModalResultVisible] = useState(false);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [resultMessage, setResultMessage] = useState("");
@@ -50,8 +50,8 @@ const ExerciseDetailsPage = () => {
   const currentModule = useAppSelector(selectCurrentModule);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleExerciseList } = useExerciseNavigation();
-  const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
-  const { moduleProgressPercentage } =
+  // const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
+  // const { moduleProgressPercentage } =
     useCalculateModuleProgress() as IModuleProgress;
 
   const totalTasks = exercise?.tasks.length || 0;
@@ -74,37 +74,47 @@ const ExerciseDetailsPage = () => {
     }
   }, [user?._id, exercise?._id, userResults, updateUserExerciseProgress]);
 
-  const handleUpdateModuleProgress = useCallback(async () => {
-    try {
-      const data = {
-        userId: user?._id || "",
-        moduleId: currentModule?._id || "",
-        progress: moduleProgressPercentage,
-      };
-      await updateUserModuleProgress(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
+  // const handleUpdateModuleProgress = useCallback(async () => {
+  //   try {
+  //     const data = {
+  //       userId: user?._id || "",
+  //       moduleId: currentModule?._id || "",
+  //       progress: moduleProgressPercentage,
+  //     };
+  //     await updateUserModuleProgress(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
 
 
 
-  useEffect(() => {
-    if (functionsCalled) return;
-    if (currentTaskIndex === totalTasks - 1) {
-      setIsModalResultVisible(true);
-      handleUpdateModuleProgress();
-      //handleFinalProgress();
+  // useEffect(() => {
+  //   if (functionsCalled) return;
+  //   if (currentTaskIndex === totalTasks - 1) {
+  //     setIsModalResultVisible(true);
+  //     handleUpdateModuleProgress();
+  //     //handleFinalProgress();
 
-      setFunctionsCalled(true);
-    }
-  }, [
-    currentTaskIndex,
-    functionsCalled,
-     handleFinalProgress,
-    totalTasks,
-    handleUpdateModuleProgress,
-  ]);
+  //     setFunctionsCalled(true);
+  //   }
+  // }, [
+  //   currentTaskIndex,
+  //   functionsCalled,
+  //    handleFinalProgress,
+  //   totalTasks,
+  //   handleUpdateModuleProgress,
+  // ]);
+
+
+
+
+  // useEffect(() => {
+  //   if(currentTaskIndex ){
+  //     console.log(currentTaskIndex)
+  //     console.log(totalTasks)
+  //   }
+  // }, [currentTaskIndex, totalTasks]);
 
 
   useEffect(() => {
@@ -119,11 +129,11 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults });
 
-  useEffect(() => {
-    if (userResults) {
-      console.log(totalTasks, currentTaskIndex);
-    }
-  }, [totalTasks, currentTaskIndex, userResults]);
+  // useEffect(() => {
+  //   if (userResults) {
+  //     console.log(totalTasks, currentTaskIndex);
+  //   }
+  // }, [totalTasks, currentTaskIndex, userResults]);
 
   const handleInputChange = useCallback(
     (
@@ -194,7 +204,10 @@ const ExerciseDetailsPage = () => {
       setCurrentTaskIndex(
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
-      //setCurrentTaskIndex((currentIndex) => currentIndex + 1);
+      if(currentTaskIndex === totalTasks - 1) {
+        handleFinalProgress();
+        setIsModalResultVisible(true);
+      }
       setIsAnswerChecked(false);
     }
   };
