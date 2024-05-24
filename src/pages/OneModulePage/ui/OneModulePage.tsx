@@ -31,15 +31,15 @@ const OneModulePage: React.FC = () => {
             dataSource={[
               //   { title: "Videos", link: `/modules/${module._id.$oid}/videos` },
               {
-                title: "Text Content",
+                title: "Text",
                 link: `/modules/${currentModule?._id}/text`,
               },
               {
-                title: "Vocabulary",
+                title: "Vocabular",
                 link: `/modules/${currentModule?._id}/vocabulary`,
               },
               {
-                title: "Exercises",
+                title: "Übungen",
                 link: `/modules/${currentModule?._id}/exercises`,
               },
             ]}
