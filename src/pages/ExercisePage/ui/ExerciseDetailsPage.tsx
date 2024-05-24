@@ -233,32 +233,33 @@ const ExerciseDetailsPage = () => {
       </Title>
       <Typography.Paragraph>{exercise.example}</Typography.Paragraph>
       <Divider />
-      {/* <Flex
-        gap={8}
+      <Flex
+        // gap={2}
         justify="center"
         align="center"
         style={{ marginTop: "2.5em" }}
-      > */}
+      >
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
+              
               <Col>
                 <Paragraph
                   className={styles.exPar}
-                  style={{ margin: "0 .2em" }}
+                  style={{ margin: "0 0" }}
                 >
                   {part}
                 </Paragraph>
               </Col>
             )}
             {partIndex < parts.length - 1 && (
-              <Col span={24}>
+              // <Col span={24}>
                 
                 <Input
                   className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
-                    maxWidth: "80%",
+                    maxWidth: "40%",
                     color: "#000000",
                     margin: "1em",
                     // fontSize: "1.5em",
@@ -273,11 +274,11 @@ const ExerciseDetailsPage = () => {
                   }
                   placeholder="Antwort..."
                 />
-              </Col>
+              // </Col>
             )}
           </React.Fragment>
         ))}
-      {/* </Flex> */}
+      </Flex>
 
       <ResultMessage
         resultMessage={resultMessage}
