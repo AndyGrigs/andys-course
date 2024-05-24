@@ -235,6 +235,7 @@ const ExerciseDetailsPage = () => {
       <Divider />
       <Flex
         // gap={2}
+        vertical
         justify="center"
         align="center"
         style={{ marginTop: "2.5em" }}
@@ -259,7 +260,7 @@ const ExerciseDetailsPage = () => {
                   className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
-                    maxWidth: "40%",
+                    maxWidth: "80%",
                     color: "#000000",
                     margin: "1em",
                     // fontSize: "1.5em",
