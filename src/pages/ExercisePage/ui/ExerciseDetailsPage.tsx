@@ -233,12 +233,12 @@ const ExerciseDetailsPage = () => {
       </Title>
       <Typography.Paragraph>{exercise.example}</Typography.Paragraph>
       <Divider />
-      <Flex
+      {/* <Flex
         gap={8}
         justify="center"
         align="center"
         style={{ marginTop: "2.5em" }}
-      >
+      > */}
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
@@ -252,14 +252,15 @@ const ExerciseDetailsPage = () => {
               </Col>
             )}
             {partIndex < parts.length - 1 && (
-              <Col span={3}>
+              <Col span={24}>
+                
                 <Input
                   className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
-                    maxWidth: "100%",
+                    maxWidth: "80%",
                     color: "#000000",
-                    margin: "0 -3em",
+                    margin: "1em",
                     // fontSize: "1.5em",
                   }}
                   value={
@@ -276,7 +277,7 @@ const ExerciseDetailsPage = () => {
             )}
           </React.Fragment>
         ))}
-      </Flex>
+      {/* </Flex> */}
 
       <ResultMessage
         resultMessage={resultMessage}
@@ -304,10 +305,9 @@ const ExerciseDetailsPage = () => {
         <div style={{ marginBottom: "2em" }}>
           <Image width={90} height={90} src={currentTask.image} />
         </div>
-        <Button type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
+        <Button style={{ marginBottom: "2em" }} type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
-        <img src="./assets/pronomen/ich.jpg" alt="" />
       </Flex>
     </div>
   );
