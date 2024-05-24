@@ -18,7 +18,7 @@ const OneModulePage: React.FC = () => {
 
       <Card
         className={theme === "dark" ? "card-dark" : "card-light"}
-        title="Твої модулі"
+        title=""
         bordered={false}
         style={{ width: "60%", margin: '0 auto' }}
       >
