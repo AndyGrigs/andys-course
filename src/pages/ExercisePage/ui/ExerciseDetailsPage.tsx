@@ -226,6 +226,8 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
+  const isShortExercise = currentTask.content.length < 27;
+
   return (
     <div style={{ textAlign: "center" }}>
       <Title level={4}>
@@ -235,7 +237,7 @@ const ExerciseDetailsPage = () => {
       <Divider />
       <Flex
         // gap={2}
-        vertical
+        vertical={!isShortExercise}
         justify="center"
         align="center"
         style={{ marginTop: "2.5em" }}
@@ -260,7 +262,7 @@ const ExerciseDetailsPage = () => {
                   className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
-                    maxWidth: "80%",
+                    maxWidth: isShortExercise ? "18%" : "80%",
                     color: "#000000",
                     margin: "1em",
                     // fontSize: "1.5em",
