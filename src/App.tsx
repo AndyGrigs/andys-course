@@ -18,7 +18,7 @@ function App() {
     <>
       <Layout style={{ minHeight: "100vh" }}>
         <Layout
-          className={theme === "dark" ? "layout-dark" : "layout-light"}
+          className={theme === "dark" ? "layout-dark" : ""}
           style={{ minHeight: "100vh" }}
         >
           <Header />

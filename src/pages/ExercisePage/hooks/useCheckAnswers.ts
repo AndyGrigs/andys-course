@@ -49,7 +49,7 @@ const useCheckAnswer = () => {
 
     if (isCorrect && user) {
       let points: number = user.points;
-      points+=1;
+      points += 1;
       const payload: UpdatePointsPayload = {
         userId: user._id, 
         points: points,
