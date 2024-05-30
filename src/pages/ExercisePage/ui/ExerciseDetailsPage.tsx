@@ -11,8 +11,7 @@ import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/u
 import useCheckAnswer from "../hooks/useCheckAnswers";
 import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
 import {
-  useUpdateUserExerciseProgressMutation,
-  // useUpdateUserModuleProgressMutation,
+  useUpdateUserExerciseProgressMutation
 } from "../../../redux/services/progressApi";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useAppSelector } from "../../../redux/slices/reduxHooks";
@@ -226,7 +225,8 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-  const isShortExercise = currentTask.content.length < 27;
+ // const isShortExercise = currentTask.content.length < 27;
+  const isShortExercise = currentTask.solution.length < 25;
 
   return (
     <div style={{ textAlign: "center" }}>
