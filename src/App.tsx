@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { ThemeContext } from "./hooks/ThemeProvider";
 import { Breadcrumbs } from "./components/Breadcrumps/Breadcrumps";
 import { Divider } from "antd/lib";
+import { AppCard } from './components/ui/AppCard/ui/AppCard';
 
 
 //13263
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <>
-      <Layout style={{ minHeight: "100vh" }}>
+      {/* <Layout style={{ minHeight: "100vh" }}>
         <Layout
           className={theme === "dark" ? "layout-dark" : ""}
           style={{ minHeight: "100vh" }}
@@ -38,7 +39,15 @@ function App() {
             Deutsch course©2024 Created by Andriy Grygorov
           </Footer>
         </Layout>
-      </Layout>
+      </Layout> */}
+      <AppCard
+        title="Custom Title"
+        description="This is a custom description."
+        buttonText="Click Me"
+        buttonOnClick={() => alert('Button clicked')}
+      >
+        <p>This is custom content inside the AppCard.</p>
+      </AppCard>
     </>
   );
 }
