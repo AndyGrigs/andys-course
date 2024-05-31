@@ -1,0 +1,17 @@
+// HomePage.module.scss
+
+.linkButton {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 16px;
+    background-color: #293139;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+  
+    &:hover {
+      background-color: darken(#666b6b, 5%);
+    }
+  }

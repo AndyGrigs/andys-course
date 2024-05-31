@@ -225,8 +225,8 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
- // const isShortExercise = currentTask.content.length < 27;
-  const isShortExercise = currentTask.solution.length < 25;
+  const isShortExercise = currentTask.content.length < 40;
+  
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -262,7 +262,7 @@ const ExerciseDetailsPage = () => {
                   className={styles.exerciseInput}
                   ref={inputRef}
                   style={{
-                    maxWidth: isShortExercise ? "18%" : "80%",
+                    maxWidth: isShortExercise ? "18%" : "60%",
                     color: "#000000",
                     margin: "1em",
                     // fontSize: "1.5em",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import styles from './HomePage.module.scss';
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
 
@@ -14,14 +15,10 @@ const HomePage: React.FC = () => {
           Мій курс допоможе вам швидко освоїти німецьку мову.
         </Paragraph >
 
-         <Link to='/modules'>
+         <Link to='/modules'  className={styles.linkButton}>
             Почати!
           </Link> 
-        {/* <button>
-          <Link to='/modules'>
-            Почати!
-          </Link>
-        </button> */}
+     
 
       </div>
     </Content>
