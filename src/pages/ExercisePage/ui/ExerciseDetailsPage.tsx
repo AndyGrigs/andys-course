@@ -73,48 +73,6 @@ const ExerciseDetailsPage = () => {
     }
   }, [user?._id, exercise?._id, userResults, updateUserExerciseProgress]);
 
-  // const handleUpdateModuleProgress = useCallback(async () => {
-  //   try {
-  //     const data = {
-  //       userId: user?._id || "",
-  //       moduleId: currentModule?._id || "",
-  //       progress: moduleProgressPercentage,
-  //     };
-  //     await updateUserModuleProgress(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [user, currentModule, moduleProgressPercentage, updateUserModuleProgress]);
-
-
-
-  // useEffect(() => {
-  //   if (functionsCalled) return;
-  //   if (currentTaskIndex === totalTasks - 1) {
-  //     setIsModalResultVisible(true);
-  //     handleUpdateModuleProgress();
-  //     //handleFinalProgress();
-
-  //     setFunctionsCalled(true);
-  //   }
-  // }, [
-  //   currentTaskIndex,
-  //   functionsCalled,
-  //    handleFinalProgress,
-  //   totalTasks,
-  //   handleUpdateModuleProgress,
-  // ]);
-
-
-
-
-  // useEffect(() => {
-  //   if(currentTaskIndex ){
-  //     console.log(currentTaskIndex)
-  //     console.log(totalTasks)
-  //   }
-  // }, [currentTaskIndex, totalTasks]);
-
 
   useEffect(() => {
     setFunctionsCalled(false);
@@ -128,11 +86,7 @@ const ExerciseDetailsPage = () => {
 
   useCalculateExerciseProgress({ userResults });
 
-  // useEffect(() => {
-  //   if (userResults) {
-  //     console.log(totalTasks, currentTaskIndex);
-  //   }
-  // }, [totalTasks, currentTaskIndex, userResults]);
+  
 
   const handleInputChange = useCallback(
     (
@@ -225,7 +179,7 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-  const isShortExercise = currentTask.content.length < 40;
+  const isShortExercise = currentTask.content.length < 20;
   
 
   return (
