@@ -28,7 +28,7 @@ interface AppCardProps {
   className?: string;
   style?: React.CSSProperties;
   children?: ReactNode;
-  backgroundGradient?: string;
+  theme?: 'light';
 
 }
 
@@ -39,16 +39,17 @@ export const AppCard: React.FC<AppCardProps> = ({
   buttonOnClick,
   className,
   children,
-  backgroundGradient = ''
+
 }) => {
 
 
   // Determine the theme from context
   const { theme } = useContext(ThemeContext); // Adjust the import path as necessary
-
+ // const cardClass = `${styles.box} ${theme === 'light'? styles.lightModeBox : ''}`;
+ 
   return (
     <div className={styles.box}>
-      <div className={styles.item}>
+      <div className={`${styles.item} ${theme === 'dark'? styles.lightModeItem : ''}`}>
         <div className={styles.layer}></div>
         <div>
           {children}

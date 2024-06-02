@@ -3,8 +3,7 @@ import { Layout, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.scss';
 import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
-const { Content } = Layout;
-// const { Title, Paragraph } = Typography;
+ const { Title, Paragraph } = Typography;
 
 const HomePage: React.FC = () => {
 
@@ -14,29 +13,29 @@ const HomePage: React.FC = () => {
     navigate('/modules');
   };
   return (
-    <Content >
-      {/* <div style={{ padding: 24, minHeight: 380, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}> */}
+  
+       <div className='box' > 
 
-        {/* <Title level={2}>Вивчай німецьку легко та ефективно!</Title>
+        <Title level={2}>Вивчай німецьку легко та ефективно!</Title>
         <Paragraph>
           Мій курс допоможе вам швидко освоїти німецьку мову.
         </Paragraph >
 
          <Link to='/modules'  className={styles.linkButton}>
             Почати!
-          </Link>  */}
+          </Link>  
 
-        <AppCard
+        {/* <AppCard
           title="Вивчай німецьку легко та ефективно!"
           description=" Мій курс допоможе вам швидко освоїти німецьку мову."
           buttonText="Start"
           buttonOnClick={() => start()}
         >
 
-        </AppCard>
+        </AppCard> */}
 
-      {/* </div> */}
-    </Content>
+       </div> 
+ 
   );
 };
 

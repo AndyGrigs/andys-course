@@ -4,11 +4,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #1d1e22
+  /* background: #1d1e22 */
 }
 
 .layout-dark {
-  background: #1d1e22;
+  /* background: #1d1e22; */
 }
 
 .layout-light {

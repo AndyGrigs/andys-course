@@ -17,9 +17,10 @@
 
 
 .box {
-  // display: flex;
-  // flex-wrap: wrap;
-  // counter-reset: item-list;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  counter-reset: item-list;
 }
 .box .title {
   font: bold 24px/28px "Ubuntu", sans-serif;
@@ -71,11 +72,15 @@
 .box .item:before {
   content: ' ';
   background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
-
 }
+.box .item:before {
+  content: ' ';
+ // background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+}
+
 .box .item:after {
-  content: counter(item-list,decimal-leading-zero);
-  counter-increment: item-list;
+  content: '🦾';
+  // counter-increment: item-list;
   position: absolute;
   font: bold 10vw/1 "Ubuntu", sans-serif;
   top: 50%;
@@ -121,4 +126,15 @@
 }
 .box .item:hover:before {
   opacity: 0;
+}
+
+// Existing styles...
+
+.lightModeBox {
+  background-color: #ffffff; // White background for light mode
+  color: #000000; // Black text for better contrast
+}
+
+.lightModeItem {
+  color: #333333; // Slightly lighter text color for readability
 }
