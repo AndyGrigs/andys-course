@@ -4,15 +4,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #1d1e22;
+  background: #1d1e22
 }
 
 .layout-dark {
-  background: radial-gradient(
-    circle at 10% 20%,
-    #4b6cb7 0%,
-    rgb(55, 82, 141) 90%
-  );
+  background: #1d1e22;
 }
 
 .layout-light {
@@ -32,4 +28,3 @@ body {
 .card-light {
   background-color: rgba(253, 253, 253, 0.805);
 }
-

@@ -1,4 +1,4 @@
-import { List, Flex, Button, Progress, Card} from "antd";
+import { List, Flex, Button, Progress, Card } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetExercisesQuery } from "../../../redux/services/exersiceApi";
 import { Loader } from "../../../components/Loader";
@@ -13,6 +13,7 @@ import { setCurrentExercise } from "../../../redux/slices/exerciseSlice";
 import { setExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import { useContext } from "react";
 import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
 
 const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
@@ -42,7 +43,7 @@ const ModuleExercises = () => {
         (progress: { progress: number; exerciseId: string }) => {
           dispatch(setExerciseProgress(progress.progress));
           return progress.exerciseId === exerciseId;
-        } 
+        }
       );
 
       if (!existingProgress) {
@@ -94,53 +95,77 @@ const ModuleExercises = () => {
   };
 
   return (
-    <List
-      dataSource={exercises}
-      renderItem={(exercise) => {
-        const exerciseProgress = allUserExerciseProgresses?.find(
-          (progress: { exerciseId: string }) =>
-            progress.exerciseId === exercise._id
-        );
-
-        const progressPercentage = exerciseProgress
-          ? exerciseProgress.progress
-          : 0;
-
+    <>
+      {exercises.map((exercise, index) => {
+                const exerciseProgress = allUserExerciseProgresses?.find(
+                  (progress: { exerciseId: string }) =>
+                    progress.exerciseId === exercise._id
+                );
+        
+                const progressPercentage = exerciseProgress
+                  ? exerciseProgress.progress
+                  : 0;
         return (
-          <List.Item key={exercise._id}>
-            <Card
-              className={theme === "dark" ? "card-dark" : "card-light"}
-              style={{ width: "80%", margin: "0 auto" }}
-              title={`Вправа ${exercise.number}`}
-            >
-              <p>{exercise.instruction}</p>
+          <AppCard
+            title={`Вправа ${index + 1}`}
+            description={exercise.instruction}
+            buttonText="Почати"
+            style={{ width: "80%", margin: "0 auto" }}
+            buttonOnClick={() => {
+              if (moduleId && exercise._id && exercise.number) {
+                handleStartExerciseClick(
+                  moduleId,
+                  exercise._id,
+                  exercise.number
+                );
+              } else {
+                console.error("moduleId or exercise._id is undefined");
+              }
+            }}
+          >
+            <Progress percent={progressPercentage} />
+          </AppCard>
+        )
+      })}
+    </>
+    // <List
+    //   dataSource={exercises}
+    //   renderItem={(exercise, index) => {
+    //     console.log(index); 
+        // const exerciseProgress = allUserExerciseProgresses?.find(
+        //   (progress: { exerciseId: string }) =>
+        //     progress.exerciseId === exercise._id
+        // );
 
-              <Progress percent={progressPercentage} />
-              <Flex justify="flex-end">
-                <Button
-                  style={{ marginTop: "1.4em" }}
-                  type="primary"
-                  onClick={() => {
-                    if (moduleId && exercise._id && exercise.number) {
-                      handleStartExerciseClick(
-                        moduleId,
-                        exercise._id,
-                        exercise.number
-                      );
-                    } else {
-                      console.error("moduleId or exercise._id is undefined");
-                    }
-                  }}
-                  size="small"
-                >
-                  Почати
-                </Button>
-              </Flex>
-            </Card>
-          </List.Item>
-        );
-      }}
-    />
+        // const progressPercentage = exerciseProgress
+        //   ? exerciseProgress.progress
+        //   : 0;
+
+    //     return (
+    //    <>
+    // <AppCard
+    //   title={`Вправа ${index + 1}`}
+    //   description={exercise.instruction}
+    //   buttonText="Почати"
+    //   style={{ width: "80%", margin: "0 auto" }}
+    //   buttonOnClick={() => {
+    //     if (moduleId && exercise._id && exercise.number) {
+    //       handleStartExerciseClick(
+    //         moduleId,
+    //         exercise._id,
+    //         exercise.number
+    //       );
+    //     } else {
+    //       console.error("moduleId or exercise._id is undefined");
+    //     }
+    //   }}
+    // >
+    //    <Progress percent={progressPercentage} />
+    // </AppCard>
+    //       </>
+    //     );
+    //   }}
+    // />
   );
 };
 

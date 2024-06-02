@@ -16,31 +16,47 @@ function App() {
   const { theme } = useContext(ThemeContext);
 
   return (
+    // <>
+    //   <Layout style={{ minHeight: "100vh" }}>
+    //     <Layout
+    //       className={theme === "dark" ? "layout-dark" : ""}
+    //       style={{ minHeight: "100vh" }}
+    //     >
+    //       <Header />
+    //       <Content>
+    // <div style={{ width: "80%", margin: "1em auto" }}>
+    //   <Breadcrumbs />
+    // </div>
+    //         <Divider/>
+    //         <AppRouter />
+    //         <div className="site-layout-background"></div>
+    //       </Content>
+    //       <Footer style={
+    //     theme === "dark"
+    //       ? { background: "#5585b5", color: '#fff', textAlign: 'center' }
+    //       : { background: "#fff", textAlign: 'center' }
+    //   }>
+    //         Deutsch course©2024 Created by Andriy Grygorov
+    //       </Footer>
+    //     </Layout>
+    //   </Layout>
+
+    // </>
+
     <>
-      <Layout style={{ minHeight: "100vh" }}>
-        <Layout
-          className={theme === "dark" ? "layout-dark" : ""}
-          style={{ minHeight: "100vh" }}
-        >
-          <Header />
-          <Content>
-            <div style={{ width: "80%", margin: "1em auto" }}>
-              <Breadcrumbs />
-            </div>
-            <Divider/>
-            <AppRouter />
-            <div className="site-layout-background"></div>
-          </Content>
-          <Footer style={
-        theme === "dark"
-          ? { background: "#5585b5", color: '#fff', textAlign: 'center' }
-          : { background: "#fff", textAlign: 'center' }
-      }>
-            Deutsch course©2024 Created by Andriy Grygorov
-          </Footer>
-        </Layout>
-      </Layout>
-      {/* <AppCard
+      <Header />
+      <div style={{ width: "80%", margin: "1em auto" }}>
+        <Breadcrumbs />
+      </div>
+      <Divider/>
+      <AppRouter />
+    </>
+  );
+}
+
+export default App;
+
+{/* <AppCard
         title="Custom Title"
         description="This is a custom description."
         buttonText="Click Me"
@@ -48,8 +64,3 @@ function App() {
       >
         <p>This is custom content inside the AppCard.</p>
       </AppCard> */}
-    </>
-  );
-}
-
-export default App;
