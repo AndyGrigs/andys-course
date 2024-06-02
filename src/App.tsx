@@ -17,7 +17,7 @@ function App() {
 
   return (
     <>
-      {/* <Layout style={{ minHeight: "100vh" }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Layout
           className={theme === "dark" ? "layout-dark" : ""}
           style={{ minHeight: "100vh" }}
@@ -39,15 +39,15 @@ function App() {
             Deutsch course©2024 Created by Andriy Grygorov
           </Footer>
         </Layout>
-      </Layout> */}
-      <AppCard
+      </Layout>
+      {/* <AppCard
         title="Custom Title"
         description="This is a custom description."
         buttonText="Click Me"
         buttonOnClick={() => alert('Button clicked')}
       >
         <p>This is custom content inside the AppCard.</p>
-      </AppCard>
+      </AppCard> */}
     </>
   );
 }

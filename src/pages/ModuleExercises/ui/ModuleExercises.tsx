@@ -45,7 +45,6 @@ const ModuleExercises = () => {
         } 
       );
 
-      console.log(allUserExerciseProgresses)
       if (!existingProgress) {
         const result = await createUserExerciseProgress({
           userId: user?._id ?? "",
