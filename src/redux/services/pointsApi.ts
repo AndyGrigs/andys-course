@@ -1,4 +1,4 @@
-import { IUser } from "../../types";
+import { IUser } from "../../app/types";
 import { api } from "./api";
 
 export const pointsApi = api.injectEndpoints({
@@ -18,6 +18,6 @@ export const pointsApi = api.injectEndpoints({
 
 export const { useUpdateUserPointsMutation } = pointsApi;
 
-export const {endpoints: {
-updateUserPoints
-}} = pointsApi;
+export const { endpoints: {
+  updateUserPoints
+} } = pointsApi;

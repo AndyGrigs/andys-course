@@ -1,6 +1,6 @@
 import { Card } from "antd";
-import { Link, useLocation} from "react-router-dom";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { Link, useLocation } from "react-router-dom";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 import { useContext } from "react";
 
 const UserCodePage = () => {

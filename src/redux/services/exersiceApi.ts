@@ -1,5 +1,5 @@
 import { api } from "./api";
-import { IExerciseResponse } from "../../types";
+import { IExerciseResponse } from "../../app/types";
 
 export const exercisesApi = api.injectEndpoints({
   endpoints: (builder) => ({

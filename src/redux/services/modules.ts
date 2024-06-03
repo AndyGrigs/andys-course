@@ -1,5 +1,5 @@
 
-import { Module } from '../../types';
+import { Module } from '../../app/types';
 import { api } from './api';
 
 export const moduleApi = api.injectEndpoints({

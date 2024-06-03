@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
@@ -41,33 +41,33 @@ export const HeaderItems: React.FC = () => {
 
       children: user
         ? [
-            {
-              key: "dashboard",
-              label: "Навчальння",
-              icon: <BookOutlined />,
-              onClick: () => navigate("/modules"),
-            },
-            {
-              key: "13",
-              label: "Вийти",
-              icon: <LogoutOutlined />,
-              onClick: onLogoutClick,
-            },
-          ]
+          {
+            key: "dashboard",
+            label: "Навчальння",
+            icon: <BookOutlined />,
+            onClick: () => navigate("/modules"),
+          },
+          {
+            key: "13",
+            label: "Вийти",
+            icon: <LogoutOutlined />,
+            onClick: onLogoutClick,
+          },
+        ]
         : [
-            {
-              key: "login",
-              label: "Увійти",
-              icon: <LoginOutlined />,
-              onClick: () => navigate("/login"),
-            },
-            {
-              key: "register",
-              label: "Зареєструватись",
-              icon: <UserAddOutlined />,
-              onClick: () => navigate("/register"),
-            },
-          ],
+          {
+            key: "login",
+            label: "Увійти",
+            icon: <LoginOutlined />,
+            onClick: () => navigate("/login"),
+          },
+          {
+            key: "register",
+            label: "Зареєструватись",
+            icon: <UserAddOutlined />,
+            onClick: () => navigate("/register"),
+          },
+        ],
     },
   ];
 

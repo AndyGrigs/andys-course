@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import { ReactNode, useContext } from "react";
-import { ThemeContext } from "../../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../../app/providers/ThemeProvider";
 import styles from './AppCard.module.scss';
 
 // export const AppCard = () => {
@@ -45,11 +45,11 @@ export const AppCard: React.FC<AppCardProps> = ({
 
   // Determine the theme from context
   const { theme } = useContext(ThemeContext); // Adjust the import path as necessary
- // const cardClass = `${styles.box} ${theme === 'light'? styles.lightModeBox : ''}`;
- 
+  // const cardClass = `${styles.box} ${theme === 'light'? styles.lightModeBox : ''}`;
+
   return (
     <div className={styles.box}>
-      <div className={`${styles.item} ${theme === 'dark'? styles.lightModeItem : ''}`}>
+      <div className={`${styles.item} ${theme === 'dark' ? styles.lightModeItem : ''}`}>
         <div className={styles.layer}></div>
         <div>
           {children}

@@ -3,7 +3,7 @@ import { List, Card, Radio, Button, message } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { useSelector } from 'react-redux';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { ThemeContext } from '../../../hooks/ThemeProvider';
+import { ThemeContext } from '../../../app/providers/ThemeProvider';
 import { selectUser, updateLokalUserPoints } from '../../../redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useUpdateUserPointsMutation } from '../../../redux/services/pointsApi';
@@ -21,7 +21,7 @@ interface UpdatePointsPayload {
   points: number;
 }
 
-interface VocabularyPageProps {}
+interface VocabularyPageProps { }
 
 const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -37,7 +37,7 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
 
   const handleOptionChange = (word: string, option: string) => {
     setAnswers({
-    ...answers,
+      ...answers,
       [word]: option
     });
   };
@@ -49,7 +49,7 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       let points: number = user.points;
       points += 1;
       const payload: UpdatePointsPayload = {
-        userId: user._id, 
+        userId: user._id,
         points: points,
       };
       dispatch(updateLokalUserPoints(payload))
@@ -70,10 +70,10 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       renderItem={(item: VocabularyItem) => (
         <List.Item key={item.word}>
           <Card
-           className={theme === "dark" ? "card-dark" : "card-light"}
-          style={{ width: '50%', margin: 'auto' }}>
+            className={theme === "dark" ? "card-dark" : "card-light"}
+            style={{ width: '50%', margin: 'auto' }}>
             <div><strong>{item.word}</strong></div>
-            <Radio.Group 
+            <Radio.Group
               onChange={(e: RadioChangeEvent) => handleOptionChange(item.word, e.target.value)}
               value={answers[item.word]}
             >
@@ -84,12 +84,12 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
             {/* <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
               Submit
             </Button> */}
-             {/* {Object.keys(answers).length > 0 && (
+            {/* {Object.keys(answers).length > 0 && (
               <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
                 Submit
               </Button>
             )} */}
-              {answers[item.word] && (
+            {answers[item.word] && (
               <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
                 Check!
               </Button>

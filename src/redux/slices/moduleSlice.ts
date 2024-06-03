@@ -1,4 +1,4 @@
-import { Module } from "../../types";
+import { Module } from "../../app/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { moduleApi } from "../services/modules";
 import { RootState } from "../store";

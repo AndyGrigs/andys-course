@@ -11,7 +11,7 @@ import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();

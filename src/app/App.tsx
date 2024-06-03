@@ -1,14 +1,14 @@
-import "./App.css";
-import { Header } from "./components/Header";
+import './styles/index.scss';
+import { Header } from "../components/Header";
 import { Layout } from "antd";
 import { Content, Footer } from "antd/es/layout/layout";
 import { AppRouter } from "./routes/Router";
 import { useContext } from "react";
 
-import { ThemeContext } from "./hooks/ThemeProvider";
-import { Breadcrumbs } from "./components/Breadcrumps/Breadcrumps";
+import { ThemeContext } from "./providers/ThemeProvider";
+import { Breadcrumbs } from "../components/Breadcrumps/Breadcrumps";
 import { Divider } from "antd/lib";
-import { AppCard } from './components/ui/AppCard/ui/AppCard';
+import { AppCard } from '../components/ui/AppCard/ui/AppCard';
 
 
 //13263
@@ -48,7 +48,7 @@ function App() {
       <div style={{ width: "80%", margin: "1em auto" }}>
         <Breadcrumbs />
       </div>
-      <Divider/>
+      <Divider />
       <AppRouter />
     </>
   );

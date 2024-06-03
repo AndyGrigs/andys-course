@@ -6,9 +6,9 @@ import { useUpdateCodeMutation } from "../../../redux/services/auth";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
-import { IUser } from "../../../types";
+import { IUser } from "../../../app/types";
 import Layout from "../../../components/Layout";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
@@ -61,19 +61,19 @@ const UpdateCode = () => {
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              <Link 
-               style={
-                theme === "dark"
-                  ? {
+              <Link
+                style={
+                  theme === "dark"
+                    ? {
                       color: "#C6E2FB",
                       borderBottom: "1px solid ",
                     }
-                  : {
+                    : {
                       color: "#030",
                       borderBottom: "1px solid ",
                     }
-              }
-              to="/login">Увійти в аккаунт</Link>
+                }
+                to="/login">Увійти в аккаунт</Link>
             </Typography.Text>
           </Space>
         </Card>

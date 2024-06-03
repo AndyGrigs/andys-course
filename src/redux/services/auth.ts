@@ -1,4 +1,4 @@
-import { IUser } from "../../types";
+import { IUser } from "../../app/types";
 import { api } from "./api";
 
 export type UserData = Omit<IUser, "id">;

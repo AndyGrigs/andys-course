@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Layout, Space, Typography, Button, Drawer } from "antd";
 import { MoonOutlined, SunOutlined, MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 import { createStyles, useTheme } from "antd-style";
 import type {
   DrawerClassNames,
@@ -139,14 +139,13 @@ export const Header = () => {
 
   return (
     <Layout.Header
-      className={`${styles.header} ${
-        theme === "dark" ? styles.dark : styles.light
-      }`}
+      className={`${styles.header} ${theme === "dark" ? styles.dark : styles.light
+        }`}
     >
       <Link to="/">
         <Space>
           <Typography.Title level={4}>
-            <img src=""/>
+            <img src="" />
           </Typography.Title>
         </Space>
       </Link>

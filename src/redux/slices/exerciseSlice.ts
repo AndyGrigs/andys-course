@@ -1,4 +1,4 @@
-import { IExercise } from "../../types";
+import { IExercise } from "../../app/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { exercisesApi } from "../services/exersiceApi";
 import { RootState } from "../store";

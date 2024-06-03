@@ -5,8 +5,8 @@ import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { Loader } from "../../../components/Loader";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
-import {  Outlet, useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { Outlet, useNavigate } from "react-router-dom";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useDispatch } from "react-redux";
 import {
@@ -73,10 +73,10 @@ const ModulePage: React.FC = () => {
 
 
   return (
-   <>
+    <>
 
-        <Card
-        className={theme === "dark"? "card-dark" : "card-light"}
+      <Card
+        className={theme === "dark" ? "card-dark" : "card-light"}
         title="Твої модулі"
         bordered={false}
         style={{ width: "100%" }}
@@ -88,7 +88,7 @@ const ModulePage: React.FC = () => {
             <List.Item key={module._id}>
               <Card
                 //className={style.card}
-                style={theme === "dark"? { background: "#5a7cbb" } : {}}
+                style={theme === "dark" ? { background: "#5a7cbb" } : {}}
                 title={module.name}
               >
                 <Button
@@ -102,8 +102,8 @@ const ModulePage: React.FC = () => {
           )}
         />
       </Card>
-    <Outlet/>
-   </>
+      <Outlet />
+    </>
   );
 };
 

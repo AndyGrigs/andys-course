@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { ThemeContext } from '../../../hooks/ThemeProvider';
+import { ThemeContext } from '../../../app/providers/ThemeProvider';
 import { Button, Card, Flex, List } from 'antd';
 
 const OneModulePage: React.FC = () => {
@@ -14,7 +14,7 @@ const OneModulePage: React.FC = () => {
 
 
   return (
-    <Flex align ='center'>
+    <Flex align='center'>
 
       <Card
         className={theme === "dark" ? "card-dark" : "card-light"}

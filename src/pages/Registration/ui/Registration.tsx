@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useContext, useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../redux/services/auth";
-import { IUser } from "../../../types";
+import { IUser } from "../../../app/types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
 
@@ -62,9 +62,9 @@ const Registration = () => {
               label="Ім'я"
               rules={[{ required: true, message: "напиши своє ім'я" }]}
             >
-              <Input 
-               onChange={(e) => e.target.value.trim()}
-              style={theme === "dark" ? { color: "darkblue" } : {}} />
+              <Input
+                onChange={(e) => e.target.value.trim()}
+                style={theme === "dark" ? { color: "darkblue" } : {}} />
             </Form.Item>
 
             {error && (
@@ -86,15 +86,15 @@ const Registration = () => {
                 style={
                   theme === "dark"
                     ? {
-                        color: "#C6E2FB",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
+                      color: "#C6E2FB",
+                      marginLeft: "1em",
+                      borderBottom: "1px solid ",
+                    }
                     : {
-                        color: "",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
+                      color: "",
+                      marginLeft: "1em",
+                      borderBottom: "1px solid ",
+                    }
                 }
                 to="/login"
               >

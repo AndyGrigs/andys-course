@@ -12,7 +12,7 @@ import {
 import { setCurrentExercise } from "../../../redux/slices/exerciseSlice";
 import { setExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import { useContext } from "react";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeProvider";
 import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
 
 const ModuleExercises = () => {
@@ -97,14 +97,14 @@ const ModuleExercises = () => {
   return (
     <>
       {exercises.map((exercise, index) => {
-                const exerciseProgress = allUserExerciseProgresses?.find(
-                  (progress: { exerciseId: string }) =>
-                    progress.exerciseId === exercise._id
-                );
-        
-                const progressPercentage = exerciseProgress
-                  ? exerciseProgress.progress
-                  : 0;
+        const exerciseProgress = allUserExerciseProgresses?.find(
+          (progress: { exerciseId: string }) =>
+            progress.exerciseId === exercise._id
+        );
+
+        const progressPercentage = exerciseProgress
+          ? exerciseProgress.progress
+          : 0;
         return (
           <AppCard
             title={`Вправа ${index + 1}`}
@@ -132,14 +132,14 @@ const ModuleExercises = () => {
     //   dataSource={exercises}
     //   renderItem={(exercise, index) => {
     //     console.log(index); 
-        // const exerciseProgress = allUserExerciseProgresses?.find(
-        //   (progress: { exerciseId: string }) =>
-        //     progress.exerciseId === exercise._id
-        // );
+    // const exerciseProgress = allUserExerciseProgresses?.find(
+    //   (progress: { exerciseId: string }) =>
+    //     progress.exerciseId === exercise._id
+    // );
 
-        // const progressPercentage = exerciseProgress
-        //   ? exerciseProgress.progress
-        //   : 0;
+    // const progressPercentage = exerciseProgress
+    //   ? exerciseProgress.progress
+    //   : 0;
 
     //     return (
     //    <>
