@@ -1,5 +1,5 @@
 // src/hooks/ThemeProvider.tsx
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { ConfigProvider } from "antd";
 
 const darkTheme = {
@@ -12,7 +12,7 @@ const lightTheme = {
   colorTextBase: " #474040",
 };
 
-// Create a context for the theme
+
 const ThemeContext = createContext({
   theme: "light",
   handleTheme: (_theme: string) => {},
@@ -27,7 +27,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   const handleTheme = (theme: string) => setTheme(theme);
 
-  // Provide the theme and handleTheme function to child components
+  useEffect(() => {
+    const rootElement = document.documentElement;
+
+    if (theme === "dark") {
+      rootElement.classList.add("app.dark");
+      rootElement.classList.remove("app.light");
+    } else {
+      rootElement.classList.add("app.light");
+      rootElement.classList.remove("app.dark");
+    }
+  }, [theme]);
+
   return (
     <ThemeContext.Provider value={{ theme, handleTheme }}>
       <ConfigProvider

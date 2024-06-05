@@ -9,6 +9,7 @@ import { ThemeContext } from "./providers/ThemeProvider";
 import { Breadcrumbs } from "../components/Breadcrumps/Breadcrumps";
 import { Divider } from "antd/lib";
 import { AppCard } from '../components/ui/AppCard/ui/AppCard';
+import { classNames } from '../shared/helpers/classNames';
 
 
 //13263
@@ -43,14 +44,22 @@ function App() {
 
     // </>
 
-    <>
-      <Header />
+    // <>
+   
+    //   <Divider />
+    //   <AppRouter />
+    // </>
+
+    <div className={classNames('app', {}, [theme])}>
+       <Header />
       <div style={{ width: "80%", margin: "1em auto" }}>
         <Breadcrumbs />
       </div>
       <Divider />
+    <div className="content-page">
       <AppRouter />
-    </>
+    </div>
+  </div>
   );
 }
 

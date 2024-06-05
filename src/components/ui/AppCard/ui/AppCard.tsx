@@ -44,8 +44,8 @@ export const AppCard: React.FC<AppCardProps> = ({
 
 
   // Determine the theme from context
-  const { theme } = useContext(ThemeContext); // Adjust the import path as necessary
-  // const cardClass = `${styles.box} ${theme === 'light'? styles.lightModeBox : ''}`;
+  const { theme } = useContext(ThemeContext);
+  
 
   return (
     <div className={styles.box}>

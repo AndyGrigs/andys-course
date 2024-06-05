@@ -60,6 +60,7 @@
 .box .item:before {
   content: ' ';
  // background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+  background: var(--primary-color);
 }
 
 .box .item:after {

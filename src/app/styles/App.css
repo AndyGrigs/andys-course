@@ -14,8 +14,8 @@ body {
 .layout-light {
   background: radial-gradient(
     circle at 10% 20%,
-    rgb(255, 254, 252) 39.5%,
-    rgba(100, 46, 122, 0.23) 100.2%
+    #fffefc 39.5%,
+    #642e7a3b 100.2%
   );
   color: #474040;
 }
