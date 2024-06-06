@@ -37,19 +37,16 @@ export const AppCard: React.FC<AppCardProps> = ({
   description = 'Default Description',
   buttonText = 'Learn More',
   buttonOnClick,
-  className,
   children,
 
 }) => {
 
 
-  // Determine the theme from context
-  const { theme } = useContext(ThemeContext);
   
 
   return (
     <div className={styles.box}>
-      <div className={`${styles.item} ${theme === 'dark' ? styles.lightModeItem : ''}`}>
+      <div className={styles.item}>
         <div className={styles.layer}></div>
         <div>
           {children}

@@ -1,7 +1,7 @@
 
 
 .box {
-  display: flex;
+  // display: flex;
   flex-wrap: wrap;
   justify-content: center;
   counter-reset: item-list;
@@ -46,6 +46,7 @@
 .box .item .layer {
   z-index: -1;
   transform: skew(2deg, 2deg);
+  // background: linear-gradient(180deg, #5c27fe, #c165dd);
 }
 .box .item .layer:before, .box .item .layer:after {
   content: ' ';
