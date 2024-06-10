@@ -39,10 +39,10 @@ export const AppRouter: React.FC = () => {
                 path="modules/:moduleId/text"
                 element={<TextPageAsync />}
               />
-              <Route
+              {/* <Route
                 path="modules/:moduleId/vocabulary"
                 element={<VocabularyPageAsync />}
-              />
+              /> */}
               <Route
                 path="modules/:moduleId/exercises/:exerciseId"
                 element={<ExercisePageAsync />}
