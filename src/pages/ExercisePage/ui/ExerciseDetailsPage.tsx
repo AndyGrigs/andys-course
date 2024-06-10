@@ -179,7 +179,7 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-  const isShortExercise = currentTask.content.length < 20;
+  const isShortExercise = currentTask.content.length < 30;
   
 
   return (
