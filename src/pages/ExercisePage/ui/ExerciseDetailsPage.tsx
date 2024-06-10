@@ -179,8 +179,8 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-  const isShortExercise = currentTask.solution.length < 12;
-  
+  const isShortExercise = currentTask.solution.length < 1;
+  console.log(currentTask.solution.length)
 
   return (
     <div style={{ textAlign: "center" }}>
