@@ -12,7 +12,7 @@ import { UpdateCodePageAsync } from "../pages/UpdateCodePage";
 import { UserCodePageAsync } from "../pages/UserCodePage";
 import { Loader } from "../components/Loader";
 import { TextPageAsync } from "../pages/TextPage";
-import { VocabularyPageAsync } from "../pages/vocabularyPage";
+// import { VocabularyPageAsync } from "../pages/vocabularyPage";
 import { OneModulePageAsync } from "../pages/OneModulePage";
 
 export const AppRouter: React.FC = () => {
