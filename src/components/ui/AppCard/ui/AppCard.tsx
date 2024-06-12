@@ -1,6 +1,5 @@
 import { Card } from "antd";
 import { ReactNode, useContext } from "react";
-import { ThemeContext } from "../../../../app/providers/ThemeProvider";
 import styles from './AppCard.module.scss';
 
 // export const AppCard = () => {
@@ -28,7 +27,7 @@ interface AppCardProps {
   className?: string;
   style?: React.CSSProperties;
   children?: ReactNode;
-  theme?: 'light';
+  theme?: string;
 
 }
 

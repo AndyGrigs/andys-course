@@ -11,7 +11,7 @@ import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
@@ -61,7 +61,6 @@ const ModulePage: React.FC = () => {
   };
 
   const progress = 0;
-
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);

@@ -12,8 +12,8 @@ import {
 import { setCurrentExercise } from "../../../redux/slices/exerciseSlice";
 import { setExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import { useContext } from "react";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
-import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
+import { AppCard } from "../../../components/ui/AppCard/ui/AppCard";
 
 const ModuleExercises = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
@@ -125,13 +125,13 @@ const ModuleExercises = () => {
           >
             <Progress percent={progressPercentage} />
           </AppCard>
-        )
+        );
       })}
     </>
     // <List
     //   dataSource={exercises}
     //   renderItem={(exercise, index) => {
-    //     console.log(index); 
+    //     console.log(index);
     // const exerciseProgress = allUserExerciseProgresses?.find(
     //   (progress: { exerciseId: string }) =>
     //     progress.exerciseId === exercise._id

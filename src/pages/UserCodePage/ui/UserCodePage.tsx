@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 import { useContext } from "react";
 
 const UserCodePage = () => {
@@ -25,7 +25,7 @@ const UserCodePage = () => {
         <h3>Запиши свій код!</h3>
         <h1>{code}</h1>
 
-        <Link to='/modules'>Start!</Link>
+        <Link to="/modules">Start!</Link>
       </div>
     </Card>
   );

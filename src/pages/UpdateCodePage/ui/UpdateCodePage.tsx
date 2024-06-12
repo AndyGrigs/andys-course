@@ -8,7 +8,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../app/types";
 import Layout from "../../../components/Layout";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
@@ -18,7 +18,6 @@ const UpdateCode = () => {
   const [_, setError] = useState("");
   const [updateCode] = useUpdateCodeMutation();
   const { theme } = useContext(ThemeContext);
-
 
   useEffect(() => {
     if (user) navigate("/modules");
@@ -65,15 +64,18 @@ const UpdateCode = () => {
                 style={
                   theme === "dark"
                     ? {
-                      color: "#C6E2FB",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "#C6E2FB",
+                        borderBottom: "1px solid ",
+                      }
                     : {
-                      color: "#030",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "#030",
+                        borderBottom: "1px solid ",
+                      }
                 }
-                to="/login">Увійти в аккаунт</Link>
+                to="/login"
+              >
+                Увійти в аккаунт
+              </Link>
             </Typography.Text>
           </Space>
         </Card>

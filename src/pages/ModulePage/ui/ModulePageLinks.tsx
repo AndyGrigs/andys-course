@@ -5,7 +5,7 @@ import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { Loader } from "../../../components/Loader";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useDispatch } from "react-redux";
@@ -21,10 +21,9 @@ const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [createUserModuleProgress] = useCreateUserModuleProgressMutation();
-  const {
-    data: allUserModuleProgresses,
-
-  } = useGetAllUserModuleProgressQuery(user?._id ?? "");
+  const { data: allUserModuleProgresses } = useGetAllUserModuleProgressQuery(
+    user?._id ?? ""
+  );
 
   const progress = 0;
 
@@ -65,16 +64,11 @@ const ModulePage: React.FC = () => {
       currentModule?.name || "",
       progress
     );
-    navigate(`/modules/${moduleId}`)
+    navigate(`/modules/${moduleId}`);
   };
-
-
-
-
 
   return (
     <>
-
       <Card
         className={theme === "dark" ? "card-dark" : "card-light"}
         title="Твої модулі"

@@ -1,12 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { List, Card, Radio, Button, message } from 'antd';
-import { RadioChangeEvent } from 'antd/lib/radio';
-import { useSelector } from 'react-redux';
-import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { ThemeContext } from '../../../app/providers/ThemeProvider';
-import { selectUser, updateLokalUserPoints } from '../../../redux/slices/authSlice';
-import { useDispatch } from 'react-redux';
-import { useUpdateUserPointsMutation } from '../../../redux/services/pointsApi';
+import React, { useContext, useState } from "react";
+import { List, Card, Radio, Button, message } from "antd";
+import { RadioChangeEvent } from "antd/lib/radio";
+import { useSelector } from "react-redux";
+import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
+import {
+  selectUser,
+  updateLokalUserPoints,
+} from "../../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { useUpdateUserPointsMutation } from "../../../redux/services/pointsApi";
 
 interface VocabularyItem {
   word: string;
@@ -21,7 +24,7 @@ interface UpdatePointsPayload {
   points: number;
 }
 
-interface VocabularyPageProps { }
+interface VocabularyPageProps {}
 
 const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -32,19 +35,20 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const dispatch = useDispatch();
   const [updatePoints] = useUpdateUserPointsMutation();
 
-
-
-
   const handleOptionChange = (word: string, option: string) => {
     setAnswers({
       ...answers,
-      [word]: option
+      [word]: option,
     });
   };
 
   const handleSubmitForItem = (word: string) => {
     const answer = answers[word];
-    if (answer === vocabulary?.find(item => item.word === word)?.correctAnswer && user) {
+    if (
+      answer ===
+        vocabulary?.find((item) => item.word === word)?.correctAnswer &&
+      user
+    ) {
       message.success(`Correct answer for "${word}"`);
       let points: number = user.points;
       points += 1;
@@ -52,14 +56,18 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
         userId: user._id,
         points: points,
       };
-      dispatch(updateLokalUserPoints(payload))
+      dispatch(updateLokalUserPoints(payload));
       try {
         updatePoints({ userId: user?._id, points });
       } catch (error) {
         console.log(error);
       }
     } else {
-      message.error(`Wrong answer for "${word}". Correct is "${vocabulary?.find(item => item.word === word)?.correctAnswer}".`);
+      message.error(
+        `Wrong answer for "${word}". Correct is "${
+          vocabulary?.find((item) => item.word === word)?.correctAnswer
+        }".`
+      );
     }
   };
 
@@ -71,14 +79,21 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
         <List.Item key={item.word}>
           <Card
             className={theme === "dark" ? "card-dark" : "card-light"}
-            style={{ width: '50%', margin: 'auto' }}>
-            <div><strong>{item.word}</strong></div>
+            style={{ width: "50%", margin: "auto" }}
+          >
+            <div>
+              <strong>{item.word}</strong>
+            </div>
             <Radio.Group
-              onChange={(e: RadioChangeEvent) => handleOptionChange(item.word, e.target.value)}
+              onChange={(e: RadioChangeEvent) =>
+                handleOptionChange(item.word, e.target.value)
+              }
               value={answers[item.word]}
             >
-              {item.options.map(option => (
-                <Radio key={option.answer} value={option.answer}>{option.answer}</Radio>
+              {item.options.map((option) => (
+                <Radio key={option.answer} value={option.answer}>
+                  {option.answer}
+                </Radio>
               ))}
             </Radio.Group>
             {/* <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
@@ -90,15 +105,18 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
               </Button>
             )} */}
             {answers[item.word] && (
-              <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
+              <Button
+                type="primary"
+                onClick={() => handleSubmitForItem(item.word)}
+                style={{ marginTop: 8 }}
+              >
                 Check!
               </Button>
             )}
           </Card>
         </List.Item>
       )}
-    >
-    </List>
+    ></List>
   );
 };
 

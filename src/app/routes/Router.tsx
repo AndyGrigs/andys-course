@@ -21,7 +21,7 @@ export const AppRouter: React.FC = () => {
       <Auth>
         <Routes>
           <Route path="/" element={<HomePageAsync />} />
-          <Route path="/login" element={<LoginPageAsync />} />
+          {/* <Route path="/login" element={<LoginPageAsync />} />
           <Route path="/register" element={<RegistrationPageAsync />} />
           <Route path="/register-update" element={<UpdateCodePageAsync />} />
           <Route path="/user-code" element={<UserCodePageAsync />} />
@@ -47,7 +47,7 @@ export const AppRouter: React.FC = () => {
               path="modules/:moduleId/exercises/:exerciseId"
               element={<ExercisePageAsync />}
             />
-          </Route>
+          </Route> */}
         </Routes>
       </Auth>
     </Suspense>

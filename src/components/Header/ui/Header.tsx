@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Layout, Space, Typography, Button, Drawer } from "antd";
 import { MoonOutlined, SunOutlined, MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
 import { createStyles, useTheme } from "antd-style";
 import type {
   DrawerClassNames,
@@ -14,7 +13,6 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 
 export const Header = () => {
-  const { handleTheme, theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
 
   const useStyle = createStyles(() => ({
@@ -50,19 +48,19 @@ export const Header = () => {
       setIsOpen(!isOpen);
     };
 
-    const classNames: DrawerClassNames = {
-      body:
-        theme === "dark"
-          ? styles["drawer-body-dark"]
-          : styles["drawer-body-light"],
-      mask: styles["my-drawer-mask"],
-      header:
-        theme === "dark"
-          ? styles["drawer-body-dark"]
-          : styles["drawer-body-light"],
-      footer: styles["my-drawer-footer"],
-      content: styles["my-drawer-content"],
-    };
+    // const classNames: DrawerClassNames = {
+    //   body:
+    //     theme === "dark"
+    //       ? styles["drawer-body-dark"]
+    //       : styles["drawer-body-light"],
+    //   mask: styles["my-drawer-mask"],
+    //   header:
+    //     theme === "dark"
+    //       ? styles["drawer-body-dark"]
+    //       : styles["drawer-body-light"],
+    //   footer: styles["my-drawer-footer"],
+    //   content: styles["my-drawer-content"],
+    // };
 
     const drawerStyles: DrawerStyles = {
       mask: {
@@ -99,7 +97,7 @@ export const Header = () => {
           // footer="Footer"
           onClose={toggleDrawer}
           open={isOpen}
-          classNames={classNames}
+        //  classNames={classNames}
           styles={drawerStyles}
         >
           {/* {user ? (
@@ -138,32 +136,29 @@ export const Header = () => {
   };
 
   return (
-    <Layout.Header
-      className={`${styles.header} ${theme === "dark" ? styles.dark : styles.light
-        }`}
+    <header className={styles.header}
     >
-      <Link to="/">
+      {/* <Link to="/">
         <Space>
           <Typography.Title level={4}>
             <img src="" />
           </Typography.Title>
         </Space>
-      </Link>
+      </Link> */}
+
       <div className={styles.links}>
         <Space>
-          <Typography.Paragraph
-            style={{ fontSize: "1.5em", marginBottom: "0", fontWeight: "700" }}
-          >
+          <Typography.Paragraph>
             🔥{user ? user.points : ""}
           </Typography.Paragraph>
         </Space>
-        <Button
+        {/* <Button
           type="text"
           onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
           icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
-        />
+        /> */}
         <Menu />
       </div>
-    </Layout.Header>
+    </header>
   );
 };

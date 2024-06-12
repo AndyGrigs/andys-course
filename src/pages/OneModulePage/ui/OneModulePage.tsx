@@ -1,26 +1,23 @@
 // Import necessary hooks and components at the top of OneModulePage.tsx
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectCurrentModule } from '../../../redux/slices/moduleSlice';
-import { ThemeContext } from '../../../app/providers/ThemeProvider';
-import { Button, Card, Flex, List } from 'antd';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
+import { Button, Card, Flex, List } from "antd";
 
 const OneModulePage: React.FC = () => {
   const currentModule = useSelector(selectCurrentModule);
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
 
-
-
   return (
-    <Flex align='center'>
-
+    <Flex align="center">
       <Card
         className={theme === "dark" ? "card-dark" : "card-light"}
         title=""
         bordered={false}
-        style={{ width: "60%", margin: '0 auto' }}
+        style={{ width: "60%", margin: "0 auto" }}
       >
         <Card
           style={theme === "dark" ? { background: "#5a7cbb" } : {}}

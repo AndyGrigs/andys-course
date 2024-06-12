@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { ErrorMessage } from "../../../components/Error";
-import { ThemeContext } from "../../../app/providers/ThemeProvider";
+import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 
 const Login: React.FC = () => {
@@ -54,11 +54,9 @@ const Login: React.FC = () => {
             <Form.Item
               name="fullName"
               label="Ім'я"
-              rules={[
-                { required: true, message: "Напиши своє ім'я" },
-              ]}
+              rules={[{ required: true, message: "Напиши своє ім'я" }]}
             >
-              <Input style={theme === 'dark' ? { color: 'darkblue' } : {}} />
+              <Input style={theme === "dark" ? { color: "darkblue" } : {}} />
             </Form.Item>
 
             <Form.Item
@@ -66,7 +64,9 @@ const Login: React.FC = () => {
               label="Код"
               rules={[{ required: true, message: "Напиши свій код" }]}
             >
-              <Input.Password style={theme === 'dark' ? { color: 'darkblue' } : {}} />
+              <Input.Password
+                style={theme === "dark" ? { color: "darkblue" } : {}}
+              />
             </Form.Item>
 
             <Form.Item>
@@ -83,15 +83,15 @@ const Login: React.FC = () => {
                 style={
                   theme === "dark"
                     ? {
-                      color: "#C6E2FB",
-                      marginLeft: "1em",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "#C6E2FB",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
                     : {
-                      color: "",
-                      marginLeft: "1em",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
                 }
               >
                 Зареєструйтесь
@@ -103,15 +103,15 @@ const Login: React.FC = () => {
                 style={
                   theme === "dark"
                     ? {
-                      color: "#C6E2FB",
-                      marginLeft: "1em",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "#C6E2FB",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
                     : {
-                      color: "",
-                      marginLeft: "1em",
-                      borderBottom: "1px solid ",
-                    }
+                        color: "",
+                        marginLeft: "1em",
+                        borderBottom: "1px solid ",
+                      }
                 }
                 to="/register-update"
               >

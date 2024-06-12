@@ -54,13 +54,10 @@
 .box .item .layer:after {
   filter: blur(8px);
 }
+
 .box .item:before {
   content: ' ';
-  background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
-}
-.box .item:before {
-  content: ' ';
- // background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+   //background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
   background: var(--primary-color);
 }
 
