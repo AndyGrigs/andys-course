@@ -1,17 +1,20 @@
 .header {
-  // position: relative;
-  // z-index: 2;
-  // padding: 10px;
-  // display: flex;
-  // align-items: center;
-  // margin-bottom: 20px;
-  // justify-content: space-between;
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
+  position: relative;
+  z-index: 2;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: space-between;
   color: var(--text-color);
- background: var(--bg-header);
+  background: var(--bg-header);
+
+
 }
+
+.logo {
+  width: 70px;
+ }
 
 .userIcon {
   font-size: 26px;

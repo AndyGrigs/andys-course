@@ -29,7 +29,7 @@ function App() {
         </div>
       <div className="content-page">
         <AppRouter />
-        <ThemeToggle/>
+        
       </div>
     </div>
     // <div className={styles.globalWrapper}>

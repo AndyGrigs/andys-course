@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Space, Typography, Button, Drawer } from "antd";
-import { MoonOutlined, SunOutlined, MenuOutlined } from "@ant-design/icons";
+import {  MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
 import { createStyles, useTheme } from "antd-style";
 import type {
@@ -11,9 +11,11 @@ import type {
 import { HeaderItems } from "./HeaderItems";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
+import ThemeToggle from '../../../app/theme/ThemeToggle';
 
 export const Header = () => {
   const user = useSelector(selectUser);
+ // const { theme } = useTheme();
 
   const useStyle = createStyles(() => ({
     "my-drawer-mask": {
@@ -136,15 +138,15 @@ export const Header = () => {
   };
 
   return (
-    <header className={styles.header}
+    <Layout.Header className={styles.header}
     >
-      {/* <Link to="/">
+      <Link to="/">
         <Space>
           <Typography.Title level={4}>
-            <img src="" />
+            <img className={styles.logo} src="https://i.postimg.cc/8PG0qFdC/small-logo-no-background.png" />
           </Typography.Title>
         </Space>
-      </Link> */}
+      </Link>
 
       <div className={styles.links}>
         <Space>
@@ -152,13 +154,9 @@ export const Header = () => {
             🔥{user ? user.points : ""}
           </Typography.Paragraph>
         </Space>
-        {/* <Button
-          type="text"
-          onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
-          icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
-        /> */}
+        <ThemeToggle/>
         <Menu />
       </div>
-    </header>
+    </Layout.Header>
   );
 };

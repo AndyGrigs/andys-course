@@ -1,5 +1,6 @@
-// src/contexts/ThemeContext.tsx
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+
+import { ConfigProvider } from 'antd';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -17,9 +18,23 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const getAntDesignTheme = () => ({
+    token: {
+      colorPrimary: theme === 'light' ? '#1890ff' : '#001529',
+      colorBgContainer: theme === 'light' ? '#fff' : '#141414',
+      colorText: theme === 'light' ? '#000' : '#fff',
+    },
+  });
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <ConfigProvider theme={getAntDesignTheme()}>
+        {children}
+      </ConfigProvider>
     </ThemeContext.Provider>
   );
 };
