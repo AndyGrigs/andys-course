@@ -7,12 +7,15 @@
       rgb(255, 254, 252) 39.5%,
       rgba(91, 4, 125, 0.305) 100.2%
     );
-  }
-  
-  [data-theme='dark'] {
-    --background-color: rgb(35, 51, 94);
-    --text-color: white;
-    --bg-header: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    --card-gradient: linear-gradient(135deg, #c8d1f4 0%, #c8d1f6 50%, #e3f179 50%, #66ee48 100%);
+
+    }
+    
+    [data-theme='dark'] {
+      --background-color: rgb(35, 51, 94);
+      --text-color: white;
+      --bg-header: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      --card-gradient: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%) ;
   }
   
   body {

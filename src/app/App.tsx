@@ -27,6 +27,7 @@ function App() {
       <div style={{ width: "80%", margin: "1em auto" }}>
           <Breadcrumbs />
         </div>
+        <Divider/>
       <div className="content-page">
         <AppRouter />
         

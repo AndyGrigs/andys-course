@@ -48,6 +48,7 @@
 
 .box {
    display: flex;
+   align-items: center;
   justify-content: center;
   counter-reset: item-list;
 }
@@ -64,8 +65,9 @@
   margin: 40px;
   border-radius: 12px;
   padding: 100px 24px;
-  color: #fff;
+  color: var(--text-color);
   position: relative;
+ 
 }
 @media (min-width: 1366px){
   .box .item{
@@ -102,7 +104,8 @@
 
 .box .item:before {
   content: ' ';
-  background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+  // background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+  background: var(--card-gradient);
  
 }
 
