@@ -1,18 +1,157 @@
 // HomePage.module.scss
 
-.linkButton {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 8px 16px;
-    background-color: #293139;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: bold;
+// .linkButton {
+//     display: inline-block;
+//     margin-top: 16px;
+//     padding: 8px 16px;
+//     background-color: #293139;
+//     color: white;
+//     text-align: center;
+//     text-decoration: none;
+//     border-radius: 4px;
+//     font-weight: bold;
   
-    &:hover {
-      background-color: darken(#666b6b, 5%);
-    }
-  }
+//     &:hover {
+//       background-color: darken(#666b6b, 5%);
+//     }
+//   }
 
+/* HomePage.module.scss */
+// .box {
+
+
+//   .title {
+//     margin-bottom: 16px;
+//     // color: #333;
+//   }
+
+//   .paragraph {
+//     margin-bottom: 24px;
+//     // color: #666;
+//   }
+
+//   .linkButton {
+//     display: inline-block;
+//     padding: 10px 20px;
+//     background-color: #1890ff;
+//     color: #fff;
+//     border-radius: 4px;
+//     text-decoration: none;
+//     transition: background-color 0.3s ease;
+
+//     &:hover {
+//       background-color: #40a9ff;
+//     }
+//   }
+// }
+
+
+.box {
+   display: flex;
+  justify-content: center;
+  counter-reset: item-list;
+}
+.box .title {
+  font: bold 24px/28px "Ubuntu", sans-serif;
+  margin-bottom: 16px;
+  letter-spacing: .4px;
+}
+.box .description {
+  font: 16px/24px "Ubuntu", sans-serif;
+  margin-bottom: 24px;
+}
+.box .item {
+  margin: 40px;
+  border-radius: 12px;
+  padding: 100px 24px;
+  color: #fff;
+  position: relative;
+}
+@media (min-width: 1366px){
+  .box .item{
+    width: calc(25% - 80px);
+  }
+}
+
+.box .item > * {
+  position: relative;
+  z-index: 2;
+}
+.box .item:before,
+.box .item .layer,
+.box .item .layer:before,
+.box .item .layer:after {
+  border-radius: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.box .item .layer {
+  z-index: -1;
+  transform: skew(2deg, 2deg);
+   //background: linear-gradient(180deg, #5c27fe, #c165dd);
+}
+.box .item .layer:before, .box .item .layer:after {
+  content: ' ';
+}
+.box .item .layer:after {
+  filter: blur(8px);
+}
+
+.box .item:before {
+  content: ' ';
+  background: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%);
+ 
+}
+
+.box .item:after {
+  content: '🦾';
+  // counter-increment: item-list;
+  position: absolute;
+  font: bold 10vw/1 "Ubuntu", sans-serif;
+  top: 50%;
+  right: 20px;
+  transform-origin: top right;
+  opacity: .1;
+  transition:  top .4s ease, opacity .4s ease,  color .4s ease,  transform .4s ease;
+}
+.box .item .button {
+  padding: 10px 20px;
+  font: bold 16px/24px "Ubuntu", sans-serif;
+  color: #fff;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  transition: opacity .3s ease,  transform .3s ease,  color .3s ease, background-color .3s ease;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.box .item:nth-child(1) .layer:before, .box .item:nth-child(1) .layer:after {
+  background: linear-gradient(180deg, #5c27fe, #c165dd);
+}
+.box .item:nth-child(2) .layer:before, .box .item:nth-child(2) .layer:after {
+  background: linear-gradient(180deg, #ff7b02, #ffcb52);
+}
+.box .item:nth-child(3) .layer:before, .box .item:nth-child(3) .layer:after {
+  background: linear-gradient(180deg, #fc76b3, #facd68);
+}
+.box .item:nth-child(4) .layer:before, .box .item:nth-child(4) .layer:after {
+  background: linear-gradient(180deg, #04f5ed, #00f7a7);
+}
+.box .item:hover .button {
+  transform: translateY(0);
+  opacity: 1;
+  color: #212121;
+  background-color: #fff;
+}
+.box .item:hover:after {
+  transform: scale(0.4);
+  top: 24px;
+  opacity: .5;
+}
+.box .item:hover:before {
+  opacity: 0;
+}
