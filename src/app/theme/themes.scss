@@ -1,13 +1,13 @@
 /* src/styles/themes.css */
 :root {
-    --background-color: rgb(216, 255, 222);
+    --background-color: rgb(245, 245, 245);
     --text-color: rgb(8, 8, 8);
     --bg-header:  radial-gradient(
       circle at 10% 20%,
       rgb(255, 254, 252) 39.5%,
       rgba(91, 4, 125, 0.305) 100.2%
     );
-    --card-gradient: linear-gradient(135deg, #c8d1f4 0%, #c8d1f6 50%, #e3f179 50%, #66ee48 100%);
+    --card-gradient:  linear-gradient(135deg, #f0f8ff 0%, #f0f8ff 50%, #e6e6fa 50%, #e6e6fa 100%);
 
     }
     
