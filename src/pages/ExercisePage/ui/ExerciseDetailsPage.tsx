@@ -183,7 +183,6 @@ console.log(totalTasks)
 
   return (
     <div style={{ textAlign: "center" }}>
-       <p>Current Task Index: {currentTaskIndex}</p>
       <Title level={4}>
         {exercise.number}. {exercise.instruction}
       </Title>

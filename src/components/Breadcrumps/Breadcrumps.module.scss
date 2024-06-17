@@ -1,7 +1,13 @@
 .text{
-    color: var(--text-color)
+    color: var(--text-color);
+    .links{
+        color: var(--text-color);
+    }
 }
 
 .lastWord{
     text-transform: capitalize;
 }
+
+
+

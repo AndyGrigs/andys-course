@@ -25,7 +25,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const getAntDesignTheme = () => ({
     token: {
-      colorPrimary: theme === 'light' ? '#1890ff' : '#001529',
+      colorPrimary: theme === 'light' ? '#1890ff' : '#737373',
       colorBgContainer: theme === 'light' ? '#fff' : '#262626',
       colorText: theme === 'light' ? '#000' : 'rgb(247, 245, 245)',
     },
