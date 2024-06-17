@@ -3,7 +3,7 @@ import { Layout, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.scss";
 import { AppCard } from "../../../components/ui/AppCard/ui/AppCard";
-import { Player, PosterImage } from "video-react";
+
 //  const { Title, Paragraph } = Typography;
 
 const HomePage: React.FC = () => {
@@ -15,17 +15,17 @@ const HomePage: React.FC = () => {
   return (
     <section>
       <div className={styles.box}>
-      <div>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/ylh_iA_ReiE?si=ez0LlGwB08AvKDSY"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></iframe>
-        </div>
+      {/* <div>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/ylh_iA_ReiE?si=ez0LlGwB08AvKDSY"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div> */}
         <div className={styles.item}>
           <div className={styles.layer}></div>
           <div className={styles.title}>

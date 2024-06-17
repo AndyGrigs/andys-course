@@ -72,7 +72,7 @@ export interface IExercise {
 }
 
 export interface IExerciseResponse {
-  _id: Key | null | undefined;
+  _id: string;
   number: number;
   instruction: string;
   example: string;

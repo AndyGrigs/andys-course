@@ -49,12 +49,10 @@ const ExerciseDetailsPage = () => {
   const currentModule = useAppSelector(selectCurrentModule);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleExerciseList } = useExerciseNavigation();
-  // const [updateUserModuleProgress] = useUpdateUserModuleProgressMutation();
-  // const { moduleProgressPercentage } =
     useCalculateModuleProgress() as IModuleProgress;
 
   const totalTasks = exercise?.tasks.length || 0;
-
+console.log(totalTasks)
   const handleCloseModal = () => {
     setIsModalResultVisible(false);
   };
@@ -124,7 +122,6 @@ const ExerciseDetailsPage = () => {
       setResultMessage("Exercise not loaded");
       return;
     }
-    console.log("Answer being sent for checking:", answerValue);
 
     const isCorrect = checkAnswer(
       currentTask._id,
@@ -146,7 +143,6 @@ const ExerciseDetailsPage = () => {
       console.log("Exercise is not defined");
       return;
     }
-
     if (!isAnswerChecked) {
       handleCheckAnswer();
       setIsAnswerChecked(true);
@@ -155,6 +151,7 @@ const ExerciseDetailsPage = () => {
       setCurrentTaskIndex(
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
+      
       if(currentTaskIndex === totalTasks - 1) {
         handleFinalProgress();
         setIsModalResultVisible(true);
@@ -172,16 +169,21 @@ const ExerciseDetailsPage = () => {
   }
 
   const currentTask = exercise.tasks[currentTaskIndex];
+  
   const parts = currentTask.content.split("{{input}}");
+  console.log(parts)
+  
   const allInputsEmpty = Object.values(
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
   const isShortExercise = currentTask.content.length < 40;
+ 
   
 
   return (
     <div style={{ textAlign: "center" }}>
+       <p>Current Task Index: {currentTaskIndex}</p>
       <Title level={4}>
         {exercise.number}. {exercise.instruction}
       </Title>
@@ -258,9 +260,12 @@ const ExerciseDetailsPage = () => {
         justify="center"
         style={{ marginTop: "2.5em" }}
       >
-        <div style={{ marginBottom: "2em" }}>
-          <Image width={90} height={90} src={currentTask.image} />
-        </div>
+        {currentTask.image ? (
+           <div style={{ marginBottom: "2em" }}>
+           <Image width={90} height={90} src={currentTask.image} />
+         </div>
+        ) : undefined}
+       
         <Button style={{ marginBottom: "2em" }} type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>

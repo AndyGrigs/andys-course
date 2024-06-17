@@ -1,4 +1,4 @@
-import { List, Flex, Button, Progress, Card } from "antd";
+import { Progress } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetExercisesQuery } from "../../../redux/services/exersiceApi";
 import { Loader } from "../../../components/Loader";
@@ -11,8 +11,6 @@ import {
 } from "../../../redux/services/progressApi";
 import { setCurrentExercise } from "../../../redux/slices/exerciseSlice";
 import { setExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
-import { useContext } from "react";
-import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 import { AppCard } from "../../../components/ui/AppCard/ui/AppCard";
 
 const ModuleExercises = () => {
@@ -20,7 +18,6 @@ const ModuleExercises = () => {
   const { data, isLoading, isError } = useGetExercisesQuery(moduleId ?? "");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { theme } = useContext(ThemeContext);
 
   const user = useSelector(selectUser);
   const {
@@ -89,6 +86,7 @@ const ModuleExercises = () => {
     exerciseNumber: number
   ) => {
     const currentexercise = exercises?.find((ex) => ex._id);
+    
     dispatch(setCurrentExercise(currentexercise));
     handleCreateUserExerciseProgress(exerciseId, exerciseNumber);
     navigate(`/modules/${moduleId}/exercises/${exerciseId}`);
@@ -96,6 +94,7 @@ const ModuleExercises = () => {
 
   return (
     <>
+    <section>
       {exercises.map((exercise, index) => {
         const exerciseProgress = allUserExerciseProgresses?.find(
           (progress: { exerciseId: string }) =>
@@ -107,6 +106,7 @@ const ModuleExercises = () => {
           : 0;
         return (
           <AppCard
+            key={exercise._id}
             title={`Вправа ${index + 1}`}
             description={exercise.instruction}
             buttonText="Почати"
@@ -125,8 +125,11 @@ const ModuleExercises = () => {
           >
             <Progress percent={progressPercentage} />
           </AppCard>
+
+
         );
       })}
+      </section>
     </>
     // <List
     //   dataSource={exercises}

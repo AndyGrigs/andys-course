@@ -1,5 +1,5 @@
 import { IExercise } from "../../app/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice  } from "@reduxjs/toolkit";
 import { exercisesApi } from "../services/exersiceApi";
 import { RootState } from "../store";
 
@@ -22,13 +22,20 @@ const exerciseSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
+    builder
+    .addMatcher(
       exercisesApi.endpoints.getExercises.matchFulfilled,
       (state, action) => {
         state.allExercises = action.payload.exercisesObj;
-      }
-    );
+      })
+      // .addMatcher(
+      //   exercisesApi.endpoints.getOneExercises.matchFulfilled,
+      //   (state, action) => {
+      //   state.currentExercise = action.payload;
+      //   }
+      // )
   },
+ 
 });
 
 export default exerciseSlice.reducer;
@@ -40,8 +47,6 @@ export const selectCurrentExercise = (state: RootState) =>
 
 export const selectExerciseById = (state: RootState, exerciseId: string) =>
   state.exercise.allExercises.find((exercise) => exercise._id === exerciseId);
-
-// export const selectExercisesByModule = (state: RootState, moduleId: string) => state.exercise.allExercises.filter((exercise)=> exercise._id === )
 
 export const selectAllExercises = (state: RootState) =>
   state.exercise.allExercises;

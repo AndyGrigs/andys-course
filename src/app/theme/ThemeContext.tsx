@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 
 import { ConfigProvider } from 'antd';
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
@@ -25,8 +26,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const getAntDesignTheme = () => ({
     token: {
       colorPrimary: theme === 'light' ? '#1890ff' : '#001529',
-      colorBgContainer: theme === 'light' ? '#fff' : '#141414',
-      colorText: theme === 'light' ? '#000' : '#fff',
+      colorBgContainer: theme === 'light' ? '#fff' : '#262626',
+      colorText: theme === 'light' ? '#000' : 'rgb(247, 245, 245)',
     },
   });
 

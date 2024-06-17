@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Card, List, Flex, Progress } from "antd";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,9 @@ import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
-import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 
 const ModulePage: React.FC = () => {
   const dispatch = useDispatch();
-  const { theme } = useContext(ThemeContext);
 
   const user = useSelector(selectUser);
 
@@ -64,7 +62,6 @@ const ModulePage: React.FC = () => {
 
   const handleStartClick = (moduleId: string) => {
     const currentModule = modulesData?.find((module) => module._id);
-    // handleCreateUserModuleProgress(currentModule?._id || "", currentModule?.name || '');
     dispatch(setCurrentModule(currentModule));
     createModuleProgress(
       user?._id || "",
@@ -99,7 +96,6 @@ const ModulePage: React.FC = () => {
 
   return (
     <Card
-      className={theme === "dark" ? "card-dark" : "card-light"}
       title="Твої модулі"
       bordered={false}
       style={{ width: "100%" }}
@@ -120,7 +116,7 @@ const ModulePage: React.FC = () => {
             (progress: { moduleId: string }) => progress.moduleId === module._id
           );
 
-          // Calculate the progress percentage
+        
           const progressPercentage = moduleProgress?.progress
             ? moduleProgress.progress
             : 0;
@@ -128,12 +124,6 @@ const ModulePage: React.FC = () => {
           return (
             <List.Item key={module._id}>
               <Card
-                // className={theme === "dark" ? "card-dark" : "card-light"}
-                style={
-                  theme === "dark"
-                    ? { textAlign: "center", background: "#5a7cbb" }
-                    : { textAlign: "center" }
-                }
                 title={module.name}
               >
                 <Flex justify="center" align="center" vertical gap={10}>

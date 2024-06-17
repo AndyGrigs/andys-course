@@ -2,19 +2,15 @@
 :root {
     --background-color: rgb(245, 245, 245);
     --text-color: rgb(8, 8, 8);
-    --bg-header:  radial-gradient(
-      circle at 10% 20%,
-      rgb(255, 254, 252) 39.5%,
-      rgba(91, 4, 125, 0.305) 100.2%
-    );
+    --bg-header: linear-gradient(180deg, #bea8ff, #e9a3ff);
     --card-gradient:  linear-gradient(135deg, #f0f8ff 0%, #f0f8ff 50%, #e6e6fa 50%, #e6e6fa 100%);
 
     }
     
     [data-theme='dark'] {
-      --background-color: rgb(35, 51, 94);
-      --text-color: white;
-      --bg-header: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      --background-color: rgb(61, 63, 66);
+      --text-color: rgb(247, 245, 245);
+      --bg-header: #262626;
       --card-gradient: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%) ;
   }
   
@@ -22,4 +18,5 @@
     background-color: var(--background-color);
     color: var(--text-color);
   }
+  
   

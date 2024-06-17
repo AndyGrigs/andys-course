@@ -1,23 +1,8 @@
-import { Card } from "antd";
-import { ReactNode, useContext } from "react";
+
+import { ReactNode } from "react";
 import styles from './AppCard.module.scss';
 
-// export const AppCard = () => {
-//   const { theme } = useContext(ThemeContext);
 
-//   return (
-// <div className={styles.box}> 
-//   <div className={styles.item}> 
-// <div className={styles.layer}></div>
-//     <div className={styles.title}>HTML mentor</div>
-//     <div className={styles.description}>
-//       Lorem ipsum dolor sit amet, consectetur 
-//     </div>
-//     <div className={styles.button}>About me</div>
-//   </div>
-// </div>
-//   );
-// };
 
 interface AppCardProps {
   title?: string;
@@ -27,7 +12,7 @@ interface AppCardProps {
   className?: string;
   style?: React.CSSProperties;
   children?: ReactNode;
-  theme?: string;
+
 
 }
 
@@ -47,9 +32,9 @@ export const AppCard: React.FC<AppCardProps> = ({
     <div className={styles.box}>
       <div className={styles.item}>
         <div className={styles.layer}></div>
-        <div>
+        <p>
           {children}
-        </div>
+        </p>
         <div className={styles.title}>{title}</div>
         <div className={styles.description}>
           {description}

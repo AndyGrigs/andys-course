@@ -1,17 +1,17 @@
 import { Button, Card, Form, Input, Row, Space, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { ErrorMessage } from "../../../components/Error";
-import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
+
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { theme } = useContext(ThemeContext);
+
   const [error, setError] = useState("");
   const user = useSelector(selectUser);
   const [loginUser] = useLoginMutation();
@@ -44,11 +44,6 @@ const Login: React.FC = () => {
         <Card
           title="Увійти в аккаунт"
           // style={{ width: "30rem" }}
-          style={
-            theme === "dark"
-              ? { background: "#5585b5", border: "none" }
-              : { background: "#fff" }
-          }
         >
           <Form onFinish={onFinish}>
             <Form.Item
@@ -56,7 +51,7 @@ const Login: React.FC = () => {
               label="Ім'я"
               rules={[{ required: true, message: "Напиши своє ім'я" }]}
             >
-              <Input style={theme === "dark" ? { color: "darkblue" } : {}} />
+              <Input />
             </Form.Item>
 
             <Form.Item
@@ -65,7 +60,7 @@ const Login: React.FC = () => {
               rules={[{ required: true, message: "Напиши свій код" }]}
             >
               <Input.Password
-                style={theme === "dark" ? { color: "darkblue" } : {}}
+              
               />
             </Form.Item>
 
@@ -80,40 +75,13 @@ const Login: React.FC = () => {
               Нема аккаунту?
               <Link
                 to="/register"
-                style={
-                  theme === "dark"
-                    ? {
-                        color: "#C6E2FB",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                    : {
-                        color: "",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                }
               >
                 Зареєструйтесь
               </Link>
             </Typography.Text>
             <Typography.Text>
               Не знаєш код?
-              <Link
-                style={
-                  theme === "dark"
-                    ? {
-                        color: "#C6E2FB",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                    : {
-                        color: "",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                }
-                to="/register-update"
+              <Link to="/register-update"
               >
                 Відновити
               </Link>

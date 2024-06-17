@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import { Card, List, Button } from "antd";
-//import style from './ModulePage.module.scss'
+import React from "react";
 import { useGetAllModulesQuery } from "../../../redux/services/modules";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { Loader } from "../../../components/Loader";
-import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setCurrentModule } from "../../../redux/slices/moduleSlice";
 import { useDispatch } from "react-redux";
@@ -13,10 +10,10 @@ import {
   useCreateUserModuleProgressMutation,
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
+import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
 
 const ModulePage: React.FC = () => {
   const { data: modules, isLoading, isError } = useGetAllModulesQuery();
-  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -69,33 +66,21 @@ const ModulePage: React.FC = () => {
 
   return (
     <>
-      <Card
-        className={theme === "dark" ? "card-dark" : "card-light"}
-        title="Твої модулі"
-        bordered={false}
-        style={{ width: "100%" }}
-      >
-        <List
-          grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
-          dataSource={modules}
-          renderItem={(module) => (
-            <List.Item key={module._id}>
-              <Card
-                //className={style.card}
-                style={theme === "dark" ? { background: "#5a7cbb" } : {}}
-                title={module.name}
-              >
-                <Button
-                  onClick={() => handleModuleLinkClick(module._id)}
-                  type="primary"
-                >
-                  Start!
-                </Button>
-              </Card>
-            </List.Item>
-          )}
+    <section>
+      {modules?.map(module => (
+
+           <AppCard
+           key={module._id}
+           title={module.name}
+           description=''
+           buttonText="Почати"
+           buttonOnClick={() => {
+             handleModuleLinkClick(module._id)
+           }}
         />
-      </Card>
+    
+      ))}
+    </section>
       <Outlet />
     </>
   );

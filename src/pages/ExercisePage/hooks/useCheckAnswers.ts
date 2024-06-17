@@ -35,7 +35,6 @@ const useCheckAnswer = () => {
     exercise: IExerciseResponse
   ) {
     const task = exercise.tasks.find((t) => t._id === taskId);
-    console.log(answerValue);
     if (!task) {
       console.error("Task not found");
 
