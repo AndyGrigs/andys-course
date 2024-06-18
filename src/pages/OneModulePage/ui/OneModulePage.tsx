@@ -20,7 +20,7 @@ const OneModulePage: React.FC = () => {
         <Card
           title=""
           bordered={false}
-          style={{ width: "60%", margin: "0 auto" }}
+          style={{ width: "40%", margin: "0 auto" }}
         >
           <Card
           >
@@ -28,21 +28,20 @@ const OneModulePage: React.FC = () => {
               size="small"
               dataSource={[
                 {
-                  title: "Text",
+                  title: "1. Text",
                   link: `/modules/${currentModule?._id}/text`,
                 },
                 {
-                  title: "Vocabular",
+                  title: "2. Vocabular",
                   link: `/modules/${currentModule?._id}/vocabulary`,
                 },
                 {
-                  title: "Übungen",
+                  title: "3. Übungen",
                   link: `/modules/${currentModule?._id}/exercises`,
                 },
               ]}
-              renderItem={(item, index) => (
+              renderItem={(item) => (
                 <List.Item>
-                  <span>{index + 1}.</span>
                   <Button
                     onClick={() => {
                       navigate(item.link);
