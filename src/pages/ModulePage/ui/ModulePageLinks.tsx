@@ -11,6 +11,8 @@ import {
   useGetAllUserModuleProgressQuery,
 } from "../../../redux/services/progressApi";
 import { AppCard } from '../../../components/ui/AppCard/ui/AppCard';
+import { Divider } from 'antd';
+import Title from 'antd/es/typography/Title';
 
 const ModulePage: React.FC = () => {
   const { data: modules, isLoading, isError } = useGetAllModulesQuery();
@@ -67,6 +69,8 @@ const ModulePage: React.FC = () => {
   return (
     <>
     <section>
+    <Title level={5}  style={{ maxWidth: '80%', margin: "0 auto" }}>🎯Почни займатись з першого модуля.</Title>
+    <Divider/>
       {modules?.map(module => (
 
            <AppCard

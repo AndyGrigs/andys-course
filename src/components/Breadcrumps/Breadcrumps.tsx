@@ -4,13 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { selectCurrentModule } from "../../redux/slices/moduleSlice";
 import style from './Breadcrumps.module.scss'
 import { selectCurrentExercise } from '../../redux/slices/exerciseSlice';
-import { useTheme } from "../../app/theme/ThemeContext";
+import { HomeOutlined } from '@ant-design/icons';
 
 export const Breadcrumbs = () => {
   const location = useLocation();
   const currentModule = useSelector(selectCurrentModule);
   const currentexercise = useSelector(selectCurrentExercise)
-  const { theme } = useTheme();
 
   const breadView = () => {
     const { pathname } = location;
@@ -19,14 +18,14 @@ export const Breadcrumbs = () => {
       <section className={style.text}>
         <Breadcrumb>
           {pathnames.length > 0 ? (
-            <Breadcrumb.Item className={style.links} >
-              <Link to="/">Home</Link>
+            <Breadcrumb.Item >
+              <Link  className={style.links} to="/">Home</Link>
             </Breadcrumb.Item>
           ) : (
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>{<HomeOutlined />}</Breadcrumb.Item>
           )}
           {pathnames.map((nam, index) => {
-            const routeTo = `/${pathnames.slice(0, index + 1).join(">")}`;
+            const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
             const isLast = index === pathnames.length - 1;
             return isLast ? (
               <Breadcrumb.Item className={style.lastWord} key={index}>

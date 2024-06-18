@@ -183,7 +183,7 @@ console.log(totalTasks)
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Title level={4}>
+      <Title level={5}>
         {exercise.number}. {exercise.instruction}
       </Title>
       <Typography.Paragraph>{exercise.example}</Typography.Paragraph>

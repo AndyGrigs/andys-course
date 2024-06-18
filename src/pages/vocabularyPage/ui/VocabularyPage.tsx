@@ -1,15 +1,11 @@
-import React, { useContext, useState } from "react";
-import { List, Card, Radio, Button, message } from "antd";
+import React, { useState } from "react";
+import { List, Card, Radio, message } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
-import { ThemeContext } from "../../../app/providers/ThemeAntdProvider";
-import {
-  selectUser,
-  updateLokalUserPoints,
-} from "../../../redux/slices/authSlice";
-import { useDispatch } from "react-redux";
+import { selectUser, updateLokalUserPoints } from "../../../redux/slices/authSlice";
 import { useUpdateUserPointsMutation } from "../../../redux/services/pointsApi";
+import styles from "./VocabularyPage.module.scss"
 
 interface VocabularyItem {
   word: string;
@@ -30,28 +26,25 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const module = useSelector(selectCurrentModule);
   const vocabulary = module?.vocabulary;
-  const { theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [updatePoints] = useUpdateUserPointsMutation();
 
   const handleOptionChange = (word: string, option: string) => {
-    setAnswers({
+    const newAnswers = {
       ...answers,
       [word]: option,
-    });
+    };
+    setAnswers(newAnswers);
+    checkAnswer(word, option);
   };
 
-  const handleSubmitForItem = (word: string) => {
-    const answer = answers[word];
-    if (
-      answer ===
-        vocabulary?.find((item) => item.word === word)?.correctAnswer &&
-      user
-    ) {
+  const checkAnswer = (word: string, selectedOption: string) => {
+    const correctAnswer = vocabulary?.find((item) => item.word === word)?.correctAnswer;
+
+    if (selectedOption === correctAnswer && user) {
       message.success(`Correct answer for "${word}"`);
-      let points: number = user.points;
-      points += 1;
+      const points = user.points + 1; // Increment user's points
       const payload: UpdatePointsPayload = {
         userId: user._id,
         points: points,
@@ -60,14 +53,10 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       try {
         updatePoints({ userId: user?._id, points });
       } catch (error) {
-        console.log(error);
+        console.error(error); 
       }
     } else {
-      message.error(
-        `Wrong answer for "${word}". Correct is "${
-          vocabulary?.find((item) => item.word === word)?.correctAnswer
-        }".`
-      );
+      message.error(`Wrong answer for "${word}". Correct is "${correctAnswer}"`);
     }
   };
 
@@ -77,17 +66,12 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       dataSource={vocabulary}
       renderItem={(item: VocabularyItem) => (
         <List.Item key={item.word}>
-          <Card
-            className={theme === "dark" ? "card-dark" : "card-light"}
-            style={{ width: "50%", margin: "auto" }}
-          >
+          <Card className={styles.card} style={{ width: "50%", margin: "auto" }}>
             <div>
               <strong>{item.word}</strong>
             </div>
             <Radio.Group
-              onChange={(e: RadioChangeEvent) =>
-                handleOptionChange(item.word, e.target.value)
-              }
+              onChange={(e: RadioChangeEvent) => handleOptionChange(item.word, e.target.value)}
               value={answers[item.word]}
             >
               {item.options.map((option) => (
@@ -96,23 +80,6 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
                 </Radio>
               ))}
             </Radio.Group>
-            {/* <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
-              Submit
-            </Button> */}
-            {/* {Object.keys(answers).length > 0 && (
-              <Button type="primary" onClick={() => handleSubmitForItem(item.word)} style={{ marginTop: 8 }}>
-                Submit
-              </Button>
-            )} */}
-            {answers[item.word] && (
-              <Button
-                type="primary"
-                onClick={() => handleSubmitForItem(item.word)}
-                style={{ marginTop: 8 }}
-              >
-                Check!
-              </Button>
-            )}
           </Card>
         </List.Item>
       )}
