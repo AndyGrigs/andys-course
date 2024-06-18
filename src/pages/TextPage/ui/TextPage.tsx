@@ -1,5 +1,5 @@
 
-import { Card, Typography} from "antd";
+import { Card, Divider, Typography} from "antd";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 const { Title, Paragraph } = Typography;
@@ -16,6 +16,8 @@ const TextPage = () => {
 
   return (
     <div style={{ padding: "20px" }}>
+      <Paragraph  style={{ maxWidth: 800, margin: "0 auto" }}>🎯Прочитайте текст, занотуйте собі нові для вас слова.</Paragraph>
+      <Divider/>
       <Card bordered={false} style={{ maxWidth: 800, margin: "0 auto" }}>
         <Typography>
           <Title level={4} style={{textAlign: 'center'}}>{title}</Title>

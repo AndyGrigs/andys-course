@@ -1,0 +1,22 @@
+/* src/styles/themes.css */
+:root {
+    --background-color: rgb(245, 245, 245);
+    --text-color: rgb(8, 8, 8);
+    --bg-header: linear-gradient(180deg, #bea8ff, #e9a3ff);
+    --card-gradient:  linear-gradient(135deg, #f0f8ff 0%, #f0f8ff 50%, #e6e6fa 50%, #e6e6fa 100%);
+
+    }
+    
+    [data-theme='dark'] {
+      --background-color: rgb(56,29,100);
+      --text-color: rgb(247, 245, 245);
+      --bg-header: #262626;
+      --card-gradient: linear-gradient(135deg, #262626 0%, #262626 50%, #1d1e22 50%, #1d1e22 100%) ;
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  

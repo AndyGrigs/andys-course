@@ -1,4 +1,4 @@
-import { IUser } from "../../types";
+import { IUser } from "../../app/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../services/auth";
 import { RootState } from "../store";
@@ -42,7 +42,7 @@ const slice = createSlice({
     updateLokalUserPoints: (state, action: PayloadAction<UpdatePointsPayload>) => {
       if (state.user) {
         state.user.points = action.payload.points
-       
+
       }
     },
   },

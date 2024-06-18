@@ -3,11 +3,11 @@ import Layout from "../../../components/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../redux/services/auth";
-import { IUser } from "../../../types";
+import { IUser } from "../../../app/types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
+
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
 
@@ -16,7 +16,6 @@ const Registration = () => {
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
   const [registerUser] = useRegisterMutation();
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (user) navigate("/modules");
@@ -44,27 +43,17 @@ const Registration = () => {
       <Row align="middle" justify="center">
         <Card
           title="Зареєструватись"
-          style={
-            theme === "dark"
-              ? { background: "#5585b5", border: "none" }
-              : { background: "#fff" }
-          }
         >
-          {/* <Form onFinish={register}>
-            <AppInput name="fullName" placeholder="Name" />
-            <AppButton type="primary" htmlType="submit">
-              Anmelden
-            </AppButton>
-          </Form> */}
           <Form onFinish={register}>
             <Form.Item
               name="fullName"
               label="Ім'я"
               rules={[{ required: true, message: "напиши своє ім'я" }]}
             >
-              <Input 
-               onChange={(e) => e.target.value.trim()}
-              style={theme === "dark" ? { color: "darkblue" } : {}} />
+              <Input
+                onChange={(e) => e.target.value.trim()}
+              
+              />
             </Form.Item>
 
             {error && (
@@ -83,19 +72,6 @@ const Registration = () => {
             <Typography.Text>
               Вже є аккаунт?{" "}
               <Link
-                style={
-                  theme === "dark"
-                    ? {
-                        color: "#C6E2FB",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                    : {
-                        color: "",
-                        marginLeft: "1em",
-                        borderBottom: "1px solid ",
-                      }
-                }
                 to="/login"
               >
                 Увійти

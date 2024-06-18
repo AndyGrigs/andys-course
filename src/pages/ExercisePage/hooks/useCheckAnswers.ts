@@ -1,14 +1,14 @@
 import { useCallback, useState } from "react";
-import { IExerciseResponse } from "../../../types";
+import { IExerciseResponse } from "../../../app/types";
 import { useUpdateUserPointsMutation } from "../../../redux/services/pointsApi";
 import { useSelector } from "react-redux";
 import { selectUser, updateLokalUserPoints } from "../../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 
 interface UpdatePointsPayload {
-    userId: string;
-    points: number;
-  }
+  userId: string;
+  points: number;
+}
 
 function compareAnswer(userAnswer: string, solution: string): boolean {
   return userAnswer === solution;
@@ -35,7 +35,6 @@ const useCheckAnswer = () => {
     exercise: IExerciseResponse
   ) {
     const task = exercise.tasks.find((t) => t._id === taskId);
-    console.log(answerValue);
     if (!task) {
       console.error("Task not found");
 
@@ -51,7 +50,7 @@ const useCheckAnswer = () => {
       let points: number = user.points;
       points += 1;
       const payload: UpdatePointsPayload = {
-        userId: user._id, 
+        userId: user._id,
         points: points,
       };
       dispatch(updateLokalUserPoints(payload))
@@ -60,7 +59,7 @@ const useCheckAnswer = () => {
       } catch (error) {
         console.log(error);
       }
-    
+
     }
 
     setUserResults((prevResults) => ({

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { api } from "./api";
-import { ModuleProgress, ExerciseProgress } from "../../types";
+import { ModuleProgress, ExerciseProgress } from "../../app/types";
 
 export const progressApi = api.injectEndpoints({
   endpoints: (builder) => ({

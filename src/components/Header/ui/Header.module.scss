@@ -1,50 +1,20 @@
 .header {
-  padding: 20px;
+  z-index: 2;
+  padding: 10px;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   justify-content: space-between;
-  color: whitesmoke;
+  color: var(--text-color);
+  background: var(--bg-header);
+
 }
+
+.logo {
+  width: 70px;
+ }
 
 .userIcon {
   font-size: 26px;
   margin-right: 12px;
-}
-
-.header.dark {
-  background: linear-gradient(
-    to top,
-    rgb(9, 32, 63) 0%,
-    rgb(83, 120, 149) 100%
-  );
-}
-
-.header.light {
-  background: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
-    radial-gradient(
-      91% 146%,
-      rgba(255, 255, 255, 0.5) 47%,
-      rgba(0, 0, 0, 0.5) 100%
-    );
-}
-
-.drawerLight {
-  .ant-drawer-body {
-    background-color: #fff;
-    color: #000;
-  }
-}
-
-.drawerDark {
-  .ant-drawer-body {
-    background-color: #333;
-    color: #fff;
-  }
-}
-
-@media (min-width: 768px) {
-}
-
-@media (max-width: 767px) {
 }

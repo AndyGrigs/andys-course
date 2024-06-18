@@ -1,4 +1,4 @@
-import { ErrorWithMessage } from "../types";
+import { ErrorWithMessage } from "../app/types";
 
 export const isErrorWithMessage = (
   error: unknown

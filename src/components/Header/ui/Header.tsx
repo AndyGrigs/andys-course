@@ -1,9 +1,8 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Space, Typography, Button, Drawer } from "antd";
-import { MoonOutlined, SunOutlined, MenuOutlined } from "@ant-design/icons";
+import {  MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { createStyles, useTheme } from "antd-style";
 import type {
   DrawerClassNames,
@@ -12,10 +11,11 @@ import type {
 import { HeaderItems } from "./HeaderItems";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
+import ThemeToggle from '../../../app/theme/ThemeToggle';
 
 export const Header = () => {
-  const { handleTheme, theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
+ // const { theme } = useTheme();
 
   const useStyle = createStyles(() => ({
     "my-drawer-mask": {
@@ -50,19 +50,19 @@ export const Header = () => {
       setIsOpen(!isOpen);
     };
 
-    const classNames: DrawerClassNames = {
-      body:
-        theme === "dark"
-          ? styles["drawer-body-dark"]
-          : styles["drawer-body-light"],
-      mask: styles["my-drawer-mask"],
-      header:
-        theme === "dark"
-          ? styles["drawer-body-dark"]
-          : styles["drawer-body-light"],
-      footer: styles["my-drawer-footer"],
-      content: styles["my-drawer-content"],
-    };
+    // const classNames: DrawerClassNames = {
+    //   body:
+    //     theme === "dark"
+    //       ? styles["drawer-body-dark"]
+    //       : styles["drawer-body-light"],
+    //   mask: styles["my-drawer-mask"],
+    //   header:
+    //     theme === "dark"
+    //       ? styles["drawer-body-dark"]
+    //       : styles["drawer-body-light"],
+    //   footer: styles["my-drawer-footer"],
+    //   content: styles["my-drawer-content"],
+    // };
 
     const drawerStyles: DrawerStyles = {
       mask: {
@@ -99,7 +99,7 @@ export const Header = () => {
           // footer="Footer"
           onClose={toggleDrawer}
           open={isOpen}
-          classNames={classNames}
+        //  classNames={classNames}
           styles={drawerStyles}
         >
           {/* {user ? (
@@ -138,31 +138,23 @@ export const Header = () => {
   };
 
   return (
-    <Layout.Header
-      className={`${styles.header} ${
-        theme === "dark" ? styles.dark : styles.light
-      }`}
+    <Layout.Header className={styles.header}
     >
       <Link to="/">
         <Space>
           <Typography.Title level={4}>
-            <img src=""/>
+            <img className={styles.logo} src="https://i.postimg.cc/8PG0qFdC/small-logo-no-background.png" />
           </Typography.Title>
         </Space>
       </Link>
+
       <div className={styles.links}>
         <Space>
-          <Typography.Paragraph
-            style={{ fontSize: "1.5em", marginBottom: "0", fontWeight: "700" }}
-          >
+          <Typography.Paragraph>
             🔥{user ? user.points : ""}
           </Typography.Paragraph>
         </Space>
-        <Button
-          type="text"
-          onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}
-          icon={theme === "dark" ? <SunOutlined /> : <MoonOutlined />}
-        />
+        <ThemeToggle/>
         <Menu />
       </div>
     </Layout.Header>

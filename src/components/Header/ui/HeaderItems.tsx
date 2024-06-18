@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   BookOutlined,
   LoginOutlined,
@@ -7,7 +7,6 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { ThemeContext } from "../../../hooks/ThemeProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
@@ -15,12 +14,9 @@ import { logout, selectUser } from "../../../redux/slices/authSlice";
 type MenuItem = Required<MenuProps>["items"][number];
 
 export const HeaderItems: React.FC = () => {
-  const { theme } = useContext(ThemeContext);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
 
   const onLogoutClick = () => {
     dispatch(logout());
@@ -29,7 +25,6 @@ export const HeaderItems: React.FC = () => {
   };
 
   const items: MenuItem[] = [
-
     {
       type: "divider",
     },
@@ -78,9 +73,6 @@ export const HeaderItems: React.FC = () => {
   return (
     <Menu
       onClick={onClick}
-      style={
-        theme === "dark" ? { background: "#5585b5" } : { background: "#fff" }
-      }
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1"]}
       mode="inline"
