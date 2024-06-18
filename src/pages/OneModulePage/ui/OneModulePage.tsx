@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
-import { Button, Card, Flex, List } from "antd";
+import { Button, Card, List } from "antd";
 import { Divider } from 'antd';
 import Title from 'antd/es/typography/Title';
 
