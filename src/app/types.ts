@@ -1,4 +1,3 @@
-import { Key } from "react";
 
 export type ErrorWithMessage = {
   status: number;

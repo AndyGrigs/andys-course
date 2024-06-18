@@ -1,8 +1,6 @@
 import React from "react";
-import { Layout, Typography } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./HomePage.module.scss";
-import { AppCard } from "../../../components/ui/AppCard/ui/AppCard";
 
 //  const { Title, Paragraph } = Typography;
 

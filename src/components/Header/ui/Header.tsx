@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Space, Typography, Button, Drawer } from "antd";
-import {  MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import styles from "./Header.module.scss";
-import { createStyles, useTheme } from "antd-style";
+import { useTheme } from "antd-style";
 import type {
-  DrawerClassNames,
   DrawerStyles,
 } from "antd/es/drawer/DrawerPanel";
 import { HeaderItems } from "./HeaderItems";
@@ -15,34 +14,34 @@ import ThemeToggle from '../../../app/theme/ThemeToggle';
 
 export const Header = () => {
   const user = useSelector(selectUser);
- // const { theme } = useTheme();
+  // const { theme } = useTheme();
 
-  const useStyle = createStyles(() => ({
-    "my-drawer-mask": {
-      boxShadow: `inset 0 0 15px #fff`,
-    },
-    "drawer-header-light": {
-      background: "green",
-    },
-    "drawer-header-dark": {
-      background: "green",
-    },
-    "my-drawer-footer": {},
-    "my-drawer-content": {
-      borderLeft: "2px solid #333",
-    },
-    "drawer-body-dark": {
-      // color: "#fff",
-      backgroundColor: "#5585b5",
-    },
-    "drawer-body-light": {
-      backgroundColor:
-        "radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%)",
-    },
-  }));
+  // const useStyle = createStyles(() => ({
+  //   "my-drawer-mask": {
+  //     boxShadow: `inset 0 0 15px #fff`,
+  //   },
+  //   "drawer-header-light": {
+  //     background: "green",
+  //   },
+  //   "drawer-header-dark": {
+  //     background: "green",
+  //   },
+  //   "my-drawer-footer": {},
+  //   "my-drawer-content": {
+  //     borderLeft: "2px solid #333",
+  //   },
+  //   "drawer-body-dark": {
+  //     // color: "#fff",
+  //     backgroundColor: "#5585b5",
+  //   },
+  //   "drawer-body-light": {
+  //     backgroundColor:
+  //       "radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%)",
+  //   },
+  // }));
 
   const Menu = () => {
-    const { styles } = useStyle();
+    // const { styles } = useStyle();
     const token = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -99,7 +98,7 @@ export const Header = () => {
           // footer="Footer"
           onClose={toggleDrawer}
           open={isOpen}
-        //  classNames={classNames}
+          //  classNames={classNames}
           styles={drawerStyles}
         >
           {/* {user ? (
@@ -154,7 +153,7 @@ export const Header = () => {
             🔥{user ? user.points : ""}
           </Typography.Paragraph>
         </Space>
-        <ThemeToggle/>
+        <ThemeToggle />
         <Menu />
       </div>
     </Layout.Header>
