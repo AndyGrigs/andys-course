@@ -33,6 +33,8 @@
   width: 100%;
  // display: block; /* Ensure the input is on its own line */
   box-sizing: border-box;
+  background: var(--color-input);
+  color: var(--text-color);
 }
 
 .exPar{
