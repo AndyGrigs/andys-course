@@ -179,7 +179,7 @@ console.log(totalTasks)
   ).every((answer) => answer.trim() === "");
 
 
-  const isShortExercise = currentTask.content.length < 40;
+  const isShortExercise = currentTask.content.length < 20;
  
   
 
