@@ -10,9 +10,9 @@ interface UpdatePointsPayload {
   points: number;
 }
 
-function compareAnswer(userAnswer: string, solution: string): boolean {
-  return userAnswer === solution;
-}
+// function compareAnswer(userAnswer: string, solution: string): boolean {
+//   return userAnswer === solution;
+// }
 
 const useCheckAnswer = () => {
   const [userResults, setUserResults] = useState({});
@@ -41,10 +41,22 @@ const useCheckAnswer = () => {
       return;
     }
 
-    const isCorrect = compareAnswer(
-      concatAnswerValue(taskId, answerValue).replace(/\s/g, "").toLowerCase(),
-      task.solution[0].replace(/\s/g, "").toLowerCase()
-    );
+    // const isCorrect = compareAnswer(
+    //   concatAnswerValue(taskId, answerValue).replace(/\s/g, "").toLowerCase(),
+    //   task.solution[0].replace(/\s/g, "").toLowerCase()
+    // );
+
+
+    const userAnswer = concatAnswerValue(taskId, answerValue).replace(/\s/g, "").toLowerCase();
+    const solution = task.solution[0].replace(/\s/g, "").toLowerCase();
+  
+    const normalizedSolution = solution.endsWith('.')? solution.slice(0, -1) : solution;
+  
+    const normalizedUserAnswer = userAnswer.endsWith('.')? userAnswer.slice(0, -1) : userAnswer;
+  
+    const isCorrect = normalizedUserAnswer === normalizedSolution;
+  
+
 
     if (isCorrect && user) {
       let points: number = user.points;

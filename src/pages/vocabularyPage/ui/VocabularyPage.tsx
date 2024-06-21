@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
 import { selectUser, updateLokalUserPoints } from "../../../redux/slices/authSlice";
 import { useUpdateUserPointsMutation } from "../../../redux/services/pointsApi";
-import styles from "./VocabularyPage.module.scss"
+import styles from "./VocabularyPage.module.scss";
 
 interface VocabularyItem {
   word: string;
@@ -24,6 +24,7 @@ interface VocabularyPageProps {}
 
 const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, boolean>>({});
   const module = useSelector(selectCurrentModule);
   const vocabulary = module?.vocabulary;
   const user = useSelector(selectUser);
@@ -37,6 +38,10 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
     };
     setAnswers(newAnswers);
     checkAnswer(word, option);
+    setAnsweredQuestions({
+      ...answeredQuestions,
+      [word]: true,
+    });
   };
 
   const checkAnswer = (word: string, selectedOption: string) => {
@@ -73,6 +78,7 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
             <Radio.Group
               onChange={(e: RadioChangeEvent) => handleOptionChange(item.word, e.target.value)}
               value={answers[item.word]}
+              disabled={answeredQuestions[item.word]}
             >
               {item.options.map((option) => (
                 <Radio key={option.answer} value={option.answer}>

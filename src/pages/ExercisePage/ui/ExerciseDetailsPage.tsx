@@ -10,9 +10,7 @@ import Input, { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import useCheckAnswer from "../hooks/useCheckAnswers";
 import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
-import {
-  useUpdateUserExerciseProgressMutation
-} from "../../../redux/services/progressApi";
+import { useUpdateUserExerciseProgressMutation } from "../../../redux/services/progressApi";
 import { selectUser } from "../../../redux/slices/authSlice";
 import { useAppSelector } from "../../../redux/slices/reduxHooks";
 import ResultsModal from "./ResultsModal";
@@ -23,6 +21,7 @@ import {
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
 import ResultMessage from "../pageElemnts/ResultMessage";
+import { Progress } from "antd";
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
@@ -44,15 +43,17 @@ const ExerciseDetailsPage = () => {
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
+  // const [completedTasksCount, setCompletedTasksCount] = useState(0);
+  // const [remainingTasksCount, setRemainingTasksCount] = useState(0);
+  const [progressPercent, setProgressPercent] = useState(0);
 
   const progress = useAppSelector(selectUserExerciseProgress);
   const currentModule = useAppSelector(selectCurrentModule);
   const [updateUserExerciseProgress] = useUpdateUserExerciseProgressMutation();
   const { handleExerciseList } = useExerciseNavigation();
-    useCalculateModuleProgress() as IModuleProgress;
+  useCalculateModuleProgress() as IModuleProgress;
 
   const totalTasks = exercise?.tasks.length || 0;
-console.log(totalTasks)
   const handleCloseModal = () => {
     setIsModalResultVisible(false);
   };
@@ -71,7 +72,6 @@ console.log(totalTasks)
     }
   }, [user?._id, exercise?._id, userResults, updateUserExerciseProgress]);
 
-
   useEffect(() => {
     setFunctionsCalled(false);
   }, []);
@@ -82,8 +82,25 @@ console.log(totalTasks)
     }
   }, []);
 
-  useCalculateExerciseProgress({ userResults });
+  // useEffect(() => {
+  //   if (exercise) {
+  //     const completedCount = currentTaskIndex + 1;
+  //     const remainingCount = exercise.tasks.length - completedCount;
+  //     setCompletedTasksCount(completedCount);
+  //     setRemainingTasksCount(remainingCount);
+  //   }
+  // }, [currentTaskIndex, exercise]);
 
+  useEffect(() => {
+    if (exercise) {
+      const totalTasks = exercise.tasks.length;
+      const completedTasks = currentTaskIndex + 1; // Assuming `currentTaskIndex` starts from 0
+      const percent = (completedTasks / totalTasks) * 100;
+      setProgressPercent(percent);
+    }
+  }, [currentTaskIndex, exercise]);
+
+  useCalculateExerciseProgress({ userResults });
 
   const handleInputChange = useCallback(
     (
@@ -152,8 +169,8 @@ console.log(totalTasks)
       setCurrentTaskIndex(
         (currentIndex) => (currentIndex + 1) % exercise.tasks.length
       );
-      
-      if(currentTaskIndex === totalTasks - 1) {
+
+      if (currentTaskIndex === totalTasks - 1) {
         handleFinalProgress();
         setIsModalResultVisible(true);
       }
@@ -170,29 +187,35 @@ console.log(totalTasks)
   }
 
   const currentTask = exercise.tasks[currentTaskIndex];
-  
+
   const parts = currentTask.content.split("{{input}}");
-  console.log(parts)
-  
+
   const allInputsEmpty = Object.values(
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-
   const isShortExercise = currentTask.content.length < 20;
- 
+  /**
   
-
-
+ strokeColor: Sets the color of the progress bar.
+status: Can be active, exception, or normal. active shows a more dynamic, animated progress bar.
+showInfo: Set to false if you don't want to show the percentage number.
+strokeWidth: The thickness of the progress line.
+ */
   return (
     <div style={{ textAlign: "center" }}>
       <Title level={5}>
-        {exercise.number}. {exercise.instruction}
+        {String(exercise.number)[0]}. {exercise.instruction}
       </Title>
       <Typography.Paragraph>{exercise.example}</Typography.Paragraph>
       <Divider />
+
+      <p style={{ maxWidth: "80%", margin: "0 auto" }}>
+        <Progress percent={Math.round(progressPercent)} status="active" />
+      </p>
+
+      <Divider />
       <Flex
-        // gap={2}
         vertical={!isShortExercise}
         justify="center"
         align="center"
@@ -201,38 +224,34 @@ console.log(totalTasks)
         {parts.map((part, partIndex) => (
           <React.Fragment key={partIndex}>
             {part && (
-              
               <Col>
-                <Paragraph
-                  className={styles.exPar}
-                  style={{ margin: "0 0" }}
-                >
+                <Paragraph className={styles.exPar} style={{ margin: "0 0" }}>
                   {part}
                 </Paragraph>
               </Col>
             )}
             {partIndex < parts.length - 1 && (
               // <Col span={24}>
-                
-                <Input
-                  className={styles.exerciseInput}
-                  ref={inputRef}
-                  style={{
-                    maxWidth: isShortExercise ? "18%" : "60%",
-                    color: "#000000",
-                    margin: "1em",
-                    // fontSize: "1.5em",
-                  }}
-                  value={
-                    answerValue[currentTask._id]
-                      ? answerValue[currentTask._id][partIndex] || ""
-                      : ""
-                  }
-                  onChange={(e) =>
-                    handleInputChange(e, currentTask._id, partIndex)
-                  }
-                  placeholder="Antwort..."
-                />
+
+              <Input
+                className={styles.exerciseInput}
+                ref={inputRef}
+                style={{
+                  maxWidth: isShortExercise ? "18%" : "60%",
+                  color: "#000000",
+                  margin: "1em",
+                  // fontSize: "1.5em",
+                }}
+                value={
+                  answerValue[currentTask._id]
+                    ? answerValue[currentTask._id][partIndex] || ""
+                    : ""
+                }
+                onChange={(e) =>
+                  handleInputChange(e, currentTask._id, partIndex)
+                }
+                placeholder="Antwort..."
+              />
               // </Col>
             )}
           </React.Fragment>
@@ -263,12 +282,17 @@ console.log(totalTasks)
         style={{ marginTop: "2.5em" }}
       >
         {currentTask.image ? (
-           <div style={{ marginBottom: "2em" }}>
-           <Image width={90} height={90} src={currentTask.image} />
-         </div>
+          <div style={{ marginBottom: "2em" }}>
+            <Image width={90} height={90} src={currentTask.image} />
+          </div>
         ) : undefined}
-       
-        <Button style={{ marginBottom: "2em" }} type="primary" disabled={allInputsEmpty} onClick={goToNextTask}>
+
+        <Button
+          style={{ marginBottom: "2em" }}
+          type="primary"
+          disabled={allInputsEmpty}
+          onClick={goToNextTask}
+        >
           {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
         </Button>
       </Flex>
