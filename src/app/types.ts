@@ -54,6 +54,7 @@ export interface IVocabulary {
   instruction: string;
   correctAnswer: string;
   options: { answer: string }[];
+  image: string;
 }
 export interface ITask {
   content: string;

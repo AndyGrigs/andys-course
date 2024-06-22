@@ -25,11 +25,11 @@ import { Progress } from "antd";
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
-
   const user = useAppSelector(selectUser);
-
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
+
+
   const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
     {}
   );
@@ -43,8 +43,7 @@ const ExerciseDetailsPage = () => {
     isLoading,
     isError,
   } = useGetOneExercisesQuery(exerciseId);
-  // const [completedTasksCount, setCompletedTasksCount] = useState(0);
-  // const [remainingTasksCount, setRemainingTasksCount] = useState(0);
+
   const [progressPercent, setProgressPercent] = useState(0);
 
   const progress = useAppSelector(selectUserExerciseProgress);
@@ -82,19 +81,12 @@ const ExerciseDetailsPage = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (exercise) {
-  //     const completedCount = currentTaskIndex + 1;
-  //     const remainingCount = exercise.tasks.length - completedCount;
-  //     setCompletedTasksCount(completedCount);
-  //     setRemainingTasksCount(remainingCount);
-  //   }
-  // }, [currentTaskIndex, exercise]);
+
 
   useEffect(() => {
     if (exercise) {
       const totalTasks = exercise.tasks.length;
-      const completedTasks = currentTaskIndex + 1; // Assuming `currentTaskIndex` starts from 0
+      const completedTasks = currentTaskIndex; 
       const percent = (completedTasks / totalTasks) * 100;
       setProgressPercent(percent);
     }

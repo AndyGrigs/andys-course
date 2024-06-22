@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { List, Card, Radio, message } from "antd";
+import { List, Card, Radio, message, Image, Flex } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentModule } from "../../../redux/slices/moduleSlice";
@@ -13,6 +13,7 @@ interface VocabularyItem {
   instruction: string;
   correctAnswer: string;
   options: { answer: string }[];
+  image: string;
 }
 
 interface UpdatePointsPayload {
@@ -20,7 +21,7 @@ interface UpdatePointsPayload {
   points: number;
 }
 
-interface VocabularyPageProps {}
+interface VocabularyPageProps { }
 
 const VocabularyPage: React.FC<VocabularyPageProps> = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -58,7 +59,7 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       try {
         updatePoints({ userId: user?._id, points });
       } catch (error) {
-        console.error(error); 
+        console.error(error);
       }
     } else {
       message.error(`Wrong answer for "${word}". Correct is "${correctAnswer}"`);
@@ -71,21 +72,28 @@ const VocabularyPage: React.FC<VocabularyPageProps> = () => {
       dataSource={vocabulary}
       renderItem={(item: VocabularyItem) => (
         <List.Item key={item.word}>
-          <Card className={styles.card} style={{ width: "50%", margin: "auto" }}>
+          <Card className={styles.card}>
             <div>
               <strong>{item.word}</strong>
             </div>
+            <Flex justify='space-between'>
             <Radio.Group
               onChange={(e: RadioChangeEvent) => handleOptionChange(item.word, e.target.value)}
               value={answers[item.word]}
               disabled={answeredQuestions[item.word]}
             >
               {item.options.map((option) => (
+                <Flex>
                 <Radio key={option.answer} value={option.answer}>
                   {option.answer}
                 </Radio>
+                </Flex>
               ))}
             </Radio.Group>
+            <div className={styles.image}>
+              <Image width={90} height={90} src={item.image} />
+            </div>
+            </Flex>
           </Card>
         </List.Item>
       )}

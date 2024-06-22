@@ -13,14 +13,14 @@ const OneModulePage: React.FC = () => {
 
   return (
     <section>
-      <Title level={5} style={{ maxWidth: '80%', margin: "0 auto" }}>🎯Читай і опрацюй текст. Потім переходь до вправ на вивчення слів та граматичних вправю</Title>
+      <Title level={5} style={{ maxWidth: '80%', margin: "0 auto" }}>🎯Читай і опрацюй текст. Потім переходь до вправ на вивчення слів та граматичних вправ </Title>
       <Divider />
 
 
         <Card
           title=""
           bordered={false}
-          style={{ width: "40%", margin: "0 auto" }}
+          style={{ maxWidth: "60%", margin: "0 auto" }}
         >
           <Card
           >
