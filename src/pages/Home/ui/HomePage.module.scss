@@ -110,3 +110,213 @@
 .box .item:hover:before {
   opacity: 0;
 }
+
+
+/* LandingPage.module.scss */
+.landingPage {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.heroSection {
+  background: url('../image/city.webp') no-repeat center center/cover;
+  // filter: blur(20px);
+  background-color: lightgray;
+  background-blend-mode: multiply;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+  }
+
+  .ctaButton {
+    background-color: #ff7b02;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+}
+
+.introductionSection {
+  padding: 50px 20px;
+  background: linear-gradient(180deg, #ff7b02, #ffcb52);
+  color: white;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+}
+
+.benefitsSection {
+  padding: 50px 20px;
+  background: white;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+
+    li {
+      background: #ffefa1;
+      padding: 20px;
+      border-radius: 10px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+ 
+  .heroSection{
+    padding: 50px 25px;
+    h1{
+      font-size: 1.5rem;
+    }
+  }
+  .benefitsSection ul {
+     flex-direction: column;
+ 
+     li {
+       width: 80%; // Adjust width for mobile
+       margin: 10px 0; // Add some margin between items on mobile
+     }
+   }
+ }
+
+.testimonialsSection {
+  padding: 50px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  max-width: 80%;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+
+  .testimonials {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .testimonial {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+    }
+  }
+}
+
+.detailsSection {
+  padding: 50px 20px;
+  background: #f7f7f7;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+
+
+    li {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.enrollmentSection {
+  padding: 50px 20px;
+  background: linear-gradient(180deg, #04f5ed, #00f7a7);
+  color: white;
+  text-align: center;
+
+  .ctaButton {
+    background-color: #ff7b02;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+}
+
+.faqSection {
+  padding: 50px 20px;
+  background: #ffffff;
+
+  .faq {
+    margin-bottom: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.footer {
+  padding: 20px;
+  background: #333;
+  color: white;
+  text-align: center;
+
+  .footerLinks,
+  .socialMedia,
+  .newsletter {
+    margin-bottom: 20px;
+
+    a {
+      color: #ff6200;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+  }
+
+  .newsletter {
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: #ff6200;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+    }
+  }
+}

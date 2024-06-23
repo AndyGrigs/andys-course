@@ -3,15 +3,14 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
   justify-content: space-between;
   color: var(--text-color);
   background: var(--bg-header);
-
+  border-bottom: 1px solid saddlebrown;
 }
 
 .logo {
-  width: 70px;
+  width: 50px;
  }
 
 .userIcon {

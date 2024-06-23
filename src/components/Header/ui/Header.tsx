@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import ThemeToggle from '../../../app/theme/ThemeToggle';
 
+
 export const Header = () => {
   const user = useSelector(selectUser);
   // const { theme } = useTheme();
@@ -142,7 +143,7 @@ export const Header = () => {
       <Link to="/">
         <Space>
           <Typography.Title level={4}>
-            <img className={styles.logo} src="https://i.postimg.cc/8PG0qFdC/small-logo-no-background.png" />
+            <img className={styles.logo} src="https://cdn.pixabay.com/photo/2013/07/13/10/09/germany-156642_1280.png" />
           </Typography.Title>
         </Space>
       </Link>
@@ -156,6 +157,7 @@ export const Header = () => {
         <ThemeToggle />
         <Menu />
       </div>
+    
     </Layout.Header>
   );
 };

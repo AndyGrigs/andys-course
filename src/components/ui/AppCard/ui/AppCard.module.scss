@@ -1,4 +1,6 @@
-
+.content-page{
+  width: 100%;
+}
 
 .box {
   // display: flex;
@@ -89,10 +91,10 @@
   opacity: 0;
 }
 .box .item:nth-child(1) .layer:before, .box .item:nth-child(1) .layer:after {
-  background: linear-gradient(180deg, #5c27fe, #c165dd);
+  background: linear-gradient(180deg, #ff7b02, #ffcb52);
 }
 .box .item:nth-child(2) .layer:before, .box .item:nth-child(2) .layer:after {
-  background: linear-gradient(180deg, #ff7b02, #ffcb52);
+  background: linear-gradient(180deg, #5c27fe, #c165dd);
 }
 .box .item:nth-child(3) .layer:before, .box .item:nth-child(3) .layer:after {
   background: linear-gradient(180deg, #fc76b3, #facd68);
