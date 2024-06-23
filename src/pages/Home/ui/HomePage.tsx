@@ -29,8 +29,8 @@ const HomePage: React.FC = () => {
         <h2>Вступ</h2>
         <p>Тут подивись відео про цей курс</p>
         <iframe
-          width="460"
-          height="215"
+          // width="460"
+          // height="215"
           src="https://www.youtube.com/embed/ylh_iA_ReiE?si=ez0LlGwB08AvKDSY"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
