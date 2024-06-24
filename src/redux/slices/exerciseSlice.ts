@@ -27,13 +27,16 @@ const exerciseSlice = createSlice({
       exercisesApi.endpoints.getExercises.matchFulfilled,
       (state, action) => {
         state.allExercises = action.payload.exercisesObj;
+        if (action.payload.exercisesObj.length > 0) {
+          state.currentExercise = action.payload.exercisesObj[0];
+        }
       })
-      // .addMatcher(
-      //   exercisesApi.endpoints.getOneExercises.matchFulfilled,
-      //   (state, action) => {
-      //   state.currentExercise = action.payload;
-      //   }
-      // )
+   .addMatcher(
+      exercisesApi.endpoints.getOneExercises.matchFulfilled,
+      (state, action) => {
+        state.currentExercise = action.payload;
+      });
+ 
   },
  
 });

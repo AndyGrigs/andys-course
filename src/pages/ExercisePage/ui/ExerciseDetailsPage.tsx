@@ -186,14 +186,8 @@ const ExerciseDetailsPage = () => {
     answerValue[currentTask._id] || []
   ).every((answer) => answer.trim() === "");
 
-  const isShortExercise = currentTask.content.length < 20;
-  /**
-  
- strokeColor: Sets the color of the progress bar.
-status: Can be active, exception, or normal. active shows a more dynamic, animated progress bar.
-showInfo: Set to false if you don't want to show the percentage number.
-strokeWidth: The thickness of the progress line.
- */
+  const isShortExercise = currentTask.solution[0].length < 15;
+
   return (
     <div style={{ textAlign: "center" }}>
       <Title level={5}>
@@ -223,7 +217,7 @@ strokeWidth: The thickness of the progress line.
               </Col>
             )}
             {partIndex < parts.length - 1 && (
-              // <Col span={24}>
+             
 
               <Input
                 className={styles.exerciseInput}
@@ -244,7 +238,7 @@ strokeWidth: The thickness of the progress line.
                 }
                 placeholder="Antwort..."
               />
-              // </Col>
+           
             )}
           </React.Fragment>
         ))}

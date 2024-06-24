@@ -29,10 +29,11 @@ export const Breadcrumbs = () => {
             const isLast = index === pathnames.length - 1;
             return isLast ? (
               <Breadcrumb.Item className={style.lastWord} key={index}>
-                {
-              
-                nam === currentModule?._id? currentModule.name : nam === currentexercise?._id? "": nam}
-                </Breadcrumb.Item>
+              {
+                  nam === currentModule?._id? currentModule.name :
+                  nam === currentexercise?._id? Math.floor(currentexercise.number) : nam
+              }
+          </Breadcrumb.Item>
             ) : (
               <Breadcrumb.Item className={style.links} key={index}>
                 <Link style={{ textTransform: 'capitalize' }} className={style.links} to={`${routeTo}`}>{nam === currentModule?._id ? currentModule.name : nam}</Link>

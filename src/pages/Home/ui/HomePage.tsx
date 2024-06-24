@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
     <div className={styles.landingPage}>
       {/* Hero Section */}
       <section className={styles.heroSection}>
-        <h1>Вичай німецьку ефективно!</h1>
+        <h1>Вивчай німецьку ефективно!</h1>
         <p>
           Мій курс допоможе тобі засвоїти граиатику та розширити словниковий
           запас
