@@ -28,15 +28,27 @@ const HomePage: React.FC = () => {
       <section className={styles.introductionSection}>
         <h2>Вступ</h2>
         <p>Тут подивись відео про цей курс</p>
-        <iframe
+        {/* <iframe
           // width="460"
           // height="215"
           src="https://www.youtube.com/embed/ylh_iA_ReiE?si=ez0LlGwB08AvKDSY"
+         
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe> */}
+        <div className={styles.iframeContainer}>
+        <iframe
+          width="80%"
+          height="250"
+          src="https://www.youtube.com/embed/pNdD0egv67Y?si=VAWK4OeGPFG-ZfCs"
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         ></iframe>
+        </div>
       </section>
 
       {/* Course Benefits */}
@@ -104,11 +116,11 @@ const HomePage: React.FC = () => {
           <a href="#contact">Contact</a>
           <a href="#privacy">Privacy Policy</a>
         </div>
-        <div className={styles.socialMedia}>
+        {/* <div className={styles.socialMedia}>
           <a href="#facebook">Facebook</a>
           <a href="#twitter">Twitter</a>
           <a href="#linkedin">LinkedIn</a>
-        </div>
+        </div> */}
         <div className={styles.newsletter}>
           <h3>Subscribe to our Newsletter</h3>
           <input type="email" placeholder="Enter your email" />

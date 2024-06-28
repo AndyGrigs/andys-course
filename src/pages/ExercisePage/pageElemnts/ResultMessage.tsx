@@ -63,6 +63,7 @@ function ResultMessage({ resultMessage, correctAnswer }: ResultMessageProp) {
           zIndex: 1000,
           opacity: resultMessage ? 1 : 0,
           transition: "opacity  0.5s",
+          border: '1px solod white',
         }}
       >
         {resultMessage === "Correct!" ? (
