@@ -10,6 +10,7 @@ import { Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../../redux/slices/authSlice";
+import { useTranslation } from 'react-i18next';
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -17,6 +18,7 @@ export const HeaderItems: React.FC = () => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onLogoutClick = () => {
     dispatch(logout());
@@ -36,33 +38,33 @@ export const HeaderItems: React.FC = () => {
 
       children: user
         ? [
-            {
-              key: "dashboard",
-              label: "Навчальння",
-              icon: <BookOutlined />,
-              onClick: () => navigate("/modules"),
-            },
-            {
-              key: "13",
-              label: "Вийти",
-              icon: <LogoutOutlined />,
-              onClick: onLogoutClick,
-            },
-          ]
+          {
+            key: "dashboard",
+            label: t("studies"),
+            icon: <BookOutlined />,
+            onClick: () => navigate("/modules"),
+          },
+          {
+            key: "13",
+            label: t("logout"),
+            icon: <LogoutOutlined />,
+            onClick: onLogoutClick,
+          },
+        ]
         : [
-            {
-              key: "login",
-              label: "Увійти",
-              icon: <LoginOutlined />,
-              onClick: () => navigate("/login"),
-            },
-            {
-              key: "register",
-              label: "Зареєструватись",
-              icon: <UserAddOutlined />,
-              onClick: () => navigate("/register"),
-            },
-          ],
+          {
+            key: "login",
+            label:  t("login"),
+            icon: <LoginOutlined />,
+            onClick: () => navigate("/login"),
+          },
+          {
+            key: "register",
+            label:  t("register"),
+            icon: <UserAddOutlined />,
+            onClick: () => navigate("/register"),
+          },
+        ],
     },
   ];
 
