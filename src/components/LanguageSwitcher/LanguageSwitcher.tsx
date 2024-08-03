@@ -1,27 +1,26 @@
-// LangSwitcher.tsx
-import React from 'react';
+// LanguageSelector.tsx
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LangSwitcher: React.FC = () => {
-  const { i18n } = useTranslation();
+interface LanguageSelectorProps {}
 
-  const changeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const lng = event.target.value;
-    void i18n.changeLanguage(lng);
+const LanguageSelector: React.FC<LanguageSelectorProps> = () => {
+  const { i18n } = useTranslation();
+  const [languages, _] = useState(['de', 'uk', 'en']);
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
   };
 
   return (
-    <div>
-      <select
-        onChange={changeLanguage}
-        defaultValue={i18n.language}
-      >
-        <option value="en">English</option>
-        <option value="de">German</option>
-        <option value="uk">Українська</option>
-      </select>
-    </div>
+    <select onChange={(e) => changeLanguage(e.target.value)} defaultValue={i18n.language}>
+      {languages.map((lang) => (
+        <option key={lang} value={lang}>
+          {lang.toUpperCase()}
+        </option>
+      ))}
+    </select>
   );
 };
 
-export default LangSwitcher;
+export default LanguageSelector;

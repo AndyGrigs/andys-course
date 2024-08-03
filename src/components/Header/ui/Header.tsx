@@ -11,6 +11,7 @@ import { HeaderItems } from "./HeaderItems";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/authSlice";
 import ThemeToggle from '../../../app/theme/ThemeToggle';
+import LanguageSelector from "../../LanguageSwitcher/LanguageSwitcher";
 
 
 export const Header = () => {
@@ -155,6 +156,7 @@ export const Header = () => {
           </Typography.Paragraph>
         </Space>
         <ThemeToggle />
+        <LanguageSelector/>
         <Menu />
       </div>
     

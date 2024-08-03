@@ -2,7 +2,6 @@ import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Flex } from "antd";
 
 interface ResultMessageProp {
   resultMessage: string;
@@ -32,10 +31,11 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
     color: type === "success" ? "#155724" : "#721c24",
     padding: "20px",
     borderRadius: "5px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    border: '1px solid darkgreen',
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
     opacity: 1,
     transition: "opacity 0.5s",
-    width: "300px",
+    width: "200px",
   };
 
   return (
@@ -46,24 +46,24 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
       ) : type === "error" ? (
         <ExclamationCircleOutlined />
       ) : null}
-      <span>{message}</span>
+      <span style={{marginLeft: ".5em"}}>{message}</span>
     </div>
   );
 };
 
 function ResultMessage({ resultMessage, correctAnswer }: ResultMessageProp) {
   return (
-    <Flex justify="center">
+  
       <div
         style={{
           position: "absolute",
-          top: "10%",
+          top: "65%",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 1000,
           opacity: resultMessage ? 1 : 0,
           transition: "opacity  0.5s",
-          border: '1px solod white',
+          
         }}
       >
         {resultMessage === "Correct!" ? (
@@ -100,7 +100,7 @@ function ResultMessage({ resultMessage, correctAnswer }: ResultMessageProp) {
           />
         ) : null}
       </div>
-    </Flex>
+   
   );
 }
 
