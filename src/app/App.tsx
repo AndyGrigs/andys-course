@@ -25,8 +25,7 @@ function App() {
       <section className="content-page">
         <AppRouter />
       </section>
-      {/* <LanguageSelector />
-      <h1>{t('welcome')}</h1>; */}
+  
     </div>
   );
 }

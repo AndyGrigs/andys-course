@@ -8,10 +8,11 @@ import { UserData, useLoginMutation } from "../../../redux/services/auth";
 import { ErrorMessage } from "../../../components/Error";
 
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [error, setError] = useState("");
   const user = useSelector(selectUser);
   const [loginUser] = useLoginMutation();
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("сталась помилка...");
+        setError(t("genericError"));
       }
     }
   };
@@ -42,22 +43,22 @@ const Login: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card
-          title="Увійти в аккаунт"
+          title={t("login")}
           // style={{ width: "30rem" }}
         >
           <Form onFinish={onFinish}>
             <Form.Item
               name="fullName"
-              label="Ім'я"
-              rules={[{ required: true, message: "Напиши своє ім'я" }]}
+              label={t("name")}
+              rules={[{ required: true, message: t("writeYourName")  }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item
               name="code"
-              label="Код"
-              rules={[{ required: true, message: "Напиши свій код" }]}
+              label={t("code")}
+              rules={[{ required: true, message: t("enterYourCode") }]}
             >
               <Input.Password
               
@@ -66,24 +67,24 @@ const Login: React.FC = () => {
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Увійти
+                {t("login")}
               </Button>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Нема аккаунту?
+              {t("dontHaveAccount")}
               <Link
                 to="/register"
               >
-                Зареєструйтесь
+                {t("register")}
               </Link>
             </Typography.Text>
             <Typography.Text>
-              Не знаєш код?
+              {t("dontKnowCode")}
               <Link to="/register-update"
               >
-                Відновити
+                {t("restore")}
               </Link>
             </Typography.Text>
             <ErrorMessage message={error} />

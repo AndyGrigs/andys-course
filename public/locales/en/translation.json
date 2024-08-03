@@ -1,3 +1,14 @@
 {
-    "welcome": "Welcome to Learn German Platform"
-  }
+  "login": "Log In",
+  "name": "name",
+  "code": "Code",
+  "welcomeBack": "Welcome back!",
+  "dontHaveAccount": "Don't have an account?",
+  "forgotPassword": "Forgot your password?",
+  "writeYourName": "Please write your name",
+  "genericError": "An error occurred...",
+  "enterYourCode": "Please enter your code",
+  "register": "Register",
+  "dontKnowCode": "Don't know the code?",
+  "restore": "Restore"
+}
