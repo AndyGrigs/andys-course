@@ -8,6 +8,7 @@ import { selectUser } from "../../../redux/slices/authSlice";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
 import { IUser } from "../../../app/types";
 import Layout from "../../../components/Layout";
+import { useTranslation } from "react-i18next";
 
 type registerData = Omit<IUser, "id"> & { confirmCode: string };
 
@@ -16,6 +17,7 @@ const UpdateCode = () => {
   const user = useSelector(selectUser);
   const [_, setError] = useState("");
   const [updateCode] = useUpdateCodeMutation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) navigate("/modules");
@@ -33,7 +35,7 @@ const UpdateCode = () => {
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("es ist ein Fehler!");
+        setError(t('genericError'));
       }
     }
   };
@@ -41,24 +43,17 @@ const UpdateCode = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card
-          title="Відновити вхід"
-        >
+        <Card title={t("resetPasswordTitle")}>
           <Form onFinish={onFinish}>
-            <AppInput name="fullName" placeholder="Ім'я" />
-            <AppInput name="repeatName" placeholder="Повтори своє ім'я" />
+            <AppInput name="fullName" placeholder={t("login")} />
+            <AppInput name="repeatName" placeholder={t("placeholderFullName")}/>
             <Button type="primary" htmlType="submit">
-              Отримати код
+              {t("getCodeAttempt")}
             </Button>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              <Link
-
-                to="/login"
-              >
-                Увійти в аккаунт
-              </Link>
+              <Link to="/login">{t("login")}</Link>
             </Typography.Text>
           </Space>
         </Card>

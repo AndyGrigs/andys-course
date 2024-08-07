@@ -1,14 +1,18 @@
 {
   "login": "Log In",
   "name": "name",
+  "placeholderFullName": "Full Name",
   "code": "Code",
+  "getCodeAttempt": "Get Code",
   "welcomeBack": "Welcome back!",
   "dontHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
   "forgotPassword": "Forgot your password?",
   "writeYourName": "Please write your name",
   "genericError": "An error occurred...",
   "enterYourCode": "Please enter your code",
   "register": "Register",
   "dontKnowCode": "Don't know the code?",
-  "restore": "Restore"
+  "restore": "Restore",
+  "resetPasswordTitle": "Reset Password"
 }

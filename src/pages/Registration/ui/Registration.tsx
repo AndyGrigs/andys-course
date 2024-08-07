@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../../redux/services/auth";
 import { IUser } from "../../../app/types";
 import { isErrorWithMessage } from "../../../utils/isErrorWithMessage";
+import { useTranslation } from "react-i18next";
 
 
 type registerData = Omit<IUser, "id"> & { confirmPassword: string };
@@ -16,6 +17,7 @@ const Registration = () => {
   const user = useSelector(selectUser);
   const [error, setError] = useState("");
   const [registerUser] = useRegisterMutation();
+  const {t} = useTranslation()
 
   useEffect(() => {
     if (user) navigate("/modules");
@@ -33,7 +35,7 @@ const Registration = () => {
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("сталась помилка...");
+        setError(t('genericError'));
       }
     }
   };
@@ -42,13 +44,13 @@ const Registration = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card
-          title="Зареєструватись"
+          title={t("register")}
         >
           <Form onFinish={register}>
             <Form.Item
               name="fullName"
-              label="Ім'я"
-              rules={[{ required: true, message: "напиши своє ім'я" }]}
+              label={t('name')}
+              rules={[{ required: true, message: t('writeYourName') }]}
             >
               <Input
                 onChange={(e) => e.target.value.trim()}
@@ -64,17 +66,17 @@ const Registration = () => {
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Зареєструватись
+                {t('register')}
               </Button>
             </Form.Item>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              Вже є аккаунт?{" "}
+              {t("alreadyHaveAccount")}{"  "}
               <Link
                 to="/login"
               >
-                Увійти
+                {t("login")}
               </Link>
             </Typography.Text>
           </Space>

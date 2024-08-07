@@ -1,14 +1,18 @@
 {
   "login": "Увійти",
   "name": "Ім'я",
+  "placeholderFullName": "Повне ім'я",
   "code": "Код",
+  "getCodeAttempt": "Отримати код",
   "welcomeBack": "Ласкаво просимо назад!",
   "dontHaveAccount": "Не маєте облікового запису?",
+  "alreadyHaveAccount": "Уже є аккаунт?",
   "forgotPassword": "Забули пароль?",
   "writeYourName": "Напишіть своє ім'я",
   "genericError": "Стала помилка...",
   "enterYourCode": "Напишіть свій код",
   "register": "Зареєструйтесь",
   "dontKnowCode": "Не знаєш код?",
-  "restore": "Відновити"
+  "restore": "Відновити",
+  "resetPasswordTitle": "Відновити пароль"
 }

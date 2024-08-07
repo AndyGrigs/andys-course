@@ -73,7 +73,7 @@ const Login: React.FC = () => {
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>
-              {t("dontHaveAccount")}
+              {t("dontHaveAccount")}{"  "}
               <Link
                 to="/register"
               >
@@ -81,7 +81,7 @@ const Login: React.FC = () => {
               </Link>
             </Typography.Text>
             <Typography.Text>
-              {t("dontKnowCode")}
+              {t("dontKnowCode")}{"  "}
               <Link to="/register-update"
               >
                 {t("restore")}

@@ -1,14 +1,18 @@
 {
   "login": "Anmelden",
   "name": "Name",
+   "placeholderFullName": "Vollständiger Name",
   "code": "Code",
+   "getCodeAttempt": "Code erhalten",
   "welcomeBack": "Willkommen zurück!",
   "dontHaveAccount": "Kein Konto?",
+  "alreadyHaveAccount": "Bereits ein Konto?",
   "forgotPassword": "Haben Sie Ihr Passwort vergessen?",
   "writeYourName": "Bitte geben Sie Ihren Namen ein",
   "genericError": "Es gab einen Fehler...",
   "enterYourCode": "Geben Sie Ihren Code ein",
   "register": "Registrieren",
   "dontKnowCode": "Kennst du den Code nicht?",
-  "restore": "Wiederherstellen"
+  "restore": "Wiederherstellen",
+  "resetPasswordTitle": "Passwort zurücksetzen"
 }

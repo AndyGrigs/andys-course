@@ -1,5 +1,6 @@
 import { Card } from "antd";
 import { Link, useLocation } from "react-router-dom";
+import style from "./code.module.scss";
 
 const UserCodePage = () => {
   const location = useLocation();
@@ -10,9 +11,7 @@ const UserCodePage = () => {
   }
 
   return (
-    <Card
-      title={`Привіт ${fullName}!`}
-    >
+    <Card className={style.code} title={`Привіт ${fullName}!`}>
       <div style={{ textAlign: "center" }}>
         <h3>Запиши свій код!</h3>
         <h1>{code}</h1>
