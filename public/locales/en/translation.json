@@ -14,5 +14,8 @@
   "register": "Register",
   "dontKnowCode": "Don't know the code?",
   "restore": "Restore",
-  "resetPasswordTitle": "Reset Password"
+  "resetPasswordTitle": "Reset Password",
+  "noCode": "No code...",
+  "greeting": "Hello",
+  "start": "Start!"
 }

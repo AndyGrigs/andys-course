@@ -1,9 +1,9 @@
 {
   "login": "Anmelden",
   "name": "Name",
-   "placeholderFullName": "Vollständiger Name",
+  "placeholderFullName": "Vollständiger Name",
   "code": "Code",
-   "getCodeAttempt": "Code erhalten",
+  "getCodeAttempt": "Code erhalten",
   "welcomeBack": "Willkommen zurück!",
   "dontHaveAccount": "Kein Konto?",
   "alreadyHaveAccount": "Bereits ein Konto?",
@@ -14,5 +14,8 @@
   "register": "Registrieren",
   "dontKnowCode": "Kennst du den Code nicht?",
   "restore": "Wiederherstellen",
-  "resetPasswordTitle": "Passwort zurücksetzen"
+  "resetPasswordTitle": "Passwort zurücksetzen",
+  "noCode": "Kein Code...",
+  "greeting": "Hallo",
+    "start": "Losgehen!"
 }

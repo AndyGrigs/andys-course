@@ -14,5 +14,8 @@
   "register": "Зареєструйтесь",
   "dontKnowCode": "Не знаєш код?",
   "restore": "Відновити",
-  "resetPasswordTitle": "Відновити пароль"
+  "resetPasswordTitle": "Відновити пароль",
+  "noCode": "Нема коду...",
+  "greeting": "Привіт",
+    "start": "Почати!"
 }

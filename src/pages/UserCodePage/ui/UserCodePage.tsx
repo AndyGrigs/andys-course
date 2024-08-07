@@ -1,22 +1,24 @@
 import { Card } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import style from "./code.module.scss";
+import { useTranslation } from 'react-i18next';
 
 const UserCodePage = () => {
   const location = useLocation();
   const { fullName, code } = location.state;
+  const {t} = useTranslation()
 
   if (!code) {
-    return <div>Нема коду...</div>;
+    return <div>{t("noCode")}</div>;
   }
 
   return (
-    <Card className={style.code} title={`Привіт ${fullName}!`}>
+    <Card className={style.code} title={`${t("greeting")} ${fullName}!`}>
       <div style={{ textAlign: "center" }}>
-        <h3>Запиши свій код!</h3>
+        <h3>{t("enterYourCode")}</h3>
         <h1>{code}</h1>
 
-        <Link to="/modules">Start!</Link>
+        <Link to="/modules">{t("start")}</Link>
       </div>
     </Card>
   );
