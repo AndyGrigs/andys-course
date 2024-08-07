@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  padding-top: 0;
   z-index: 2;
   padding: 10px;
   display: flex;
@@ -8,7 +9,8 @@
   color: var(--text-color);
   background: var(--bg-header);
   border-bottom: 1px solid saddlebrown;
-  position: fixed;
+  // position: fixed;
+
 }
 
 .logo {
