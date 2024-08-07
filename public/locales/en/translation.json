@@ -17,5 +17,20 @@
   "resetPasswordTitle": "Reset Password",
   "noCode": "No code...",
   "greeting": "Hello",
-  "start": "Start!"
+  "start": "Start!",
+  "homePage": {
+    "heroTitle": "Learn German effectively!",
+    "heroDescription": "My course will help you master the grammar and expand your vocabulary.",
+    "startButton": "Start!",
+    "videoIntroText": "Here 👇 video about this course",
+    "benefits": {
+      "title": "What awaits you?",
+      "list": [
+        "Texts",
+        "Dictionary exercises",
+        "Grammar trainer",
+        "Video explanations for each exercise"
+      ]
+    }
+  }
 }

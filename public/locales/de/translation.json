@@ -17,5 +17,20 @@
   "resetPasswordTitle": "Passwort zurücksetzen",
   "noCode": "Kein Code...",
   "greeting": "Hallo",
-    "start": "Losgehen!"
+  "start": "Losgehen!",
+  "homePage": {
+    "heroTitle": "Deutsch effektiv lernen!",
+    "heroDescription": "Mein Kurs hilft Ihnen, die Grammatik zu beherrschen und Ihr Wortschatz zu erweitern.",
+    "startButton": "Los geht's!",
+    "videoIntroText": "Hier 👇 Video über diesen Kurs",
+    "benefits": {
+      "title": "Was erwartet dich?",
+      "list": [
+        "Texte",
+        "Wörterbuchsübungen",
+        "Grammatiktrainer",
+        "Videos zu jeder Übung"
+      ]
+    }
+  }
 }

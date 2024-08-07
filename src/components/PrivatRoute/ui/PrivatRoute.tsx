@@ -1,6 +1,6 @@
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "../../../redux/slices/authSlice"; // Update the path as necessary
+import { selectIsAuthenticated } from "../../../redux/slices/authSlice"; 
 
 const PrivateRoute: React.FC = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
