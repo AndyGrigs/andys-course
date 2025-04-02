@@ -81,7 +81,6 @@ const HomePage: React.FC = () => {
       {/* Enrollment Section */}
       <section className={styles.enrollmentSection}>
         <h2>Готові почати? Реєструйтесь зараз!</h2>
-        <p></p>
         <button className={styles.ctaButton}>Реєструйтесь!</button>
       </section>
 

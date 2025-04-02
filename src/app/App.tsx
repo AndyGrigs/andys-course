@@ -18,7 +18,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div style={{}}>
+      <div>
         <Breadcrumbs />
       </div>
       {/* <Divider /> */}
