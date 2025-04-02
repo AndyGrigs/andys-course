@@ -13,8 +13,6 @@
 }
 
 
-
-/* LandingPage.module.scss */
 .landingPage {
   font-family: Arial, sans-serif;
   color: #333;
@@ -22,54 +20,89 @@
 }
 
 .heroSection {
-  background: url('../image/city.webp') no-repeat center center/cover;
-  background-color: gray;
-  background-blend-mode: multiply;
-  color: white;
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.9)), url('../image/city.webp') no-repeat center center/cover;
   text-align: center;
-  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
 
-  h1 {
-    font-size: 3em;
-    margin-bottom: 0.5em;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.4) 100%);
+    z-index: 1;
   }
 
-  p {
+  .content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .title {
+    font-size: 3.5em;
+    margin-bottom: 0.5em;
+    
+    .language {
+      color: #1a237e; /* Dark blue */
+      font-weight: bold;
+    }
+    
+    .school {
+      color: #d32f2f; /* Red */
+      font-weight: bold;
+    }
+  }
+
+  .description {
     font-size: 1.5em;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
+    color: #424242;
   }
 
   .ctaButton {
-    background-color: #b66508;
+    background-color: #673ab7; /* Purple */
     color: white;
-    padding: 15px 30px;
+    padding: 15px 40px;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    border-radius: 30px;
+    font-size: 1.2em;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
   }
 }
 
-.introductionSection {
-  padding: 50px 20px;
-  background: linear-gradient(180deg, #ff7b02, #ffcb52);
-  color: white;
-  text-align: center;
-
+.illustration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  
   img {
-    max-width: 100%;
+    max-width: 600px;
     height: auto;
-    margin-top: 20px;
   }
 }
 
 .benefitsSection {
   padding: 50px 20px;
-  background: white;
+  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
 
   h2 {
     text-align: center;
     margin-bottom: 30px;
+    color: #333;
   }
 
   ul {
@@ -77,111 +110,45 @@
     padding: 0;
     display: flex;
     justify-content: space-around;
-
-    li {
-      background: #ffefa1;
-      padding: 20px;
-      border-radius: 10px;
-      width: 200px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-  }
-}
-
-@media (max-width: 767px) {
- 
-  .heroSection{
-    padding: 50px 25px;
-    h1{
-      font-size: 1.5rem;
-    }
-  }
-  .benefitsSection ul {
-     flex-direction: column;
- 
-     li {
-       width: 80%; // Adjust width for mobile
-       margin: 10px 0; // Add some margin between items on mobile
-     }
-   }
- }
-
-.testimonialsSection {
-  padding: 50px 20px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  max-width: 80%;
-  margin: 0 auto;
-  color: white;
-  text-align: center;
-
-  .testimonials {
-    display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 20px;
-
-    .testimonial {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 20px;
-      border-radius: 10px;
-    }
-  }
-}
-
-.detailsSection {
-  padding: 50px 20px;
-  background: #f7f7f7;
-
-  h2 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-
 
     li {
       background: white;
       padding: 20px;
       border-radius: 10px;
+      width: 250px;
+      text-align: center;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
     }
   }
 }
 
-.enrollmentSection {
-  padding: 50px 20px;
-  background: linear-gradient(180deg, #04f5ed, #00f7a7);
-  color: white;
-  text-align: center;
-
-  .ctaButton {
-    background-color: #ff7b02;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 50px 25px;
+    
+    .title {
+      font-size: 2rem;
+    }
+    
+    .description {
+      font-size: 1.2rem;
+    }
   }
-}
 
-.faqSection {
-  padding: 50px 20px;
-  background: #ffffff;
-
-  .faq {
-    margin-bottom: 20px;
-
-    h3 {
-      margin-bottom: 10px;
+  .benefitsSection ul {
+    flex-direction: column;
+    align-items: center;
+    
+    li {
+      width: 80%;
+      margin: 10px 0;
     }
   }
 }
@@ -192,32 +159,18 @@
   color: white;
   text-align: center;
 
-  .footerLinks,
-  .socialMedia,
-  .newsletter {
+  .footerLinks {
     margin-bottom: 20px;
 
     a {
-      color: #ff6200;
+      color: #fff;
       text-decoration: none;
       margin: 0 10px;
-    }
-  }
+      transition: color 0.3s ease;
 
-  .newsletter {
-    input {
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-right: 10px;
-    }
-
-    button {
-      background-color: #ff6200;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
+      &:hover {
+        color: #673ab7;
+      }
     }
   }
 }
@@ -236,5 +189,17 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+}
+
+.introductionSection {
+  padding: 50px 20px;
+  color: rgb(36, 26, 26);
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
   }
 }
