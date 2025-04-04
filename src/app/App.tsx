@@ -18,10 +18,9 @@ function App() {
   return (
     <div>
       <Header />
-      <div>
+      
         <Breadcrumbs />
-      </div>
-      {/* <Divider /> */}
+     
       <section className="content-page">
         <AppRouter />
       </section>

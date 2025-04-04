@@ -1,14 +1,14 @@
 .text{
+    position: absolute;
+    left: 9%;
+    top: 5%;
+    z-index: 10;
     color: var(--text-color);
     .links{
         color: var(--text-color);
     }
 
    background: var(--bg-header);
-   padding-left: 2em;
-
-
-
 }
 
 .lastWord{
