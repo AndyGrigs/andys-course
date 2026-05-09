@@ -46,7 +46,7 @@ const Login: React.FC = () => {
         </div>
 
         <h1 className={styles.heading}>{t("welcomeBack")}</h1>
-        <p className={styles.subtitle}>{t("loginSubtitle")}</p>
+        {/* <p className={styles.subtitle}>{t("loginSubtitle")}</p> */}
 
         {error && <div className={styles.errorBox}>{error}</div>}
 

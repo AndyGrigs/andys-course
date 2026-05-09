@@ -51,7 +51,7 @@ const Registration = () => {
         </div>
 
         <h1 className={styles.heading}>{t("register")}</h1>
-        <p className={styles.subtitle}>{t("registerSubtitle")}</p>
+        {/* <p className={styles.subtitle}>{t("registerSubtitle")}</p> */}
 
         {error && <div className={styles.errorBox}>{error}</div>}
 

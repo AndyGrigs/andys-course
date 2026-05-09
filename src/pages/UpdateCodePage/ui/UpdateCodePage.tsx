@@ -50,7 +50,7 @@ const UpdateCode = () => {
         </div>
 
         <h1 className={styles.heading}>{t("resetPasswordTitle")}</h1>
-        <p className={styles.subtitle}>{t("resetSubtitle")}</p>
+        {/* <p className={styles.subtitle}>{t("resetSubtitle")}</p> */}
 
         {error && <div className={styles.errorBox}>{error}</div>}
 
