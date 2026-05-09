@@ -32,8 +32,7 @@ const HomePage: React.FC = () => {
         <div className={styles.container}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>
-              <span className={styles.accentWord}>Language</span>{' '}
-              <span className={styles.highlightWord}>School</span>
+              <span className={styles.accentWord}>Andy</span><span className={styles.highlightWord}>Kurs</span>
             </h1>
             <p className={styles.heroDescription}>{t('homePage.heroDescription')}</p>
             <button onClick={() => navigate('/modules')} className={styles.ctaButton}>
@@ -105,8 +104,7 @@ const HomePage: React.FC = () => {
         <div className={styles.container}>
           <div className={styles.footerContent}>
             <span className={styles.footerBrand}>
-              <span className={styles.accentWord}>Language</span>{' '}
-              <span className={styles.highlightWord}>School</span>
+              <span className={styles.accentWord}>Andy</span><span className={styles.highlightWord}>Kurs</span>
             </span>
             <nav className={styles.footerLinks}>
               <a href="#about">{t('homePage.footer.about')}</a>

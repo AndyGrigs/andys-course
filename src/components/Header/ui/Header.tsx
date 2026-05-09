@@ -30,11 +30,10 @@ export const Header = () => {
         <img
           className={styles.logo}
           src="https://cdn.pixabay.com/photo/2013/07/13/10/09/germany-156642_1280.png"
-          alt="Language School logo"
+          alt="AndsKurs logo"
         />
         <span className={styles.brandName}>
-          <span className={styles.brandAccent}>Language</span>{' '}
-          <span className={styles.brandHighlight}>School</span>
+          <span className={styles.brandAccent}>Andy</span><span className={styles.brandHighlight}>Kurs</span>
         </span>
       </Link>
 
