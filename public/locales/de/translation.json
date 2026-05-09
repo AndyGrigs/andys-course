@@ -31,6 +31,22 @@
         "Grammatiktrainer",
         "Videos zu jeder Übung"
       ]
+    },
+    "stats": {
+      "students": "Aktive Schüler",
+      "modules": "Lernmodule",
+      "exercises": "Übungen"
+    },
+    "cta": {
+      "title": "Bereit anzufangen?",
+      "description": "Schließe dich hunderten von Schülern an, die bereits Deutsch lernen.",
+      "button": "Kostenlos starten"
+    },
+    "footer": {
+      "about": "Über uns",
+      "contact": "Kontakt",
+      "privacy": "Datenschutz",
+      "copyright": "© 2024 Language School. Alle Rechte vorbehalten."
     }
   }
 }

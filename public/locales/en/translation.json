@@ -31,6 +31,22 @@
         "Grammar trainer",
         "Video explanations for each exercise"
       ]
+    },
+    "stats": {
+      "students": "Active Students",
+      "modules": "Study Modules",
+      "exercises": "Exercises"
+    },
+    "cta": {
+      "title": "Ready to start learning?",
+      "description": "Join hundreds of students already mastering German.",
+      "button": "Start for free"
+    },
+    "footer": {
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "copyright": "© 2024 Language School. All rights reserved."
     }
   }
 }
