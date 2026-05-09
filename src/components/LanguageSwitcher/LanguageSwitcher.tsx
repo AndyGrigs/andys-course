@@ -1,25 +1,29 @@
-// LanguageSelector.tsx
-import React, { useState } from 'react';
+import React from 'react';
+import { Segmented } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-interface LanguageSelectorProps {}
+const LANGUAGES = [
+  { label: 'DE', value: 'de' },
+  { label: 'UK', value: 'uk' },
+  { label: 'EN', value: 'en' },
+];
 
-const LanguageSelector: React.FC<LanguageSelectorProps> = () => {
+const normalise = (lang: string) => {
+  if (lang.startsWith('de')) return 'de';
+  if (lang.startsWith('uk')) return 'uk';
+  return 'en';
+};
+
+const LanguageSelector: React.FC = () => {
   const { i18n } = useTranslation();
-  const [languages, _] = useState(['de', 'uk', 'en']);
-
-  const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
-  };
 
   return (
-    <select onChange={(e) => changeLanguage(e.target.value)} defaultValue={i18n.language}>
-      {languages.map((lang) => (
-        <option key={lang} value={lang}>
-          {lang.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <Segmented
+      size="small"
+      options={LANGUAGES}
+      value={normalise(i18n.language)}
+      onChange={(val) => i18n.changeLanguage(val as string)}
+    />
   );
 };
 

@@ -1,23 +1,106 @@
 .header {
+  position: sticky !important;
+  top: 0;
+  z-index: 100;
   width: 100%;
-  padding-top: 0;
-  z-index: 2;
-  padding: 10px;
-  display: flex;
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 0 24px !important;
+  display: flex !important;
   align-items: center;
   justify-content: space-between;
-  color: var(--text-color);
-  background: var(--bg-header);
-  // border-bottom: 1px solid saddlebrown;
-  // position: fixed;
+  background: var(--header-glass-bg) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--header-border-color);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  transition: background 0.3s ease;
+}
 
+// ── Logo + brand ──────────────────────────────────────────────────────────────
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+
+  &:hover .brandName {
+    opacity: 0.8;
+  }
 }
 
 .logo {
-  width: 50px;
- }
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-.userIcon {
-  font-size: 26px;
-  margin-right: 12px;
+.brandName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+
+.brandAccent {
+  color: var(--brand-color-1);
+}
+
+.brandHighlight {
+  color: var(--brand-color-2);
+}
+
+// ── Right controls ────────────────────────────────────────────────────────────
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// ── Points badge ──────────────────────────────────────────────────────────────
+
+.points {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #ff6f00, #ffa726);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(255, 111, 0, 0.35);
+  line-height: 1;
+  margin-right: 4px;
+}
+
+.fireIcon {
+  font-size: 0.95rem;
+}
+
+.pointsValue {
+  letter-spacing: 0.3px;
+}
+
+// ── Hamburger button ──────────────────────────────────────────────────────────
+
+.menuButton {
+  border-radius: 10px !important;
+  transition: background 0.2s ease !important;
+}
+
+// ── Drawer title ──────────────────────────────────────────────────────────────
+
+.drawerTitle {
+  font-weight: 600;
+  font-size: 1rem;
 }

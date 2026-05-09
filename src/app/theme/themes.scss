@@ -3,6 +3,10 @@
   --background-color: rgb(245, 245, 245);
   --text-color: rgb(8, 8, 8);
   --bg-header: rgb(247, 245, 245);
+  --header-glass-bg: rgba(247, 245, 245, 0.88);
+  --header-border-color: rgba(0, 0, 0, 0.07);
+  --brand-color-1: #1a237e;
+  --brand-color-2: #673ab7;
   --card-gradient: linear-gradient(
     135deg,
     #f0f8ff 0%,
@@ -17,6 +21,10 @@
   --background-color: rgb(55, 54, 56);
   --text-color: rgb(247, 245, 245);
   --bg-header: #262626;
+  --header-glass-bg: rgba(30, 30, 30, 0.92);
+  --header-border-color: rgba(255, 255, 255, 0.07);
+  --brand-color-1: #90caf9;
+  --brand-color-2: #ce93d8;
   --card-gradient: linear-gradient(
     135deg,
     #262626 0%,
@@ -24,7 +32,7 @@
     #1d1e22 50%,
     #1d1e22 100%
   );
---color-input: grey;
+  --color-input: grey;
 }
 
 body {
