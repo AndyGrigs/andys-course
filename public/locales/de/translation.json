@@ -18,6 +18,9 @@
   "noCode": "Kein Code...",
   "greeting": "Hallo",
   "start": "Losgehen!",
+  "loginSubtitle": "Gib deine Daten ein, um fortzufahren",
+  "registerSubtitle": "Erstelle dein Konto in Sekunden",
+  "resetSubtitle": "Gib deinen Namen zweimal ein, um einen neuen Code zu erhalten",
   "homePage": {
     "heroTitle": "Deutsch effektiv lernen!",
     "heroDescription": "Mein Kurs hilft Ihnen, die Grammatik zu beherrschen und Ihr Wortschatz zu erweitern.",

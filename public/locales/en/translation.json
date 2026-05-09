@@ -18,6 +18,9 @@
   "noCode": "No code...",
   "greeting": "Hello",
   "start": "Start!",
+  "loginSubtitle": "Enter your details to continue",
+  "registerSubtitle": "Create your account in seconds",
+  "resetSubtitle": "Enter your name twice to receive a new code",
   "homePage": {
     "heroTitle": "Learn German effectively!",
     "heroDescription": "My course will help you master the grammar and expand your vocabulary.",

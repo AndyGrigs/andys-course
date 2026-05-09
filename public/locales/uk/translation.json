@@ -9,7 +9,7 @@
   "alreadyHaveAccount": "Уже є аккаунт?",
   "forgotPassword": "Забули пароль?",
   "writeYourName": "Напишіть своє ім'я",
-  "genericError": "Стала помилка...",
+  "genericError": "Сталася помилка...",
   "enterYourCode": "Напишіть свій код",
   "register": "Зареєструйтесь",
   "dontKnowCode": "Не знаєш код?",
@@ -18,6 +18,9 @@
   "noCode": "Нема коду...",
   "greeting": "Привіт",
   "start": "Почати!",
+  "loginSubtitle": "Введи свої дані для продовження",
+  "registerSubtitle": "Створи акаунт за кілька секунд",
+  "resetSubtitle": "Введи своє ім'я двічі, щоб отримати новий код",
   "homePage": {
     "heroTitle": "Навчайся німецької ефективно!",
     "heroDescription": "Мій курс допоможе вам швидко освоїти німецьку мову.",
