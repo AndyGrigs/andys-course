@@ -1,12 +1,9 @@
 import React, { useRef } from "react";
-import { Button, Col, Flex, Typography, Divider, Image } from "antd";
-const { Title, Paragraph } = Typography;
 import { useParams } from "react-router-dom";
 import { Loader } from "../../../components/Loader";
 import { useCallback, useEffect, useState } from "react";
 import { useGetOneExercisesQuery } from "../../../redux/services/exersiceApi";
-import styles from "./ExerciseDetailsPage.module.scss";
-import Input, { InputRef } from "antd/lib/input";
+import { InputRef } from "antd/lib/input";
 import { selectUserExerciseProgress } from "../../../redux/slices/userProgress/userProgressSlice";
 import useCheckAnswer from "../hooks/useCheckAnswers";
 import { useCalculateExerciseProgress } from "../utils/culculateExerciseProgress";
@@ -21,7 +18,9 @@ import {
   useCalculateModuleProgress,
 } from "../utils/culculateModuleProgress";
 import ResultMessage from "../pageElemnts/ResultMessage";
-import { Progress } from "antd";
+import ExerciseHeader from "./ExerciseHeader";
+import TaskInputs from "./TaskInputs";
+import ExerciseActions from "./ExerciseActions";
 
 const ExerciseDetailsPage = () => {
   const inputRef = useRef<InputRef>(null);
@@ -29,10 +28,7 @@ const ExerciseDetailsPage = () => {
   const { exerciseId } = useParams<{ exerciseId: string }>();
   const { checkAnswer, userResults } = useCheckAnswer();
 
-
-  const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>(
-    {}
-  );
+  const [answerValue, setAnswerValue] = useState<{ [key: string]: string[] }>({});
   const [_, setFunctionsCalled] = useState(false);
   const [isModaResultlVisible, setIsModalResultVisible] = useState(false);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
@@ -53,19 +49,17 @@ const ExerciseDetailsPage = () => {
   useCalculateModuleProgress() as IModuleProgress;
 
   const totalTasks = exercise?.tasks.length || 0;
-  const handleCloseModal = () => {
-    setIsModalResultVisible(false);
-  };
+
+  const handleCloseModal = () => setIsModalResultVisible(false);
 
   const handleFinalProgress = useCallback(async () => {
     try {
-      const finalResult = {
+      await updateUserExerciseProgress({
         userId: user?._id || "",
         exerciseId: exercise?._id ? String(exercise._id) : "",
         answers: userResults,
         progress: 100,
-      };
-      await updateUserExerciseProgress(finalResult);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -81,13 +75,9 @@ const ExerciseDetailsPage = () => {
     }
   }, []);
 
-
-
   useEffect(() => {
     if (exercise) {
-      const totalTasks = exercise.tasks.length;
-      const completedTasks = currentTaskIndex; 
-      const percent = (completedTasks / totalTasks) * 100;
+      const percent = (currentTaskIndex / exercise.tasks.length) * 100;
       setProgressPercent(percent);
     }
   }, [currentTaskIndex, exercise]);
@@ -114,14 +104,12 @@ const ExerciseDetailsPage = () => {
 
   const handleAddProgress = async () => {
     try {
-      const data = {
+      await updateUserExerciseProgress({
         userId: user?._id || "",
         exerciseId: (exercise?._id as string) || "",
         progress,
         answers: userResults,
-      };
-
-      await updateUserExerciseProgress(data);
+      });
     } catch (error) {
       console.error("Error updating user progress:", error);
     }
@@ -132,7 +120,6 @@ const ExerciseDetailsPage = () => {
       setResultMessage("Exercise not loaded");
       return;
     }
-
     const isCorrect = checkAnswer(
       currentTask._id,
       currentTaskIndex,
@@ -158,10 +145,7 @@ const ExerciseDetailsPage = () => {
       setIsAnswerChecked(true);
     } else {
       clearResultMessage();
-      setCurrentTaskIndex(
-        (currentIndex) => (currentIndex + 1) % exercise.tasks.length
-      );
-
+      setCurrentTaskIndex((i) => (i + 1) % exercise.tasks.length);
       if (currentTaskIndex === totalTasks - 1) {
         handleFinalProgress();
         setIsModalResultVisible(true);
@@ -170,79 +154,33 @@ const ExerciseDetailsPage = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError || !exercise) {
-    return <div>Error loading exercise</div>;
-  }
+  if (isLoading) return <Loader />;
+  if (isError || !exercise) return <div>Error loading exercise</div>;
 
   const currentTask = exercise.tasks[currentTaskIndex];
-
   const parts = currentTask.content.split("{{input}}");
-
-  const allInputsEmpty = Object.values(
-    answerValue[currentTask._id] || []
-  ).every((answer) => answer.trim() === "");
-
+  const allInputsEmpty = Object.values(answerValue[currentTask._id] || []).every(
+    (answer) => answer.trim() === ""
+  );
   const isShortExercise = currentTask.solution[0].length < 15;
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Title level={5}>
-        {String(exercise.number)[0]}. {exercise.instruction}
-      </Title>
-      <Typography.Paragraph>{exercise.example}</Typography.Paragraph>
-      <Divider />
+      <ExerciseHeader
+        exerciseNumber={exercise.number}
+        instruction={exercise.instruction}
+        example={exercise.example}
+        progressPercent={progressPercent}
+      />
 
-      <p style={{ maxWidth: "80%", margin: "0 auto" }}>
-        <Progress percent={Math.round(progressPercent)} status="active" />
-      </p>
-
-      <Divider />
-      <Flex
-        vertical={!isShortExercise}
-        justify="center"
-        align="center"
-        style={{ marginTop: "2.5em" }}
-      >
-        {parts.map((part, partIndex) => (
-          <React.Fragment key={partIndex}>
-            {part && (
-              <Col>
-                <Paragraph className={styles.exPar} style={{ margin: "0 0" }}>
-                  {part}
-                </Paragraph>
-              </Col>
-            )}
-            {partIndex < parts.length - 1 && (
-             
-
-              <Input
-                className={styles.exerciseInput}
-                ref={inputRef}
-                style={{
-                  maxWidth: isShortExercise ? "18%" : "60%",
-                  color: "#000000",
-                  margin: "1em",
-                  // fontSize: "1.5em",
-                }}
-                value={
-                  answerValue[currentTask._id]
-                    ? answerValue[currentTask._id][partIndex] || ""
-                    : ""
-                }
-                onChange={(e) =>
-                  handleInputChange(e, currentTask._id, partIndex)
-                }
-                placeholder="Antwort..."
-              />
-           
-            )}
-          </React.Fragment>
-        ))}
-      </Flex>
+      <TaskInputs
+        parts={parts}
+        isShortExercise={isShortExercise}
+        answerValue={answerValue}
+        currentTaskId={currentTask._id}
+        inputRef={inputRef}
+        onInputChange={handleInputChange}
+      />
 
       <ResultMessage
         resultMessage={resultMessage}
@@ -254,34 +192,20 @@ const ExerciseDetailsPage = () => {
         onClose={handleCloseModal}
         userResults={userResults}
         onHandleExerciseList={() => {
-          if (currentModule && currentModule._id) {
+          if (currentModule?._id) {
             handleExerciseList(currentModule._id);
           } else {
             console.error("Module ID is not available");
           }
         }}
       />
-      <Flex
-        vertical={true}
-        align="center"
-        justify="center"
-        style={{ marginTop: "2.5em" }}
-      >
-        {currentTask.image ? (
-          <div style={{ marginBottom: "2em" }}>
-            <Image width={90} height={90} src={currentTask.image} />
-          </div>
-        ) : undefined}
 
-        <Button
-          style={{ marginBottom: "2em" }}
-          type="primary"
-          disabled={allInputsEmpty}
-          onClick={goToNextTask}
-        >
-          {isAnswerChecked ? "Наступне Завдання" : "Перевірити відповідь"}
-        </Button>
-      </Flex>
+      <ExerciseActions
+        image={currentTask.image}
+        allInputsEmpty={allInputsEmpty}
+        isAnswerChecked={isAnswerChecked}
+        onNext={goToNextTask}
+      />
     </div>
   );
 };
